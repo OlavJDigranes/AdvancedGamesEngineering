@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainMenuManager : MonoBehaviour
 {
-    //Take in the customising parameters and use them to generate the planetary system. 
+    //Take in the customising parameters and use them to generate the planetary system. Use a seperate class to hold the information. 
     // Start is called before the first frame update
     void Start()
     {
