@@ -16,4 +16,9 @@ public class MainMenuManager : MonoBehaviour
     {
         
     }
+
+    // This function starts the simulatin using the gathered parameters. 
+    public void StartSim(){
+
+    }
 }
