@@ -11,10 +11,10 @@ public class MainMenuManager : MonoBehaviour
     public float starLuminocity;
     public int starAge; 
 
-    private string input1; 
-    private string input2; 
-    private string input3; 
-    private string input4; 
+    private string inputStarMass; 
+    private string inputStarAge; 
+    private string inputStarLuminocity; 
+    private string inputNumOfPlanets; 
 
     // Start is called before the first frame update
     void Start()
@@ -30,34 +30,38 @@ public class MainMenuManager : MonoBehaviour
 
     // This function starts the simulatin using the gathered parameters. 
     public void StartSim(){
-        if(int.TryParse(input1, out int result1)){
-            starMass = result1; 
+        if(int.TryParse(inputStarMass, out int mass)){
+            starMass = mass; 
         } 
-        if(int.TryParse(input2, out int result2)){
-            starAge = result2; 
+        if(int.TryParse(inputStarAge, out int age)){
+            starAge = age; 
         } 
-        if(int.TryParse(input3, out int result3)){
-            starLuminocity = result3; 
+        if(float.TryParse(inputStarLuminocity, out float lumin)){
+            starLuminocity = lumin; 
         } 
-        if(int.TryParse(input4, out int result4)){
-            numOfPlanets = result4; 
+        if(int.TryParse(inputNumOfPlanets, out int nop)){
+            numOfPlanets = nop; 
         } 
         SceneManager.LoadScene(1, LoadSceneMode.Single); 
     }
 
-    public void ReadStringInput1(string s){
-        input1 = s;
+    public void ReadStringinputStarMass(string s){
+        inputStarMass = s;
+        Debug.Log(inputStarMass);
     }
 
-    public void ReadStringInput2(string s){
-        input2 = s;
+    public void ReadStringinputStarAge(string s){
+        inputStarAge = s;
+        Debug.Log(inputStarAge);
     }
 
-    public void ReadStringInput3(string s){
-        input3 = s;
+    public void ReadStringinputStarLuminocity(string s){
+        inputStarLuminocity = s;
+        Debug.Log(inputStarLuminocity);
     }
 
-    public void ReadStringInput4(string s){
-        input4 = s;
+    public void ReadStringinputNumOfPlanets(string s){
+        inputNumOfPlanets = s;
+        Debug.Log(inputNumOfPlanets);
     }
 }
