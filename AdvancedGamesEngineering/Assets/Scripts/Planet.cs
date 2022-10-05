@@ -5,6 +5,14 @@ using UnityEngine;
 public class Planet : MonoBehaviour
 {
     int planetTotal;
+
+    public GameObject menu; 
+    MainMenuManager mainMenuMngr;
+
+    void Awake() {
+        mainMenuMngr = menu.GetComponent<MainMenuManager>(); 
+    }
+
     // Start is called before the first frame update
     void Start()
     {

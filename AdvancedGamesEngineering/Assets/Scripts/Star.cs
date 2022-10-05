@@ -44,7 +44,7 @@ public class Star : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Rotational speed based on size. 
     }
 
     void DetermineColour(int a){
@@ -89,11 +89,13 @@ public class Star : MonoBehaviour
     }
 
     void DetermineLightEmission(float l){
-
+        //Turn the star into the light in the scene. Use colour of star to colour te emitted light. 
     }
 
     void DetermineSizeAndPull(int m){
-
+        //Directly set rigidbody mass. 
+        //https://www.youtube.com/watch?v=kUXskc76ud8 <- make planets and moons. 
+        //https://www.youtube.com/watch?v=RvIsJCGLsSU 
     }
 
     void FIllColours(){
@@ -112,3 +114,7 @@ public class Star : MonoBehaviour
         colours[11] = Color.blue; 
     }
 }
+
+/*NOTES:
+ - Star will always be at point 0, 0, 0.  
+*/
