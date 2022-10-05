@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Planet : MonoBehaviour
 {
+    int planetTotal;
     // Start is called before the first frame update
     void Start()
     {
