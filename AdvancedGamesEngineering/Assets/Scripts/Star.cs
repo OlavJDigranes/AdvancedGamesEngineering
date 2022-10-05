@@ -5,14 +5,19 @@ using UnityEngine;
 public class Star : MonoBehaviour
 {
     int mass;
-    int luminocity;
+    float luminocity;
     int age;
 
     public GameObject star;
+    public MainMenuManager mainMenuMngr;
 
     // Start is called before the first frame update
     void Start()
     {
+        mass = mainMenuMngr.starMass;
+        luminocity = mainMenuMngr.starLuminocity;
+        age = mainMenuMngr.starAge;
+
         DetermineColour(age);
         DetermineLightEmission(luminocity);
         DetermineSizeAndPull(mass);
@@ -60,7 +65,7 @@ public class Star : MonoBehaviour
         sphereRenderer.material.SetColor("_Color", starColour);
     }
 
-    void DetermineLightEmission(int l){
+    void DetermineLightEmission(float l){
 
     }
 
