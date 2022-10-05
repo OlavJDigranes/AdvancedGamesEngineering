@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 public class MainMenuManager : MonoBehaviour
 {
     //Take in the customising parameters and use them to generate the planetary system. Use a seperate class to hold the information. 
-    public int numOfPlanets; 
-    public int starMass;
-    public float starLuminocity;
-    public int starAge; 
+    public static int numOfPlanets; 
+    public static int starMass;
+    public static float starLuminocity;
+    public static int starAge; 
+
+    public GameObject menuPanel;
 
     private string inputStarMass; 
     private string inputStarAge; 
@@ -19,7 +21,7 @@ public class MainMenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //DontDestroyOnLoad(menuPanel);
     }
 
     // Update is called once per frame
@@ -47,21 +49,17 @@ public class MainMenuManager : MonoBehaviour
 
     public void ReadStringinputStarMass(string s){
         inputStarMass = s;
-        Debug.Log(inputStarMass);
     }
 
     public void ReadStringinputStarAge(string s){
         inputStarAge = s;
-        Debug.Log(inputStarAge);
     }
 
     public void ReadStringinputStarLuminocity(string s){
         inputStarLuminocity = s;
-        Debug.Log(inputStarLuminocity);
     }
 
     public void ReadStringinputNumOfPlanets(string s){
         inputNumOfPlanets = s;
-        Debug.Log(inputNumOfPlanets);
     }
 }
