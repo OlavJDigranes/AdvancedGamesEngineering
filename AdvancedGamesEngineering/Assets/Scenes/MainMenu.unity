@@ -183,8 +183,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Start
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 99453988}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387a9786e7918eb49a7f0fee86280447, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bee5991085dccc4a8d7a256de91fda6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   numOfPlanets: 0
@@ -419,10 +419,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Planetary System Simulator '
+  m_text: Planetary System Simulator
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -577,8 +577,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter Number
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -712,8 +712,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -871,7 +871,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 99453992}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
         m_MethodName: StartSim
         m_Mode: 1
@@ -987,7 +987,7 @@ GameObject:
   - component: {fileID: 554466464}
   - component: {fileID: 554466463}
   m_Layer: 5
-  m_Name: InputField4
+  m_Name: InputFieldNumOfPlanets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1078,8 +1078,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 99453992}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: ReadStringInput4
-        m_Mode: 0
+        m_MethodName: ReadStringinputNumOfPlanets
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1268,7 +1268,7 @@ GameObject:
   - component: {fileID: 627814009}
   - component: {fileID: 627814008}
   m_Layer: 5
-  m_Name: Info4
+  m_Name: NumOfPlanets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1316,8 +1316,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Number of Planets
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1403,7 +1403,7 @@ GameObject:
   - component: {fileID: 686398726}
   - component: {fileID: 686398725}
   m_Layer: 5
-  m_Name: Info2
+  m_Name: StarAge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1451,8 +1451,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Star Age
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1592,7 +1592,7 @@ GameObject:
   - component: {fileID: 858849324}
   - component: {fileID: 858849323}
   m_Layer: 5
-  m_Name: InputField1
+  m_Name: InputFieldStarMass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1683,7 +1683,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 99453992}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: ReadStringInput1
+        m_MethodName: ReadStringinputStarMass
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1779,7 +1779,7 @@ GameObject:
   - component: {fileID: 876242721}
   - component: {fileID: 876242720}
   m_Layer: 5
-  m_Name: Info3
+  m_Name: StarLuminocity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1827,8 +1827,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Star Luminocity
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1983,8 +1983,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter Number
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2071,7 +2071,7 @@ GameObject:
   - component: {fileID: 1134750716}
   - component: {fileID: 1134750715}
   m_Layer: 5
-  m_Name: InputField2
+  m_Name: InputFieldStarAge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2162,7 +2162,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 99453992}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: ReadStringInput2
+        m_MethodName: ReadStringinputStarAge
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2306,8 +2306,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2462,8 +2462,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter Number
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2597,8 +2597,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2958,8 +2958,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter Number
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3199,7 +3199,7 @@ GameObject:
   - component: {fileID: 1737315091}
   - component: {fileID: 1737315090}
   m_Layer: 5
-  m_Name: Info1
+  m_Name: StarMass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3247,8 +3247,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Star Mass
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3335,7 +3335,7 @@ GameObject:
   - component: {fileID: 1817579693}
   - component: {fileID: 1817579692}
   m_Layer: 5
-  m_Name: InputField3
+  m_Name: InputFieldStarLuminocity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3426,8 +3426,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 99453992}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: ReadStringInput3
-        m_Mode: 0
+        m_MethodName: ReadStringinputStarLuminocity
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3570,8 +3570,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
