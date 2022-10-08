@@ -109,6 +109,9 @@ public class Star : MonoBehaviour
         //https://www.youtube.com/watch?v=RvIsJCGLsSU 
         rb.GetComponent<Rigidbody>();
         rb.mass = m; 
+        var scale = star.transform.localScale; 
+        scale *= m; 
+        star.transform.localScale = scale; 
     }
 
     void FIllColours(){
