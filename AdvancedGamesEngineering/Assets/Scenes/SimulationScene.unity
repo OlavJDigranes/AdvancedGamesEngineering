@@ -436,6 +436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   star: {fileID: 1651945815}
   menu: {fileID: 5866709574479496159, guid: 67921259de6bdad4580c0e37653f9db8, type: 3}
+  rb: {fileID: 1651945820}
 --- !u!1001 &3591699307190981980
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -443,6 +444,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3591699308838396933, guid: 19abb1f3b014aba459c5067be23dea84, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9139c185e75759a4f960de0a58ad5276, type: 2}
     - target: {fileID: 3591699308838396935, guid: 19abb1f3b014aba459c5067be23dea84, type: 3}
       propertyPath: m_RootOrder
       value: 3

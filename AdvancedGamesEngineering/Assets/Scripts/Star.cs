@@ -10,6 +10,7 @@ public class Star : MonoBehaviour
 
     public GameObject star;
     public GameObject menu; 
+    public Rigidbody rb; 
     MainMenuManager mainMenuMngr;
 
     Color[] colours; 
@@ -86,16 +87,25 @@ public class Star : MonoBehaviour
 
         //Color starColour = new Color(r, g, b, 1.0f);
         sphereRenderer.material.SetColor("_Color", colours[tempAge - 1]);
+        sphereRenderer.material.SetColor("_EmissionColor", colours[tempAge - 1]);
+        
     }
 
     void DetermineLightEmission(float l){
         //Turn the star into the light in the scene. Use colour of star to colour te emitted light. 
+        var sphereRenderer = star.GetComponent<Renderer>(); 
+        Color tempColour; 
+        tempColour = sphereRenderer.material.GetColor("_EmissionColor"); 
+        tempColour.a = l; 
+        sphereRenderer.material.SetColor("_EmissionColor", tempColour); 
     }
 
     void DetermineSizeAndPull(int m){
         //Directly set rigidbody mass. 
         //https://www.youtube.com/watch?v=kUXskc76ud8 <- make planets and moons. 
         //https://www.youtube.com/watch?v=RvIsJCGLsSU 
+        rb.GetComponent<Rigidbody>();
+        rb.mass = m; 
     }
 
     void FIllColours(){
