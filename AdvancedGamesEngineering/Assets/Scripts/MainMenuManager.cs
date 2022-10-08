@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    //Take in the customising parameters and use them to generate the planetary system. Use a seperate class to hold the information. 
+    //Take in the customising parameters and use them to generate the planetary system. 
     public static int numOfPlanets; 
     public static int starMass;
     public static int starLuminocity;
@@ -47,6 +47,7 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadScene(1, LoadSceneMode.Single); 
     }
 
+    //These functions are used for the InputFields in the main menu scene. Debug Logs are due to an editor bug as of 08.10.2022
     public void ReadStringinputStarMass(string s){
         inputStarMass = s;
         Debug.Log(s); 

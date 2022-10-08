@@ -92,7 +92,7 @@ public class Star : MonoBehaviour
     }
 
     void DetermineLightEmission(int l){
-        //Turn the star into the light in the scene. Use colour of star to colour te emitted light. 
+        //Turn the star into the light in the scene. Use colour of star to colour the emitted light. 
         float alpha = (float)l/10.0f;
         var sphereRenderer = star.GetComponent<Renderer>(); 
         Color tempColour; 
@@ -115,6 +115,7 @@ public class Star : MonoBehaviour
     }
 
     void FIllColours(){
+        //This functions fills the colour array
         colours = new Color[12]; 
         colours[0] = Color.white; 
         colours[1] = Color.red;
