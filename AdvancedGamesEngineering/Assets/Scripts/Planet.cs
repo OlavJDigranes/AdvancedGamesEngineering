@@ -17,6 +17,7 @@ public class Planet : MonoBehaviour
     void Start()
     {
         planetTotal = MainMenuManager.numOfPlanets; 
+        //Debug.Log(planetTotal); 
     }
 
     // Update is called once per frame

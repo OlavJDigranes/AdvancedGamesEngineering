@@ -8,7 +8,7 @@ public class MainMenuManager : MonoBehaviour
     //Take in the customising parameters and use them to generate the planetary system. Use a seperate class to hold the information. 
     public static int numOfPlanets; 
     public static int starMass;
-    public static float starLuminocity;
+    public static int starLuminocity;
     public static int starAge; 
 
     public GameObject menuPanel;
@@ -38,7 +38,7 @@ public class MainMenuManager : MonoBehaviour
         if(int.TryParse(inputStarAge, out int age)){
             starAge = age; 
         } 
-        if(float.TryParse(inputStarLuminocity, out float lumin)){
+        if(int.TryParse(inputStarLuminocity, out int lumin)){
             starLuminocity = lumin; 
         } 
         if(int.TryParse(inputNumOfPlanets, out int nop)){
@@ -49,17 +49,21 @@ public class MainMenuManager : MonoBehaviour
 
     public void ReadStringinputStarMass(string s){
         inputStarMass = s;
+        Debug.Log(s); 
     }
 
     public void ReadStringinputStarAge(string s){
         inputStarAge = s;
+        Debug.Log(s); 
     }
 
     public void ReadStringinputStarLuminocity(string s){
         inputStarLuminocity = s;
+        Debug.Log(s); 
     }
 
     public void ReadStringinputNumOfPlanets(string s){
         inputNumOfPlanets = s;
+        Debug.Log(s); 
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Star : MonoBehaviour
 {
     int mass;
-    float luminocity;
+    int luminocity;
     int age;
 
     public GameObject star;
@@ -91,13 +91,16 @@ public class Star : MonoBehaviour
         
     }
 
-    void DetermineLightEmission(float l){
+    void DetermineLightEmission(int l){
         //Turn the star into the light in the scene. Use colour of star to colour te emitted light. 
+        float alpha = (float)l/10.0f;
         var sphereRenderer = star.GetComponent<Renderer>(); 
         Color tempColour; 
         tempColour = sphereRenderer.material.GetColor("_EmissionColor"); 
-        tempColour.a = l; 
+        tempColour.a = alpha; 
+        //Debug.Log(tempColour); 
         sphereRenderer.material.SetColor("_EmissionColor", tempColour); 
+        Debug.Log(tempColour = sphereRenderer.material.GetColor("_EmissionColor")); 
     }
 
     void DetermineSizeAndPull(int m){
