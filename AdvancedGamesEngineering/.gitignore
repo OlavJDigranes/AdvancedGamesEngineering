@@ -67,7 +67,7 @@ sysinfo.txt
 
 # Other
 *.log
-/[Ll]ibrary/Artifacts/*
+# /[Ll]ibrary/Artifacts/*
 *.png
 *.wav
 *.mp3
