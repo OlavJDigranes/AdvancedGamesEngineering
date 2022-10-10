@@ -23,6 +23,9 @@ public class Star : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Ensure the star is at the point of origin. 
+        rb.transform.position = new Vector3(-6, 0, 0);
+
         //mass = mainMenuMngr.starMass;
         //luminocity = mainMenuMngr.starLuminocity;
         //age = mainMenuMngr.starAge;
