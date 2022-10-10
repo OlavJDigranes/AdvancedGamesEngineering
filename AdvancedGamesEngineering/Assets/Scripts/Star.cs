@@ -6,7 +6,7 @@ public class Star : MonoBehaviour
 {
     int mass;
     int luminocity;
-    int age;
+    int age; 
 
     public GameObject star;
     public GameObject menu; 

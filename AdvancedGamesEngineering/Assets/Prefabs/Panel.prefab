@@ -215,8 +215,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter Number
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -370,8 +370,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Start
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -746,8 +746,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Number of Planets
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -881,8 +881,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1016,8 +1016,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Star Mass
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1204,8 +1204,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1339,8 +1339,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Star Luminocity
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1475,8 +1475,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter Number
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1818,8 +1818,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Star Age
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2006,8 +2006,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2169,13 +2169,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5866709574479496159}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bee5991085dccc4a8d7a256de91fda6, type: 3}
+  m_Script: {fileID: 11500000, guid: 387a9786e7918eb49a7f0fee86280447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numOfPlanets: 0
-  starMass: 0
-  starLuminocity: 0
-  starAge: 0
+  menuPanel: {fileID: 5866709574479496159}
 --- !u!1 &5866709574671695981
 GameObject:
   m_ObjectHideFlags: 0
@@ -2297,8 +2294,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2808,8 +2805,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Planetary System Simulator
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2944,8 +2941,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter Number
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3100,8 +3097,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter Number
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
