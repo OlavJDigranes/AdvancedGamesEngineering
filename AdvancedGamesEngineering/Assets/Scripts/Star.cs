@@ -24,7 +24,7 @@ public class Star : MonoBehaviour
     void Start()
     {
         //Ensure the star is at the point of origin. 
-        rb.transform.position = new Vector3(-6, 0, 0);
+        star.transform.position = new Vector3(0, 0, 0);
 
         //mass = mainMenuMngr.starMass;
         //luminocity = mainMenuMngr.starLuminocity;
@@ -34,7 +34,7 @@ public class Star : MonoBehaviour
         luminocity = MainMenuManager.starLuminocity;
         age = MainMenuManager.starAge;
 
-        //Debug.Log("Sim Loaded");
+        Debug.Log("Sim Loaded");
         //Debug.Log(mass);
         //Debug.Log(luminocity);
         //Debug.Log(age);
