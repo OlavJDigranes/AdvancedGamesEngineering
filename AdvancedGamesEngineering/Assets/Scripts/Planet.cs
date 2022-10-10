@@ -7,6 +7,7 @@ public class Planet : MonoBehaviour
     int planetTotal;
 
     public GameObject menu; 
+    public GameObject star; 
     MainMenuManager mainMenuMngr;
 
     void Awake() {
