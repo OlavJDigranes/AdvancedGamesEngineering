@@ -5,7 +5,7 @@ using UnityEngine;
 public class PSManager : MonoBehaviour
 {
     //This will manage the behaviour of stars and planets in the simulation. 
-    readonly float G = 100.0f; 
+    readonly float G = 10.0f; 
     GameObject[] celestialBodies; 
     public GameObject star;
     public GameObject planet; 
@@ -18,7 +18,7 @@ public class PSManager : MonoBehaviour
         Random.InitState(7); 
         CreatePlanets();
         celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBody"); 
-        //InitialOrbitVelocity();
+        InitialOrbitVelocity();
     }
 
     // Update is called once per frame
@@ -28,7 +28,7 @@ public class PSManager : MonoBehaviour
     }
     
     private void FixedUpdate() {
-        //GravitationalPull(); 
+        GravitationalPull(); 
     }
 
     void GravitationalPull(){
@@ -64,8 +64,10 @@ public class PSManager : MonoBehaviour
         for(int i = 0; i < MainMenuManager.numOfPlanets; i++){
             Planet p = new Planet();
             //int randInt = RandomNumberGenerator.GetInt32(0,10);
-            p.mass = Random.Range(0, MainMenuManager.starMass);
-            p.position = new Vector3(i, 0, 0);
+            p.mass = Random.Range(0, (float)MainMenuManager.starMass);
+            Debug.Log(p.mass); 
+            p.position = new Vector3(i + MainMenuManager.starMass, 0, 0);
+            p.CalculateProperties(); 
             //celestialBodies[i] = p;
             planets[i] = p; 
         }
