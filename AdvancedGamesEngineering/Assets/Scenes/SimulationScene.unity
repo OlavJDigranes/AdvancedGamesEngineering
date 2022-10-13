@@ -295,7 +295,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -20}
+  m_LocalPosition: {x: 0, y: 80, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -510,4 +510,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   star: {fileID: 1378566511}
-  planet: {fileID: 783261928739982422, guid: a3a433e099c2f2049bd0a79c7686b7f2, type: 3}
+  planet: {fileID: 783261928739982422, guid: c1c7bbd4f98b45f49b016523ec1cc0ee, type: 3}

@@ -109,9 +109,9 @@ public class Star : MonoBehaviour
     void DetermineSizeAndPull(int m){
         //Directly set rigidbody mass. 
         //https://www.youtube.com/watch?v=kUXskc76ud8 <- make planets and moons. 
-        //https://www.youtube.com/watch?v=RvIsJCGLsSU 
+        //https://www.youtube.com/watch?v=RvIsJCGLsSU
         rb.GetComponent<Rigidbody>();
-        rb.mass = m; 
+        rb.mass = (m); 
         var scale = star.transform.localScale; 
         scale *= m; 
         star.transform.localScale = scale; 

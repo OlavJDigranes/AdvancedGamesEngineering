@@ -8,6 +8,10 @@ public class CameraMovement : MonoBehaviour
     private float moveSpeed = 0.05f;
     private float scrollSpeed = 5f;
 
+    void Start() {
+        transform.LookAt(Vector3.zero);     
+    }
+
     void Update () {
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) {
             transform.position += moveSpeed * new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));

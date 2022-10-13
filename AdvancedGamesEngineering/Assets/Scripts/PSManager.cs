@@ -5,7 +5,7 @@ using UnityEngine;
 public class PSManager : MonoBehaviour
 {
     //This will manage the behaviour of stars and planets in the simulation. 
-    readonly float G = 10.0f; 
+    readonly float G = 100.0f; 
     GameObject[] celestialBodies; 
     public GameObject star;
     public GameObject planet; 
@@ -32,6 +32,15 @@ public class PSManager : MonoBehaviour
     }
 
     void GravitationalPull(){
+        //Has to be calculated in relation to the sun. 
+        float m1 = MainMenuManager.starMass; 
+        for (int i = 1; i < celestialBodies.Length; i++){
+            float m2 = celestialBodies[i].GetComponent<Rigidbody>().mass; 
+            float r = Vector3.Distance(celestialBodies[0].transform.position, celestialBodies[i].transform.position); 
+            celestialBodies[i].GetComponent<Rigidbody>().AddForce((celestialBodies[0].transform.position - celestialBodies[i].transform.position).normalized * (G * (m1 * m2) / (r * r))); 
+        }
+
+        /*
         foreach(GameObject a in celestialBodies){
             foreach(GameObject b in celestialBodies){
                 if(!a.Equals(b)){
@@ -42,9 +51,20 @@ public class PSManager : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     void InitialOrbitVelocity(){
+        //Has to be calculated in relation to the sun. 
+        float m1 = MainMenuManager.starMass; 
+        for (int i = 1; i < celestialBodies.Length; i++){
+            float m2 = celestialBodies[i].GetComponent<Rigidbody>().mass; 
+            float r = Vector3.Distance(celestialBodies[0].transform.position, celestialBodies[i].transform.position); 
+            celestialBodies[i].transform.LookAt(celestialBodies[0].transform); 
+            celestialBodies[i].GetComponent<Rigidbody>().velocity += celestialBodies[i].transform.right * Mathf.Sqrt((G * m1) / r);  
+        }
+
+        /*
         foreach(GameObject a in celestialBodies){
             foreach(GameObject b in celestialBodies){
                 if(!a.Equals(b)){
@@ -55,6 +75,7 @@ public class PSManager : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     void CreatePlanets(){
@@ -66,7 +87,7 @@ public class PSManager : MonoBehaviour
             //int randInt = RandomNumberGenerator.GetInt32(0,10);
             p.mass = Random.Range(0, (float)MainMenuManager.starMass);
             Debug.Log(p.mass); 
-            p.position = new Vector3(i + MainMenuManager.starMass, 0, 0);
+            p.position = new Vector3(MainMenuManager.starMass * (i + 2), 0, 0);
             p.CalculateProperties(); 
             //celestialBodies[i] = p;
             planets[i] = p; 
