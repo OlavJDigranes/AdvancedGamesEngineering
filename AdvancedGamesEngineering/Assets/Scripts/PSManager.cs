@@ -9,12 +9,21 @@ public class PSManager : MonoBehaviour
     GameObject[] celestialBodies; 
     public GameObject star;
     public GameObject planet; 
+    Material rockyPlanetMaterial; 
+    Material gassyPlanetMaterial;
+    Color rockyPanet = new Color(0.74f, 0.2f, 0.2f, 0.5f);
+    Color gassyPanet = new Color(0.32f, 0.45f, 0.53f, 0.5f); 
     // Start is called before the first frame update
     void Start()
     {
         //celestialBodies = new GameObject[MainMenuManager.numOfPlanets + 1]; 
         //celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBodies"); 
         //celestialBodies[0] = star; 
+        rockyPlanetMaterial = new Material(Shader.Find("Standard"));
+        gassyPlanetMaterial = new Material(Shader.Find("Standard"));
+        rockyPlanetMaterial.SetColor("_Color", rockyPanet);
+        gassyPlanetMaterial.SetColor("_Color", gassyPanet);
+
         Random.InitState(7); 
         CreatePlanets();
         celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBody"); 
@@ -84,12 +93,18 @@ public class PSManager : MonoBehaviour
 
     void CreatePlanets(){
         //Random r = new Random(); 
-        //RandomNumberGenerator.Create();
+        //RandomNumberGenerator.Create(); 
+
         Planet[] planets = new Planet[MainMenuManager.numOfPlanets]; 
         for(int i = 0; i < MainMenuManager.numOfPlanets; i++){
             Planet p = new Planet();
             //int randInt = RandomNumberGenerator.GetInt32(0,10);
-            p.mass = Random.Range(0, (float)MainMenuManager.starMass);
+            if(i < (MainMenuManager.numOfPlanets/2)){
+                p.mass = Random.Range(0, (float)MainMenuManager.starMass-2.0f);
+            }
+            if(i >= (MainMenuManager.numOfPlanets/2)){
+                p.mass = Random.Range(0, (float)MainMenuManager.starMass);
+            }
             //Debug.Log(p.mass); 
             p.position = new Vector3(MainMenuManager.starMass * (i + 2), 0, 0);
             p.CalculateProperties(); 
@@ -105,8 +120,20 @@ public class PSManager : MonoBehaviour
             rbG.mass = p.mass; 
             g.transform.position = p.position; 
             g.transform.localScale = p.scale;
+            var planetRenderer = g.GetComponent<Renderer>();
+            if(planetNr <= (MainMenuManager.numOfPlanets/2)){
+                planetRenderer.material = rockyPlanetMaterial; 
+                //g.GetComponent<Renderer>().material.color = rockyPanet; 
+                //Debug.Log("rock");
+            }
+            if(planetNr > (MainMenuManager.numOfPlanets/2)){               
+                planetRenderer.material = gassyPlanetMaterial; 
+                //g.GetComponent<Renderer>().material.color = gassyPanet; 
+                //Debug.Log("gassy");
+            }
             //celestialBodies[planetNr] = g;
             Instantiate(g);
+            Debug.Log(g.transform.position); 
             planetNr++; 
         }
     }

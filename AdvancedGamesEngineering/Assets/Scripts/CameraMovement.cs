@@ -6,7 +6,7 @@ public class CameraMovement : MonoBehaviour
 {
     //https://dev.to/matthewodle/simple-3d-camera-movement-1lcj
     private float moveSpeed = 0.05f;
-    private float scrollSpeed = 5f;
+    private float scrollSpeed = 10.0f;
 
     void Start() {
         transform.LookAt(Vector3.zero);     
