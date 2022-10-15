@@ -48,7 +48,7 @@ public class Star : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Rotational speed based on size. 
+        
     }
 
     void DetermineColour(int a){

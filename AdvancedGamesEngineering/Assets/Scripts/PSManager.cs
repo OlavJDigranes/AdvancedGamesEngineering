@@ -24,6 +24,10 @@ public class PSManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Rotational speed based on size. 
+        foreach(GameObject x in celestialBodies){
+            x.transform.Rotate(new Vector3(0, -(float)x.GetComponent<Rigidbody>().mass * 10.0f, 0) * Time.deltaTime); 
+        }
         
     }
     
@@ -86,7 +90,7 @@ public class PSManager : MonoBehaviour
             Planet p = new Planet();
             //int randInt = RandomNumberGenerator.GetInt32(0,10);
             p.mass = Random.Range(0, (float)MainMenuManager.starMass);
-            Debug.Log(p.mass); 
+            //Debug.Log(p.mass); 
             p.position = new Vector3(MainMenuManager.starMass * (i + 2), 0, 0);
             p.CalculateProperties(); 
             //celestialBodies[i] = p;
