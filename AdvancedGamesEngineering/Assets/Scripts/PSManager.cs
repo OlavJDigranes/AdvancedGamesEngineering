@@ -178,7 +178,7 @@ public class PSManager : MonoBehaviour
                 p.mass = planetMass; 
                 planetMasses[i] = planetMass; 
             }
-            Debug.Log(p.mass); 
+            //Debug.Log(p.mass); 
             p.position = new Vector3((MainMenuManager.starMass * (i + 2.0f)) * 2.0f, 0, 0);
             p.CalculateProperties(); 
             //celestialBodies[i] = p;
@@ -234,7 +234,7 @@ public class PSManager : MonoBehaviour
                 g.GetComponent<Renderer>().sharedMaterial.color = Color.grey;
 
                 Instantiate(g); 
-                Debug.Log(i + 1); 
+                //Debug.Log(i + 1); 
                 planetsAndMoons.Add(new KeyValuePair<int, int>(i, listCounter));    
 
                 //moons[listCounter] = g;
