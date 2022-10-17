@@ -23,6 +23,9 @@ public class Star : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Ensure the star is at the point of origin. 
+        star.transform.position = new Vector3(0, 0, 0);
+
         //mass = mainMenuMngr.starMass;
         //luminocity = mainMenuMngr.starLuminocity;
         //age = mainMenuMngr.starAge;
@@ -31,7 +34,7 @@ public class Star : MonoBehaviour
         luminocity = MainMenuManager.starLuminocity;
         age = MainMenuManager.starAge;
 
-        //Debug.Log("Sim Loaded");
+        Debug.Log("Sim Loaded");
         //Debug.Log(mass);
         //Debug.Log(luminocity);
         //Debug.Log(age);
@@ -45,7 +48,7 @@ public class Star : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Rotational speed based on size. 
+        
     }
 
     void DetermineColour(int a){
@@ -106,9 +109,9 @@ public class Star : MonoBehaviour
     void DetermineSizeAndPull(int m){
         //Directly set rigidbody mass. 
         //https://www.youtube.com/watch?v=kUXskc76ud8 <- make planets and moons. 
-        //https://www.youtube.com/watch?v=RvIsJCGLsSU 
+        //https://www.youtube.com/watch?v=RvIsJCGLsSU
         rb.GetComponent<Rigidbody>();
-        rb.mass = m; 
+        rb.mass = (m); 
         var scale = star.transform.localScale; 
         scale *= m; 
         star.transform.localScale = scale; 
