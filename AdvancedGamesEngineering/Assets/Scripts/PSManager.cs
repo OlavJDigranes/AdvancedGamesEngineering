@@ -61,14 +61,16 @@ public class PSManager : MonoBehaviour
     void GravitationalPull(){
         //Has to be calculated in relation to the sun. 
         //var tDt = (Time.deltaTime); 
-        float tDt = 0.07f; 
-        float m1 = MainMenuManager.starMass; 
+        float tDt = 0.004f; 
+        float tDt2 = 0.0167f;
+        //float m1 = MainMenuManager.starMass; 
+        float m1 = celestialBodies[0].GetComponent<Rigidbody>().mass; 
         for (int i = 1; i < celestialBodies.Length; i++){
             float m2 = celestialBodies[i].GetComponent<Rigidbody>().mass; 
             //float m2 = planetMasses[i]; 
             float r = Vector3.Distance(celestialBodies[0].transform.position, celestialBodies[i].transform.position); 
-            celestialBodies[i].GetComponent<Rigidbody>().AddForce((celestialBodies[0].transform.position - celestialBodies[i].transform.position).normalized * (G * (m1 * m2) / (r * r)) * tDt); 
-            //celestialBodies[0].GetComponent<Rigidbody>().AddForce((celestialBodies[i].transform.position - celestialBodies[0].transform.position).normalized * (G * (m1 * m2) / (r * r)) * tDt); 
+            celestialBodies[i].GetComponent<Rigidbody>().AddForce((celestialBodies[0].transform.position - celestialBodies[i].transform.position).normalized * (G * (m1 * m2) / (r * r)) * (tDt)); 
+            //celestialBodies[0].GetComponent<Rigidbody>().AddForce((celestialBodies[i].transform.position - celestialBodies[0].transform.position).normalized * (G * (m1 * m2) / (r * r)) * (tDt * 4)); 
             //celestialBodies[i].GetComponent<Rigidbody>().AddForce((celestialBodies[0].transform.position - celestialBodies[i].transform.position).normalized * (G * (m1 * m2) / (r * r)));
 
             foreach (KeyValuePair<int, int> kvp in planetsAndMoons) {
@@ -78,8 +80,8 @@ public class PSManager : MonoBehaviour
                     float r2 = Vector3.Distance(tempMoon.transform.position, celestialBodies[i].transform.position);
                     //celestialBodies[i].GetComponent<Rigidbody>().AddForce((kvp.Value.transform.position - celestialBodies[i].transform.position).normalized * ((G / 2) * (m2 * m3) / (r2 * r2)));
                     
-                    tempMoon.GetComponent<Rigidbody>().AddForce((celestialBodies[i].transform.position - tempMoon.transform.position).normalized * (G * ((m2 * m3) / (r2 * r2))) * tDt); 
-                    celestialBodies[i].GetComponent<Rigidbody>().AddForce((tempMoon.transform.position - celestialBodies[i].transform.position).normalized * (G * ((m2 * m3) / (r2 * r2))) * tDt); 
+                    tempMoon.GetComponent<Rigidbody>().AddForce((celestialBodies[i].transform.position - tempMoon.transform.position).normalized * (G * ((m2 * m3) / (r2 * r2))) * tDt2); 
+                    celestialBodies[i].GetComponent<Rigidbody>().AddForce((tempMoon.transform.position - celestialBodies[i].transform.position).normalized * (G * ((m2 * m3) / (r2 * r2))) * tDt2); 
 
                     //tempMoon.GetComponent<Rigidbody>().AddForce((celestialBodies[i].transform.position - tempMoon.transform.position).normalized * (G * ((m2 * m3) / (r2 * r2)))); 
                     //celestialBodies[i].GetComponent<Rigidbody>().AddForce((tempMoon.transform.position - celestialBodies[i].transform.position).normalized * (G * ((m2 * m3) / (r2 * r2)))); 
@@ -163,19 +165,22 @@ public class PSManager : MonoBehaviour
     void GeneratePlanets(){
         //Random r = new Random(); 
         //RandomNumberGenerator.Create(); 
-
+        
+        //float localStarMass = celestialBodies[0].GetComponent<Rigidbody>().mass; 
         Planet[] planets = new Planet[MainMenuManager.numOfPlanets]; 
         planetMasses = new float[MainMenuManager.numOfPlanets]; 
         for(int i = 0; i < MainMenuManager.numOfPlanets; i++){
             Planet p = new Planet();
             //int randInt = RandomNumberGenerator.GetInt32(0,10);
             if(i < (MainMenuManager.numOfPlanets/2)){
-                float planetMass = Random.Range(1.0f, ((float)MainMenuManager.starMass * 0.5f) - 2.0f);
+                float planetMass = Random.Range(1.0f, (((float)MainMenuManager.starMass * 10.0f) * 0.09f) - 2.0f);
+                //float planetMass = Random.Range(1.0f, (localStarMass * 0.09f) - 2.0f);
                 p.mass = planetMass; 
                 planetMasses[i] = planetMass; 
             }
             if(i >= (MainMenuManager.numOfPlanets/2)){
-                float planetMass = Random.Range(1.0f, ((float)MainMenuManager.starMass) * 0.5f);
+                float planetMass = Random.Range(1.0f, (((float)MainMenuManager.starMass * 10.0f) * 0.09f));
+                //float planetMass = Random.Range(1.0f, (localStarMass * 0.09f));
                 p.mass = planetMass; 
                 planetMasses[i] = planetMass; 
             }

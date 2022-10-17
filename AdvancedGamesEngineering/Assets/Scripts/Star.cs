@@ -111,7 +111,7 @@ public class Star : MonoBehaviour
         //https://www.youtube.com/watch?v=kUXskc76ud8 <- make planets and moons. 
         //https://www.youtube.com/watch?v=RvIsJCGLsSU
         rb.GetComponent<Rigidbody>();
-        rb.mass = (m); 
+        rb.mass = (m * 10); 
         var scale = star.transform.localScale; 
         scale *= m; 
         star.transform.localScale = scale; 
