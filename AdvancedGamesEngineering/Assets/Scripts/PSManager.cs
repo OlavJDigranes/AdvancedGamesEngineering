@@ -170,12 +170,12 @@ public class PSManager : MonoBehaviour
             Planet p = new Planet();
             //int randInt = RandomNumberGenerator.GetInt32(0,10);
             if(i < (MainMenuManager.numOfPlanets/2)){
-                float planetMass = Random.Range(1.0f, ((float)MainMenuManager.starMass * 0.7f) - 2.0f);
+                float planetMass = Random.Range(1.0f, ((float)MainMenuManager.starMass * 0.5f) - 2.0f);
                 p.mass = planetMass; 
                 planetMasses[i] = planetMass; 
             }
             if(i >= (MainMenuManager.numOfPlanets/2)){
-                float planetMass = Random.Range(1.0f, ((float)MainMenuManager.starMass) * 0.7f);
+                float planetMass = Random.Range(1.0f, ((float)MainMenuManager.starMass) * 0.5f);
                 p.mass = planetMass; 
                 planetMasses[i] = planetMass; 
             }
