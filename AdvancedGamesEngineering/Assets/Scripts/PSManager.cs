@@ -106,7 +106,8 @@ public class PSManager : MonoBehaviour
                 p.mass = Random.Range(0, (float)MainMenuManager.starMass);
             }
             //Debug.Log(p.mass); 
-            p.position = new Vector3(MainMenuManager.starMass * (i + 2), 0, 0);
+            p.position = new Vector3((MainMenuManager.starMass * (i + 2.0f)) * 2.0f, 0, 0);
+            //p.position = new Vector3(MainMenuManager.starMass * (i + 2), 0, 0);
             p.CalculateProperties(); 
             //celestialBodies[i] = p;
             planets[i] = p; 
