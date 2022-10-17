@@ -219,7 +219,7 @@ public class PSManager : MonoBehaviour
                 Rigidbody rbM; 
                 rbM = g.GetComponent<Rigidbody>();
                 
-                float moonMass = Random.Range(0.1f, 0.3f);
+                float moonMass = Random.Range(0, planetMasses[i] * 0.12f);
                 rbM.mass = moonMass; 
                 m.mass = moonMass; 
 
