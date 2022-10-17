@@ -9,7 +9,7 @@ public class Moon
     public Vector3 position;
 
     public void CalculateProperties(){
-        scale *= mass;
+        scale *= (mass + 0.5f);
         //Debug.Log(mass);
         //Debug.Log(scale); 
     }

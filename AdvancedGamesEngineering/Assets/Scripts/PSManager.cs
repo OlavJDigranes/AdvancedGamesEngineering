@@ -5,8 +5,9 @@ using UnityEngine;
 public class PSManager : MonoBehaviour
 {
     //This will manage the behaviour of stars and planets in the simulation. 
-    readonly float G = 100.0f; 
-    readonly float G2 = 100.0f; 
+    readonly float G = 9.81f;
+    //readonly float G = 100.0f; 
+    //readonly float G2 = 100.0f; 
     GameObject[] celestialBodies; 
     GameObject[] moons; 
     float[] planetMasses; 
@@ -49,21 +50,25 @@ public class PSManager : MonoBehaviour
         foreach(GameObject m in moons){
             m.transform.Rotate(new Vector3(0, -(float)m.GetComponent<Rigidbody>().mass * 10.0f, 0) * Time.deltaTime); 
         }
+        GravitationalPull(); 
         
     }
     
     private void FixedUpdate() {
-        GravitationalPull(); 
+        //GravitationalPull(); 
     }
 
     void GravitationalPull(){
         //Has to be calculated in relation to the sun. 
+        //var tDt = (Time.deltaTime); 
+        float tDt = 0.0167f; 
         float m1 = MainMenuManager.starMass; 
         for (int i = 1; i < celestialBodies.Length; i++){
             float m2 = celestialBodies[i].GetComponent<Rigidbody>().mass; 
             //float m2 = planetMasses[i]; 
             float r = Vector3.Distance(celestialBodies[0].transform.position, celestialBodies[i].transform.position); 
-            celestialBodies[i].GetComponent<Rigidbody>().AddForce((celestialBodies[0].transform.position - celestialBodies[i].transform.position).normalized * (G * (m1 * m2) / (r * r))); 
+            celestialBodies[i].GetComponent<Rigidbody>().AddForce((celestialBodies[0].transform.position - celestialBodies[i].transform.position).normalized * (G * (m1 * m2) / (r * r)) * tDt); 
+            //celestialBodies[i].GetComponent<Rigidbody>().AddForce((celestialBodies[0].transform.position - celestialBodies[i].transform.position).normalized * (G * (m1 * m2) / (r * r)));
 
             foreach (KeyValuePair<int, int> kvp in planetsAndMoons) {
                 if((kvp.Key + 1) == i){
@@ -71,7 +76,12 @@ public class PSManager : MonoBehaviour
                     float m3 = tempMoon.GetComponent<Rigidbody>().mass;
                     float r2 = Vector3.Distance(tempMoon.transform.position, celestialBodies[i].transform.position);
                     //celestialBodies[i].GetComponent<Rigidbody>().AddForce((kvp.Value.transform.position - celestialBodies[i].transform.position).normalized * ((G / 2) * (m2 * m3) / (r2 * r2)));
-                    tempMoon.GetComponent<Rigidbody>().AddForce((celestialBodies[i].transform.position - tempMoon.transform.position).normalized * (G2 * ((m2 * m3) / (r2 * r2)))); 
+                    
+                    tempMoon.GetComponent<Rigidbody>().AddForce((celestialBodies[i].transform.position - tempMoon.transform.position).normalized * (G * ((m2 * m3) / (r2 * r2))) * tDt); 
+                    celestialBodies[i].GetComponent<Rigidbody>().AddForce((tempMoon.transform.position - celestialBodies[i].transform.position).normalized * (G * ((m2 * m3) / (r2 * r2))) * tDt); 
+
+                    //tempMoon.GetComponent<Rigidbody>().AddForce((celestialBodies[i].transform.position - tempMoon.transform.position).normalized * (G * ((m2 * m3) / (r2 * r2)))); 
+                    //celestialBodies[i].GetComponent<Rigidbody>().AddForce((tempMoon.transform.position - celestialBodies[i].transform.position).normalized * (G * ((m2 * m3) / (r2 * r2)))); 
                 }
             }
         }
@@ -118,7 +128,7 @@ public class PSManager : MonoBehaviour
                     float m3 = moonInstance.GetComponent<Rigidbody>().mass;
                     float r2 = Vector3.Distance(moonInstance.transform.position, celestialBodies[i].transform.position);
                     moonInstance.transform.LookAt(celestialBodies[i].transform);
-                    moonInstance.GetComponent<Rigidbody>().velocity += moonInstance.transform.right * Mathf.Sqrt((G2 * m2) / r2);
+                    moonInstance.GetComponent<Rigidbody>().velocity += moonInstance.transform.right * Mathf.Sqrt((G * m2) / r2);
                 }
             }
         }
@@ -209,7 +219,7 @@ public class PSManager : MonoBehaviour
                 Rigidbody rbM; 
                 rbM = g.GetComponent<Rigidbody>();
                 
-                float moonMass = Random.Range(0.5f, 1.0f);
+                float moonMass = Random.Range(0.1f, 0.3f);
                 rbM.mass = moonMass; 
                 m.mass = moonMass; 
 
