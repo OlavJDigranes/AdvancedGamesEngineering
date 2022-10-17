@@ -6,7 +6,7 @@ public class PSManager : MonoBehaviour
 {
     //This will manage the behaviour of stars and planets in the simulation. 
     readonly float G = 100.0f; 
-    readonly float G2 = 20.0f; 
+    readonly float G2 = 100.0f; 
     GameObject[] celestialBodies; 
     GameObject[] moons; 
     float[] planetMasses; 
@@ -118,7 +118,7 @@ public class PSManager : MonoBehaviour
                     float m3 = moonInstance.GetComponent<Rigidbody>().mass;
                     float r2 = Vector3.Distance(moonInstance.transform.position, celestialBodies[i].transform.position);
                     moonInstance.transform.LookAt(celestialBodies[i].transform);
-                    moonInstance.GetComponent<Rigidbody>().velocity += moonInstance.transform.right * Mathf.Sqrt((G2 * m3) / r2);
+                    moonInstance.GetComponent<Rigidbody>().velocity += moonInstance.transform.right * Mathf.Sqrt((G2 * m2) / r2);
                 }
             }
         }
