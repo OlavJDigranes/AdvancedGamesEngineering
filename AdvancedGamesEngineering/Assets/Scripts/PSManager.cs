@@ -71,7 +71,7 @@ public class PSManager : MonoBehaviour
                     float m3 = tempMoon.GetComponent<Rigidbody>().mass;
                     float r2 = Vector3.Distance(tempMoon.transform.position, celestialBodies[i].transform.position);
                     //celestialBodies[i].GetComponent<Rigidbody>().AddForce((kvp.Value.transform.position - celestialBodies[i].transform.position).normalized * ((G / 2) * (m2 * m3) / (r2 * r2)));
-                    tempMoon.GetComponent<Rigidbody>().AddForce((celestialBodies[i].transform.position - tempMoon.transform.position).normalized * (G2 * (m2 * m3) / (r2 * r2))); 
+                    tempMoon.GetComponent<Rigidbody>().AddForce((celestialBodies[i].transform.position - tempMoon.transform.position).normalized * (G2 * ((m2 * m3) / (r2 * r2)))); 
                 }
             }
         }
