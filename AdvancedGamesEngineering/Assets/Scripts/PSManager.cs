@@ -61,13 +61,14 @@ public class PSManager : MonoBehaviour
     void GravitationalPull(){
         //Has to be calculated in relation to the sun. 
         //var tDt = (Time.deltaTime); 
-        float tDt = 0.0167f; 
+        float tDt = 0.07f; 
         float m1 = MainMenuManager.starMass; 
         for (int i = 1; i < celestialBodies.Length; i++){
             float m2 = celestialBodies[i].GetComponent<Rigidbody>().mass; 
             //float m2 = planetMasses[i]; 
             float r = Vector3.Distance(celestialBodies[0].transform.position, celestialBodies[i].transform.position); 
             celestialBodies[i].GetComponent<Rigidbody>().AddForce((celestialBodies[0].transform.position - celestialBodies[i].transform.position).normalized * (G * (m1 * m2) / (r * r)) * tDt); 
+            //celestialBodies[0].GetComponent<Rigidbody>().AddForce((celestialBodies[i].transform.position - celestialBodies[0].transform.position).normalized * (G * (m1 * m2) / (r * r)) * tDt); 
             //celestialBodies[i].GetComponent<Rigidbody>().AddForce((celestialBodies[0].transform.position - celestialBodies[i].transform.position).normalized * (G * (m1 * m2) / (r * r)));
 
             foreach (KeyValuePair<int, int> kvp in planetsAndMoons) {
@@ -169,12 +170,12 @@ public class PSManager : MonoBehaviour
             Planet p = new Planet();
             //int randInt = RandomNumberGenerator.GetInt32(0,10);
             if(i < (MainMenuManager.numOfPlanets/2)){
-                float planetMass = Random.Range(1.0f, (float)MainMenuManager.starMass-2.0f);
+                float planetMass = Random.Range(1.0f, ((float)MainMenuManager.starMass * 0.7f) - 2.0f);
                 p.mass = planetMass; 
                 planetMasses[i] = planetMass; 
             }
             if(i >= (MainMenuManager.numOfPlanets/2)){
-                float planetMass = Random.Range(1.0f, (float)MainMenuManager.starMass);
+                float planetMass = Random.Range(1.0f, ((float)MainMenuManager.starMass) * 0.7f);
                 p.mass = planetMass; 
                 planetMasses[i] = planetMass; 
             }
