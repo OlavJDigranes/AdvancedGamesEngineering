@@ -511,3 +511,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   star: {fileID: 1378566511}
   planet: {fileID: 783261928739982422, guid: c1c7bbd4f98b45f49b016523ec1cc0ee, type: 3}
+  moon: {fileID: 3897115612952843644, guid: 5a0226f4d631b4b4e98639d2084dfcb2, type: 3}
