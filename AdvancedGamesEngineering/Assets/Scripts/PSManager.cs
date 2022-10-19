@@ -88,19 +88,30 @@ public class PSManager : MonoBehaviour
             //calculate gravitational pull vector
             double gp = (G * (m1 * m2) / (r * r));
             //Debug.Log(gp); 
-            double3 gravitationalPullVector = ((convPlanetPos - starPosition) * gp);
+
+            Vector3 dist = (celestialBodies[i].transform.position - celestialBodies[0].transform.position).normalized;
+            double3 normalizedDistance;
+            normalizedDistance.x = (double)dist.x;
+            normalizedDistance.y = (double)dist.y;
+            normalizedDistance.z = (double)dist.z;
+
+            double3 gravitationalPullVector = (normalizedDistance * gp);
             //Vector3 gravitationalPullVector = Multiply((celestialBodies[i].transform.position - celestialBodies[0].transform.position).normalized, gp);
             //Debug.Log(gravitationalPullVector + ", " + G + ", " + m1 + ", " + m2 + ", " + r + ", " + (celestialBodies[i].transform.position - celestialBodies[0].transform.position).normalized);
+            
             //Symplectic Euler
             double3 planetPos = convPlanetPos;
             double3 planetVel;
             planetVel.x = (double)celestialBodies[i].GetComponent<Rigidbody>().velocity.x;
             planetVel.y = (double)celestialBodies[i].GetComponent<Rigidbody>().velocity.y;
             planetVel.z = (double)celestialBodies[i].GetComponent<Rigidbody>().velocity.z; 
+
             double3 accel = gravitationalPullVector/m2;
             planetVel = planetVel + (tDt * accel);
+
             //celestialBodies[i].GetComponent<Rigidbody>().velocity += planetVel;
             double3 newPlanetPos = planetPos + (tDt * planetVel);
+
             Vector3 convertedNewPlanetPos;
             convertedNewPlanetPos.x = (float)newPlanetPos.x;
             convertedNewPlanetPos.y = (float)newPlanetPos.y;
@@ -156,6 +167,9 @@ public class PSManager : MonoBehaviour
         //Has to be calculated in relation to the sun. 
         double m1 = MainMenuManager.starMass; 
 
+        double3 yAxis = new double3(0, 1, 0);
+        double3 zAxis = new double3(0, 0, 1);
+
         double3 starPosition;
         starPosition.x = (double)celestialBodies[0].transform.position.x;
         starPosition.y = (double)celestialBodies[0].transform.position.y;
@@ -165,12 +179,26 @@ public class PSManager : MonoBehaviour
             double m2 = celestialBodies[i].GetComponent<Rigidbody>().mass; 
             //float m2 = planetMasses[i]; 
             double r = Vector3.Distance(celestialBodies[0].transform.position, celestialBodies[i].transform.position); 
+
             celestialBodies[i].transform.LookAt(celestialBodies[0].transform); 
 
-            double3 dir;
-            dir.x = (double)celestialBodies[i].transform.right.x;
-            dir.y = (double)celestialBodies[i].transform.right.y;
-            dir.z = (double)celestialBodies[i].transform.right.z;
+            double3 convPlanetPos;
+            convPlanetPos.x = (double)celestialBodies[i].transform.position.x;
+            convPlanetPos.y = (double)celestialBodies[i].transform.position.y;
+            convPlanetPos.z = (double)celestialBodies[i].transform.position.z;
+
+            Vector3 dist = (celestialBodies[i].transform.position - celestialBodies[0].transform.position).normalized;
+            double3 normalizedDistance;
+            normalizedDistance.x = (double)dist.x;
+            normalizedDistance.y = (double)dist.y;
+            normalizedDistance.z = (double)dist.z;
+
+            //double3 dir = math.cross((starPosition - convPlanetPos), yAxis);
+            double3 dir = (normalizedDistance + zAxis);
+            //double3 dir; 
+            //dir.x = (double)celestialBodies[i].transform.right.x;
+            //dir.y = (double)celestialBodies[i].transform.right.y;
+            //dir.z = (double)celestialBodies[i].transform.right.z;
 
             Debug.Log(dir);
 
@@ -183,7 +211,7 @@ public class PSManager : MonoBehaviour
             newVel.z = (float)vel.z;
 
             //celestialBodies[i].GetComponent<Rigidbody>().velocity += celestialBodies[i].transform.right * Mathf.Sqrt((G * m2) / r); 
-            celestialBodies[i].GetComponent<Rigidbody>().velocity +=newVel;
+            celestialBodies[i].GetComponent<Rigidbody>().velocity += newVel;
 
             foreach(KeyValuePair<int, int> kvp in planetsAndMoons){
                 if((kvp.Key + 1) == i){
@@ -194,7 +222,7 @@ public class PSManager : MonoBehaviour
                     //moonInstance.GetComponent<Rigidbody>().velocity += moonInstance.transform.right * Mathf.Sqrt((G * m3) / r2);
                 }
             }
-            Debug.Log(celestialBodies[i].GetComponent<Rigidbody>().velocity);
+            //Debug.Log(celestialBodies[i].GetComponent<Rigidbody>().velocity);
         }
 
         /*
@@ -234,13 +262,13 @@ public class PSManager : MonoBehaviour
             Planet p = new Planet();
             //int randInt = RandomNumberGenerator.GetInt32(0,10);
             if(i < (MainMenuManager.numOfPlanets/2)){
-                float planetMass = UnityEngine.Random.Range(1.0f, (((float)MainMenuManager.starMass * 1) * 0.9f) - 2.0f);
+                float planetMass = UnityEngine.Random.Range(1.0f, (((float)MainMenuManager.starMass * 1) * 0.09f) - 2.0f);
                 //float planetMass = Random.Range(1.0f, (localStarMass * 0.09f) - 2.0f);
                 p.mass = planetMass; 
                 planetMasses[i] = planetMass; 
             }
             if(i >= (MainMenuManager.numOfPlanets/2)){
-                float planetMass = UnityEngine.Random.Range(1.0f, (((float)MainMenuManager.starMass * 1) * 0.9f));
+                float planetMass = UnityEngine.Random.Range(1.0f, (((float)MainMenuManager.starMass * 1) * 0.09f));
                 //float planetMass = Random.Range(1.0f, (localStarMass * 0.09f));
                 p.mass = planetMass; 
                 planetMasses[i] = planetMass; 

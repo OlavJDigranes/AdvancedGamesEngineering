@@ -9,7 +9,8 @@ public class CameraMovement : MonoBehaviour
     private float scrollSpeed = 10.0f;
 
     void Start() {
-        transform.LookAt(Vector3.zero);     
+        transform.LookAt(Vector3.zero);
+        Camera.main.transform.position = new Vector3 (0.0f, MainMenuManager.starMass * 2, 0.0f);     
     }
 
     void Update () {
