@@ -10,7 +10,7 @@ public class CameraMovement : MonoBehaviour
 
     void Start() {
         transform.LookAt(Vector3.zero);
-        Camera.main.transform.position = new Vector3 (0.0f, MainMenuManager.starMass * 2, 0.0f);     
+        Camera.main.transform.position = new Vector3 (0.0f, MainMenuManager.starMass * 5, 0.0f);     
     }
 
     void Update () {
