@@ -44,30 +44,17 @@ public class TestPS : MonoBehaviour
         //double tDt = 1000; 
 
         Vector3 starPosition = star.transform.position; 
-        //starPosition.x = (double)star.transform.position.x;
-        //starPosition.y = (double)star.transform.position.y;
-        //starPosition.z = (double)star.transform.position.z;
 
         float m1 = star.GetComponent<Rigidbody>().mass * S; 
         float m2 = planet.GetComponent<Rigidbody>().mass * S; 
-
-        //Vector3 planetPosition = planet.transform.position * S; 
-        //convertedPlanetPosition.x = (double)planet.transform.position.x;
-        //convertedPlanetPosition.y = (double)planet.transform.position.y;
-        //convertedPlanetPosition.z = (double)planet.transform.position.z;
 
         //Distance
         float r = Vector3.Distance(star.transform.position, planet.transform.position) * S; 
 
         //Gravitational Pull
-        float gp = (G * (m1 * m2)/(r * r)); 
+        float gp = (G * (m1 * m2)/(r * r) * S); 
 
         Vector3 dist = (star.transform.position - planet.transform.position).normalized * S; 
-        
-        //double3 normDist; 
-        //normDist.x = (double)dist.x;
-        //normDist.y = (double)dist.y;
-        //normDist.z = (double)dist.z;
 
         Vector3 gravPullVec = dist * gp; 
 
@@ -76,19 +63,11 @@ public class TestPS : MonoBehaviour
 
         Vector3 planetVel = planet.GetComponent<Rigidbody>().velocity; 
         
-        //planetVel.x = (double)planet.GetComponent<Rigidbody>().velocity.x;
-        //planetVel.y = (double)planet.GetComponent<Rigidbody>().velocity.y;
-        //planetVel.z = (double)planet.GetComponent<Rigidbody>().velocity.z;
 
         Vector3 accel = gravPullVec/m2; 
         planetVel = planetVel + (tDt * accel); 
 
         Vector3 newPlanetPos = planetPos + (tDt * planetVel); 
-
-        //Vector3 convertedNewPlanetPosition;
-        //convertedNewPlanetPosition.x = (float)newPlanetPos.x;
-        //convertedNewPlanetPosition.y = (float)newPlanetPos.y;
-        //convertedNewPlanetPosition.z = (float)newPlanetPos.z;
 
         planet.transform.position = newPlanetPos; 
     }
