@@ -133,6 +133,8 @@ public class Star : MonoBehaviour
         colours[10] = new Color(0.0f, 0.2f, 0.8f, 1.0f);
         colours[11] = Color.blue; 
     }
+
+    
 }
 
 /*NOTES:
