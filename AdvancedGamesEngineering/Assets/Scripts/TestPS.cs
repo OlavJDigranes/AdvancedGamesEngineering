@@ -23,6 +23,7 @@ public class TestPS : MonoBehaviour
         for(int i = 0; i < celestialBodies.Length; i++){
             Debug.Log(celestialBodies[i].GetComponent<Rigidbody>().mass); 
         }
+        SetStarColour(); 
         //InitialOrbitalVelocity2(); 
     }
 
@@ -146,5 +147,11 @@ public class TestPS : MonoBehaviour
                 }
             }
         }
+    }
+
+    void SetStarColour(){
+        var renderer = star.GetComponent<Renderer>();
+        renderer.material.SetColor("_PropertyColour", Color.red);
+        renderer.material.SetColor("_PropertyColour2", Color.blue);
     }
 }
