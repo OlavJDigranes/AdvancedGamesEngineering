@@ -8,7 +8,7 @@ public class Planet{
     public Vector3 position;
 
     public void CalculateProperties(){
-        scale *= mass;
+        scale *= (mass * 2);
         //Debug.Log(mass);
         //Debug.Log(scale); 
     }
