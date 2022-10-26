@@ -5,8 +5,8 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     //https://dev.to/matthewodle/simple-3d-camera-movement-1lcj
-    private float moveSpeed = 0.1f;
-    private float scrollSpeed = 20.0f;
+    private float moveSpeed = 0.075f;
+    private float scrollSpeed = 15.0f;
 
     void Start() {
         transform.LookAt(Vector3.zero);

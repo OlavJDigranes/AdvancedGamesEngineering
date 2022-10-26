@@ -89,8 +89,8 @@ public class Star : MonoBehaviour
         */
 
         //Color starColour = new Color(r, g, b, 1.0f);
-        sphereRenderer.material.SetColor("_Color", colours[tempAge - 1]);
-        sphereRenderer.material.SetColor("_EmissionColor", colours[tempAge - 1]);
+        sphereRenderer.material.SetColor("_DetailColor", colours[tempAge - 1]);
+        sphereRenderer.material.SetColor("_StarColor", colours[tempAge - 1]);
         
     }
 
@@ -99,11 +99,11 @@ public class Star : MonoBehaviour
         float alpha = (float)l/10.0f;
         var sphereRenderer = star.GetComponent<Renderer>(); 
         Color tempColour; 
-        tempColour = sphereRenderer.material.GetColor("_EmissionColor"); 
+        tempColour = sphereRenderer.material.GetColor("_StarColor"); 
         tempColour.a = alpha; 
         //Debug.Log(tempColour); 
-        sphereRenderer.material.SetColor("_EmissionColor", tempColour); 
-        Debug.Log(tempColour = sphereRenderer.material.GetColor("_EmissionColor")); 
+        sphereRenderer.material.SetColor("_StarColor", tempColour); 
+        Debug.Log(tempColour = sphereRenderer.material.GetColor("_StarColor")); 
     }
 
     void DetermineSizeAndPull(int m){

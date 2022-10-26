@@ -8,12 +8,16 @@ public class PSManager : MonoBehaviour
     //readonly float G = 100.0f; 
     readonly float G = 6.670e-11f;
     //readonly float S = 1.0f; 
-    readonly float S = 1.0e+15f; //Scale 
+    readonly float S = 1.0e+12f; //Scale 
     GameObject[] celestialBodies; 
     public GameObject star;
     public GameObject planet; 
-    Material rockyPlanetMaterial; 
-    Material gassyPlanetMaterial;
+    public Material rockyPlanetMaterial; 
+    public Material gassyPlanetMaterial;
+    public Shader pgg; 
+    public Shader pgr; 
+    //Material rockyPlanetMaterial; 
+    //Material gassyPlanetMaterial; 
     Color rockyPanet = new Color(0.74f, 0.2f, 0.2f, 0.5f);
     Color gassyPanet = new Color(0.32f, 0.45f, 0.53f, 0.5f); 
 
@@ -27,10 +31,10 @@ public class PSManager : MonoBehaviour
         //celestialBodies = new GameObject[MainMenuManager.numOfPlanets + 1]; 
         //celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBodies"); 
         //celestialBodies[0] = star; 
-        rockyPlanetMaterial = new Material(Shader.Find("Standard"));
-        gassyPlanetMaterial = new Material(Shader.Find("Standard"));
-        rockyPlanetMaterial.SetColor("_Color", rockyPanet);
-        gassyPlanetMaterial.SetColor("_Color", gassyPanet);
+        //rockyPlanetMaterial = new Material(Shader.Find("Shader Graphs/ProcGenRocky"));
+        //gassyPlanetMaterial = new Material(Shader.Find("Shader Graphs/ProcGenGassy"));
+        //rockyPlanetMaterial.SetColor("_Color", rockyPanet);
+        //gassyPlanetMaterial.SetColor("_Color", gassyPanet);
 
         Random.InitState(7); 
         GeneratePlanets();
@@ -118,8 +122,9 @@ public class PSManager : MonoBehaviour
 
         int planetNr = 1;
         foreach (Planet p in planets){
-            GameObject g = planet; 
+            GameObject g = planet;  
             Rigidbody rbG; 
+            //Material mat;  
 
             //Generate values
             rbG = g.GetComponent<Rigidbody>();
@@ -130,62 +135,29 @@ public class PSManager : MonoBehaviour
             
             //Assign correct material
             if(planetNr <= (MainMenuManager.numOfPlanets/2)){
-                planetRenderer.material = rockyPlanetMaterial; 
+                //Material mat = new Material(rockyPlanetMaterial.shader); 
+                Material mat = new Material(pgr); 
+                mat.SetColor("_Color", rockyPanet);
+                float rand = Random.Range(1, 10); 
+                mat.SetFloat("_Scale", rand); 
+                planetRenderer.material = mat;
+                Debug.Log(rand); 
+                
             }
-            if(planetNr > (MainMenuManager.numOfPlanets/2)){               
-                planetRenderer.material = gassyPlanetMaterial; 
+
+            if(planetNr > (MainMenuManager.numOfPlanets/2)){   
+                Material mat = new Material(pgg); 
+                mat.SetColor("_Color", gassyPanet);
+                float rand = Random.Range(1, 3); 
+                mat.SetFloat("_CellDensity", rand);          
+                planetRenderer.material = mat; 
+                Debug.Log(rand); 
+                 
             }
             //celestialBodies[planetNr] = g;
             Instantiate(g);
             planetNr++; 
         }
     }
-
-    void CreatePlanets(){
-        //Random r = new Random(); 
-        //RandomNumberGenerator.Create(); 
-
-        Planet[] planets = new Planet[MainMenuManager.numOfPlanets]; 
-        for(int i = 0; i < MainMenuManager.numOfPlanets; i++){
-            Planet p = new Planet();
-            //int randInt = RandomNumberGenerator.GetInt32(0,10);
-            if(i < (MainMenuManager.numOfPlanets/2)){
-                p.mass = Random.Range(0, (float)MainMenuManager.starMass-2.0f);
-            }
-            if(i >= (MainMenuManager.numOfPlanets/2)){
-                p.mass = Random.Range(0, (float)MainMenuManager.starMass);
-            }
-            //Debug.Log(p.mass); 
-            p.position = new Vector3(MainMenuManager.starMass * (i + 2), 0, 0);
-            p.CalculateProperties(); 
-            //celestialBodies[i] = p;
-            planets[i] = p; 
-        }
-
-        int planetNr = 1;
-        foreach (Planet p in planets){
-            GameObject g = planet; 
-            Rigidbody rbG; 
-            rbG = g.GetComponent<Rigidbody>();
-            rbG.mass = p.mass; 
-            g.transform.position = p.position; 
-            g.transform.localScale = p.scale;
-            var planetRenderer = g.GetComponent<Renderer>();
-            if(planetNr <= (MainMenuManager.numOfPlanets/2)){
-                planetRenderer.material = rockyPlanetMaterial; 
-                //g.GetComponent<Renderer>().material.color = rockyPanet; 
-                //Debug.Log("rock");
-            }
-            if(planetNr > (MainMenuManager.numOfPlanets/2)){               
-                planetRenderer.material = gassyPlanetMaterial; 
-                //g.GetComponent<Renderer>().material.color = gassyPanet; 
-                //Debug.Log("gassy");
-            }
-            //celestialBodies[planetNr] = g;
-            Instantiate(g);
-            planetNr++; 
-        }
-    }
-
     
 }
