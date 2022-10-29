@@ -10,8 +10,13 @@ public class PSManager : MonoBehaviour
     //readonly float S = 1.0f; 
     readonly float S = 1.0e+12f; //Scale 
     GameObject[] celestialBodies; 
+    GameObject[] moons; 
+    //Moon[] moons2; 
+    List<Moon> moons2 = new List<Moon>();  
+    Planet[] planets = new Planet[MainMenuManager.numOfPlanets]; 
     public GameObject star;
     public GameObject planet; 
+    public GameObject moon; 
     public Material rockyPlanetMaterial; 
     public Material gassyPlanetMaterial;
     public Shader pgg; 
@@ -25,6 +30,7 @@ public class PSManager : MonoBehaviour
     public int sizeZ = 50;
     public float tileSize = 1.0f;
     public int tileResolution = 8; 
+    int moonCounter; 
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +44,9 @@ public class PSManager : MonoBehaviour
 
         Random.InitState(7); 
         GeneratePlanets();
+        //moons2 = new Moon[moonCounter]; 
         celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBody"); 
+        moons = GameObject.FindGameObjectsWithTag("Moon"); 
         InitialOrbitVelocity();
     }
 
@@ -49,11 +57,14 @@ public class PSManager : MonoBehaviour
         foreach(GameObject x in celestialBodies){
             x.transform.Rotate(new Vector3(0, -(float)x.GetComponent<Rigidbody>().mass * 10.0f, 0) * Time.deltaTime); 
         }
-        
+        foreach(GameObject m in moons){
+            m.transform.Rotate(new Vector3(0, -(float)m.GetComponent<Rigidbody>().mass * 10.0f, 0) * Time.deltaTime); 
+        }
     }
     
     private void FixedUpdate() {
         GravitationalPull(); 
+        MoonGravPull(); 
     }
 
     void GravitationalPull(){
@@ -79,6 +90,27 @@ public class PSManager : MonoBehaviour
         */
     }
 
+    void MoonGravPull(){
+        for(int i = 0; i < moonCounter; i++){
+            float m1 = celestialBodies[moons2[i].planetID].GetComponent<Rigidbody>().mass;
+            float m2 = moons[i].GetComponent<Rigidbody>().mass; 
+            float r = Vector3.Distance(celestialBodies[moons2[i].planetID].transform.position, moons[i].transform.position); 
+
+            
+            Vector3 force = (celestialBodies[moons2[i].planetID].transform.position - moons[i].transform.position).normalized * ((G * S) * (m1 * m2) / (r * r)); 
+            Vector3 force2 = -(moons[i].transform.position - celestialBodies[moons2[i].planetID].transform.position).normalized * ((G * S) * (m1 * m2) / (r * r)); 
+            Vector3 accel = (force + force2) / m2; 
+            Vector3 vel = moons[i].GetComponent<Rigidbody>().velocity + (Time.deltaTime * accel);
+            Vector3 pos = moons[i].transform.position + (Time.deltaTime * vel); 
+            moons[i].transform.position = pos; 
+            moons[i].GetComponent<Rigidbody>().velocity = vel; 
+
+            //Debug.Log("ID: " + (i + 1) + "\nDistance: " + r + "\nForce: " + force + "\nAccel: " + accel + "\nVel:   " + vel + "\nPos:   " + pos); 
+            
+            //moons[i].GetComponent<Rigidbody>().AddForce((celestialBodies[moons2[i].planetID].transform.position - moons[i].transform.position).normalized * ((G * S) * (m1 * m2) / (r * r))); 
+        }
+    }
+
     void InitialOrbitVelocity(){
         //Has to be calculated in relation to the sun. 
         float m1 = MainMenuManager.starMass; 
@@ -87,6 +119,17 @@ public class PSManager : MonoBehaviour
             float r = Vector3.Distance(celestialBodies[0].transform.position, celestialBodies[i].transform.position); 
             celestialBodies[i].transform.LookAt(celestialBodies[0].transform); 
             celestialBodies[i].GetComponent<Rigidbody>().velocity += celestialBodies[i].transform.right * Mathf.Sqrt(((G * S) * m1) / r);  
+        }
+
+
+        for(int j = 0; j < moons.Length; j++){
+            //float m3 = celestialBodies[moons2[j].planetID].GetComponent<Rigidbody>().mass; 
+            float m3 = planets[moons2[j].planetID-1].mass;  
+            float m4 = moons[j].GetComponent<Rigidbody>().mass; 
+            float r2 = Vector3.Distance(celestialBodies[moons2[j].planetID].transform.position, moons[j].transform.position); 
+
+            moons[j].transform.LookAt(celestialBodies[moons2[j].planetID].transform); 
+            moons[j].GetComponent<Rigidbody>().velocity += moons[j].transform.right * Mathf.Sqrt(((G * S) * m3) / r2); 
         }
         /*
         foreach(GameObject a in celestialBodies){
@@ -103,7 +146,7 @@ public class PSManager : MonoBehaviour
     }
 
     void GeneratePlanets(){        
-        Planet[] planets = new Planet[MainMenuManager.numOfPlanets]; 
+        //Planet[] planets = new Planet[MainMenuManager.numOfPlanets]; 
         for(int i = 0; i < MainMenuManager.numOfPlanets; i++){
             Planet p = new Planet();
             if(i < (MainMenuManager.numOfPlanets/2)){
@@ -141,7 +184,6 @@ public class PSManager : MonoBehaviour
                 float rand = Random.Range(1, 10); 
                 mat.SetFloat("_Scale", rand); 
                 planetRenderer.material = mat;
-                Debug.Log(rand); 
                 
             }
 
@@ -151,13 +193,40 @@ public class PSManager : MonoBehaviour
                 float rand = Random.Range(1, 3); 
                 mat.SetFloat("_CellDensity", rand);          
                 planetRenderer.material = mat; 
-                Debug.Log(rand); 
                  
             }
             //celestialBodies[planetNr] = g;
             Instantiate(g);
+
+            if(rbG.mass > 2.0f){
+                GenerateMoon(p.mass, p.position, planetNr, p.scale); 
+            }
+
             planetNr++; 
         }
+    }
+
+    void GenerateMoon(float planetMass, Vector3 planetPosition, int planetID, Vector3 planetScale){
+        Moon m = new Moon(); 
+        m.mass = planetMass * 0.27f;
+        m.planetID = planetID;  
+        m.position = new Vector3(planetPosition.x, planetPosition.y, planetPosition.z + planetScale.z); 
+        m.CalculateProperties(); 
+
+        moons2.Add(m); 
+
+        GameObject gm = moon; 
+        Rigidbody rbM; 
+
+        rbM = gm.GetComponent<Rigidbody>(); 
+        rbM.mass = m.mass; 
+
+        gm.transform.position = m.position; 
+        gm.transform.localScale = m.scale; 
+        var moonRenderer = gm.GetComponent<Renderer>(); 
+        moonRenderer.sharedMaterial.SetColor("_Color", Color.grey); 
+        Instantiate(gm);
+        moonCounter++;  
     }
     
 }

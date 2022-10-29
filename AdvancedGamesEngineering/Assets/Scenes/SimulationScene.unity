@@ -511,6 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   star: {fileID: 1378566511}
   planet: {fileID: 783261928739982422, guid: c1c7bbd4f98b45f49b016523ec1cc0ee, type: 3}
+  moon: {fileID: 1363588573039599007, guid: c2b2f4ffd3320a84c960bfc79f440b6b, type: 3}
   rockyPlanetMaterial: {fileID: 2100000, guid: 26975ba42c8921247b8285a5e895bc7a, type: 2}
   gassyPlanetMaterial: {fileID: 2100000, guid: 9130ecd9f61ec0e439bef1cf66de27ed, type: 2}
   pgg: {fileID: -6465566751694194690, guid: b015eee52bb9ff6498ce84890568b2b7, type: 3}
