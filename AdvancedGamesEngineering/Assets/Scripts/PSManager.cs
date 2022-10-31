@@ -5,9 +5,9 @@ using UnityEngine;
 public class PSManager : MonoBehaviour
 {
     //This will manage the behaviour of stars and planets in the simulation. 
-    //readonly float G = 100.0f; 
+
+    //Variables
     readonly float G = 6.670e-11f;
-    //readonly float S = 1.0f; 
     readonly float S = 1.0e+15f; //Scale 
     GameObject[] celestialBodies; 
     public GameObject star;
@@ -15,37 +15,28 @@ public class PSManager : MonoBehaviour
     public Material rockyPlanetMaterial; 
     public Material gassyPlanetMaterial;
     public Shader pgg; 
-    public Shader pgr; 
-    //Material rockyPlanetMaterial; 
-    //Material gassyPlanetMaterial; 
+    public Shader pgr;  
     Color rockyPanet = new Color(0.74f, 0.2f, 0.2f, 0.5f);
-    Color gassyPanet = new Color(0.32f, 0.45f, 0.53f, 0.5f); 
+    Color gassyPanet = new Color(0.32f, 0.45f, 0.53f, 0.5f);  
 
-    public int sizeX = 100;
-    public int sizeZ = 50;
-    public float tileSize = 1.0f;
-    public int tileResolution = 8; 
     // Start is called before the first frame update
     void Start()
     {
-        //celestialBodies = new GameObject[MainMenuManager.numOfPlanets + 1]; 
-        //celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBodies"); 
-        //celestialBodies[0] = star; 
-        //rockyPlanetMaterial = new Material(Shader.Find("Shader Graphs/ProcGenRocky"));
-        //gassyPlanetMaterial = new Material(Shader.Find("Shader Graphs/ProcGenGassy"));
-        //rockyPlanetMaterial.SetColor("_Color", rockyPanet);
-        //gassyPlanetMaterial.SetColor("_Color", gassyPanet);
+        //Seed randomisation
+        Random.InitState(7);
 
-        Random.InitState(7); 
+        //Generate planets and fill celestial bodies array. Note: Star will always be at index 0 
         GeneratePlanets();
         celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBody"); 
+
+        //Calculate initial orbital velocity
         InitialOrbitVelocity();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Rotational speed based on size. 
+        //Rotational speed based on size. Simple implementation for demonstration purposes
         foreach(GameObject x in celestialBodies){
             x.transform.Rotate(new Vector3(0, -(float)x.GetComponent<Rigidbody>().mass * 10.0f, 0) * Time.deltaTime); 
         }
@@ -53,10 +44,13 @@ public class PSManager : MonoBehaviour
     }
     
     private void FixedUpdate() {
+        //calculate gravitational pull
         GravitationalPull(); 
     }
 
     void GravitationalPull(){
+        //Calculate gravitational pull using Newton's law of universil gravitation:
+        //  F = G * ((m1 * m2)/r^2)
         //Has to be calculated in relation to the sun. 
         float m1 = MainMenuManager.starMass; 
         for (int i = 1; i < celestialBodies.Length; i++){
@@ -64,22 +58,10 @@ public class PSManager : MonoBehaviour
             float r = Vector3.Distance(celestialBodies[0].transform.position, celestialBodies[i].transform.position); 
             celestialBodies[i].GetComponent<Rigidbody>().AddForce((celestialBodies[0].transform.position - celestialBodies[i].transform.position).normalized * ((G * S) * (m1 * m2) / (r * r))); 
         }
-
-        /*
-        foreach(GameObject a in celestialBodies){
-            foreach(GameObject b in celestialBodies){
-                if(!a.Equals(b)){
-                    float m1 = a.GetComponent<Rigidbody>().mass;
-                    float m2 = b.GetComponent<Rigidbody>().mass;
-                    float r = Vector3.Distance(a.transform.position, b.transform.position);
-                    a.GetComponent<Rigidbody>().AddForce((b.transform.position - a.transform.position).normalized * (G * (m1* m2) / (r * r)));
-                }
-            }
-        }
-        */
     }
 
     void InitialOrbitVelocity(){
+        //Calculate initial orbital velocity using circular orbit instant velocity
         //Has to be calculated in relation to the sun. 
         float m1 = MainMenuManager.starMass; 
         for (int i = 1; i < celestialBodies.Length; i++){
@@ -88,22 +70,14 @@ public class PSManager : MonoBehaviour
             celestialBodies[i].transform.LookAt(celestialBodies[0].transform); 
             celestialBodies[i].GetComponent<Rigidbody>().velocity += celestialBodies[i].transform.right * Mathf.Sqrt(((G * S) * m1) / r);  
         }
-        /*
-        foreach(GameObject a in celestialBodies){
-            foreach(GameObject b in celestialBodies){
-                if(!a.Equals(b)){
-                    float m2 = b.GetComponent<Rigidbody>().mass;
-                    float r = Vector3.Distance(a.transform.position, b.transform.position);
-                    a.transform.LookAt(b.transform);
-                    a.GetComponent<Rigidbody>().velocity += a.transform.right * Mathf.Sqrt((G * m2) / r);
-                }
-            }
-        }
-        */
     }
 
-    void GeneratePlanets(){        
+    //Generate planets 
+    void GeneratePlanets(){     
+        //Set up array of planets   
         Planet[] planets = new Planet[MainMenuManager.numOfPlanets]; 
+
+        //Make a new planet using randomized values based on number of planets and order
         for(int i = 0; i < MainMenuManager.numOfPlanets; i++){
             Planet p = new Planet();
             if(i < (MainMenuManager.numOfPlanets/2)){
@@ -115,16 +89,15 @@ public class PSManager : MonoBehaviour
                 p.mass = planetMass; 
             }
             p.position = new Vector3((MainMenuManager.starMass * (i + 2.0f)) * 2.0f, 0, 0);
-            //p.position = new Vector3((MainMenuManager.starMass * p.mass), 0, 0);
             p.CalculateProperties(); 
             planets[i] = p; 
         }
 
+        //generate planet game objects
         int planetNr = 1;
         foreach (Planet p in planets){
             GameObject g = planet;  
             Rigidbody rbG; 
-            //Material mat;  
 
             //Generate values
             rbG = g.GetComponent<Rigidbody>();
@@ -135,7 +108,6 @@ public class PSManager : MonoBehaviour
             
             //Assign correct material
             if(planetNr <= (MainMenuManager.numOfPlanets/2)){
-                //Material mat = new Material(rockyPlanetMaterial.shader); 
                 Material mat = new Material(pgr); 
                 mat.SetColor("_Color", rockyPanet);
                 float rand = Random.Range(1, 10); 
@@ -154,7 +126,6 @@ public class PSManager : MonoBehaviour
                 Debug.Log(rand); 
                  
             }
-            //celestialBodies[planetNr] = g;
             Instantiate(g);
             planetNr++; 
         }

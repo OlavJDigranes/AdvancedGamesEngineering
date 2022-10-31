@@ -460,6 +460,7 @@ GameObject:
   - component: {fileID: 2073790015}
   - component: {fileID: 2073790016}
   - component: {fileID: 2073790017}
+  - component: {fileID: 2073790018}
   m_Layer: 0
   m_Name: PlanetarySystem
   m_TagString: Untagged
@@ -519,3 +520,15 @@ MonoBehaviour:
   sizeZ: 50
   tileSize: 1
   tileResolution: 8
+--- !u!114 &2073790018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073790014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77b609329e2c7c34f8438472d8a3a28b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
