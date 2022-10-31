@@ -8,7 +8,7 @@ public class PSManager : MonoBehaviour
     //readonly float G = 100.0f; 
     readonly float G = 6.670e-11f;
     //readonly float S = 1.0f; 
-    readonly float S = 1.0e+12f; //Scale 
+    readonly float S = 1.0e+15f; //Scale 
     GameObject[] celestialBodies; 
     public GameObject star;
     public GameObject planet; 
