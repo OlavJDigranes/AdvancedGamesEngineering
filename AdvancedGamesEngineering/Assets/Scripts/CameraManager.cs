@@ -35,6 +35,11 @@ public class CameraManager : MonoBehaviour
                 cameras[cameraIndex].enabled = true; 
                 cameras[cameraIndex + 1].enabled = false; 
         }
+
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
     }
 
     void LateUpdate() {
