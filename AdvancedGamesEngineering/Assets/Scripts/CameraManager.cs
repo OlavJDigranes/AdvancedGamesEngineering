@@ -23,21 +23,17 @@ public class CameraManager : MonoBehaviour
     void Update()
     {
         //Cycle up through the cameras
-        if(Input.GetKeyDown(KeyCode.T)){
-            if(cameraIndex < cameras.Length){
+        if(Input.GetKeyDown(KeyCode.T) && cameraIndex < cameras.Length){
                 cameraIndex++; 
                 cameras[cameraIndex].enabled = true; 
                 cameras[cameraIndex - 1].enabled = false; 
-            }
         }
 
         //Cycle down through the cameras
-        if(Input.GetKeyDown(KeyCode.G)){
-            if(cameraIndex > 0){
+        if(Input.GetKeyDown(KeyCode.G) && cameraIndex > 0){
                 cameraIndex--; 
                 cameras[cameraIndex].enabled = true; 
                 cameras[cameraIndex + 1].enabled = false; 
-            }
         }
     }
 
