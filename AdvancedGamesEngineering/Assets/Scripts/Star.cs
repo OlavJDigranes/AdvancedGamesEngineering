@@ -76,7 +76,7 @@ public class Star : MonoBehaviour
     void DetermineSizeAndPull(int m){
         //Directly set rigidbody mass.  
         rb.GetComponent<Rigidbody>();
-        rb.mass = (m * 1); 
+        rb.mass = (m); 
         var scale = star.transform.localScale; 
 
         //Set scale based on mass

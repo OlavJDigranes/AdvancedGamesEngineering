@@ -11,20 +11,5 @@ public class Moon : MonoBehaviour
 
     public void CalculateProperties(){
         scale *= (mass * 2);
-        //Debug.Log(mass);
-        //Debug.Log(scale); 
     }
-    /*
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    */
 }

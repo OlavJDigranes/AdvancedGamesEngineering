@@ -10,4 +10,4 @@ USAGE OF THE PLANETARY SYSTEM SIMULATOR:
     - In the simulation scene: For the star/first camera use W/A/S/D to move along te x and z axis, and
       zoom using the scroll wheel on your mouse. Change cameras using the T and G keys on your keyboard.
       T goes further away from the star, G goes closer to it. All other cameras do not have the movement
-      but they all have the zoom functionlaity. Press ESC to quit the program. 
+      but they all have the zoom functionlaity. Press ESC in the simulation scene to quit the program. 
