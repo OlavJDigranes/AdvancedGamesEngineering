@@ -19,8 +19,10 @@ public class PSManager : MonoBehaviour
     public GameObject moon; 
     public Material rockyPlanetMaterial; 
     public Material gassyPlanetMaterial;
+    public Material moonMaterial; 
     public Shader pgg; 
-    public Shader pgr;  
+    public Shader pgr;
+    public Shader pgm;   
     Color rockyPanet = new Color(0.74f, 0.2f, 0.2f, 0.5f);
     Color gassyPanet = new Color(0.32f, 0.45f, 0.53f, 0.5f);  
     int moonCounter; 
@@ -167,8 +169,7 @@ public class PSManager : MonoBehaviour
             }
             Instantiate(g);
 
-            if(rbG.mass > 2.5f){
-                Debug.Log("MOON"); 
+            if(rbG.mass > 3.0f){
                 GenerateMoon(p.mass, p.position, planetNr, p.scale); 
             }
 
@@ -193,8 +194,14 @@ public class PSManager : MonoBehaviour
 
         gm.transform.position = m.position; 
         gm.transform.localScale = m.scale; 
+
+        //Set up material
         var moonRenderer = gm.GetComponent<Renderer>(); 
-        moonRenderer.sharedMaterial.SetColor("_Color", Color.grey); 
+        Material moonMat = new Material(pgm); 
+        moonMat.SetFloat("_Roughness", Random.Range(3f, 5f)); 
+        moonMat.SetColor("_Color", Color.grey); 
+        moonRenderer.material = moonMat; 
+        //moonRenderer.sharedMaterial.SetColor("_Color", Color.grey); 
         Instantiate(gm);
         moonCounter++;  
     }

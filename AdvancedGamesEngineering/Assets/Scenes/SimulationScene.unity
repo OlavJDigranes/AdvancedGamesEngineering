@@ -1645,8 +1645,10 @@ MonoBehaviour:
   moon: {fileID: 1363588573039599007, guid: c2b2f4ffd3320a84c960bfc79f440b6b, type: 3}
   rockyPlanetMaterial: {fileID: 2100000, guid: 26975ba42c8921247b8285a5e895bc7a, type: 2}
   gassyPlanetMaterial: {fileID: 2100000, guid: 9130ecd9f61ec0e439bef1cf66de27ed, type: 2}
+  moonMaterial: {fileID: 2100000, guid: 1ef3218418dca8d429d14e45f4e5e727, type: 2}
   pgg: {fileID: -6465566751694194690, guid: b015eee52bb9ff6498ce84890568b2b7, type: 3}
   pgr: {fileID: -6465566751694194690, guid: 8f7ac5606eb9e644ea5040deba7060ff, type: 3}
+  pgm: {fileID: -6465566751694194690, guid: 0bc71ae1a3c4434479990dd214fe1bcb, type: 3}
 --- !u!114 &2073790018
 MonoBehaviour:
   m_ObjectHideFlags: 0

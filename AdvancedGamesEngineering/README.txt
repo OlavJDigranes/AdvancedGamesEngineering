@@ -2,6 +2,7 @@ USAGE OF THE PLANETARY SYSTEM SIMULATOR:
     - When you run the executable you will see a green menu with 4 input fields requireing inputs. BE AWARE, 
       NO INPUT DELIMITERS HAVE BEEN IMPLEMENTED. 
         - The first field should be limited to between 20 and 60 as this is the range of test values.
+          - Values up to 100 can be used, however that is not fully tested for integration. 
         - The second can only handle an input between 1 and 360.
         - The third MUST be kept between 1 and 10 as this is converted to a value between 0 adn 1. 
         - The last field can accept as big a number as you want to input. 
