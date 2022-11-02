@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Star : MonoBehaviour
 {
+    //Variables
     int mass;
     int luminocity;
     int age;
@@ -15,6 +16,7 @@ public class Star : MonoBehaviour
 
     Color[] colours; 
 
+    //set up some varaiables
     void Awake() {
         FIllColours(); 
         mainMenuMngr = menu.GetComponent<MainMenuManager>(); 
@@ -26,99 +28,64 @@ public class Star : MonoBehaviour
         //Ensure the star is at the point of origin. 
         star.transform.position = new Vector3(0, 0, 0);
 
-        //mass = mainMenuMngr.starMass;
-        //luminocity = mainMenuMngr.starLuminocity;
-        //age = mainMenuMngr.starAge;
-
+        //Take in variables from menu
         mass = MainMenuManager.starMass;
         luminocity = MainMenuManager.starLuminocity;
         age = MainMenuManager.starAge;
 
         Debug.Log("Sim Loaded");
-        //Debug.Log(mass);
-        //Debug.Log(luminocity);
-        //Debug.Log(age);
 
+        //Funcitons to generate star
         DetermineColour(age);
         DetermineLightEmission(luminocity);
         DetermineSizeAndPull(mass);
    
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void DetermineColour(int a){
         /*
-        The age of the star determines the colour. 
+        The age of the star determines the colour. This is a simple early implementation for the sake of proving the concept. 
         */
         var sphereRenderer = star.GetComponent<Renderer>();
 
-        
-        int tempAge = 0;
+        //Reverse and rotate the colour wheel as younger stars are more blue. A more accurate representation of star colour requires implementation of Hertzsprung-Russell values. 
+        float rotatedAge = 360f - (float)a; 
+        float ageHue = rotatedAge/360f; 
 
-        if(a <= 12){
-            tempAge = a;
-        }
-        if(a > 12){
-            tempAge = 12; 
-        }
+        Debug.Log(Color.HSVToRGB(ageHue, 1f, 1f));
+        //Debug.Log(Color.HSVToRGB(a, Random.Range(0f, 1f), Random.Range(0f, 1f)));
 
-        /*
-        float r = 0.0f;
-        float g = 0.0f;
-        float b = 0.0f;
-
-        float increment = 0.33f;
-
-        for(int i = tempAge; i > 0; i--){
-            if(i % 3 == 0){
-                r += increment;
-            }
-            else if(i % 2 == 0){
-                g += increment;
-            }
-            else{
-                b += increment;
-            }
-        }
-        Debug.Log(r + ", " + g + ", " + b); 
-        */
-
-        //Color starColour = new Color(r, g, b, 1.0f);
-        sphereRenderer.material.SetColor("_DetailColor", colours[tempAge - 1]);
-        sphereRenderer.material.SetColor("_StarColor", colours[tempAge - 1]);
-        
+        sphereRenderer.material.SetColor("_DetailColor", Color.white);
+        sphereRenderer.material.SetColor("_StarColor", Color.HSVToRGB(ageHue, 1f, 1f));
     }
 
     void DetermineLightEmission(int l){
         //Turn the star into the light in the scene. Use colour of star to colour the emitted light. 
+
+        //Turn alpha to a float between 0 and 1
         float alpha = (float)l/10.0f;
+
+        //Colour handling 
         var sphereRenderer = star.GetComponent<Renderer>(); 
         Color tempColour; 
         tempColour = sphereRenderer.material.GetColor("_StarColor"); 
         tempColour.a = alpha; 
-        //Debug.Log(tempColour); 
         sphereRenderer.material.SetColor("_StarColor", tempColour); 
-        Debug.Log(tempColour = sphereRenderer.material.GetColor("_StarColor")); 
     }
 
     void DetermineSizeAndPull(int m){
-        //Directly set rigidbody mass. 
-        //https://www.youtube.com/watch?v=kUXskc76ud8 <- make planets and moons. 
-        //https://www.youtube.com/watch?v=RvIsJCGLsSU
+        //Directly set rigidbody mass.  
         rb.GetComponent<Rigidbody>();
         rb.mass = (m * 1); 
         var scale = star.transform.localScale; 
+
+        //Set scale based on mass
         scale *= (m); 
         star.transform.localScale = scale; 
     }
 
     void FIllColours(){
-        //This functions fills the colour array
+        //This functions fills the colour array in a gradient from red to blue. 
         colours = new Color[12]; 
         colours[0] = Color.white; 
         colours[1] = Color.red;

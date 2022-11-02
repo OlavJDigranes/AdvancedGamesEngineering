@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    //https://dev.to/matthewodle/simple-3d-camera-movement-1lcj
+    //This script allows simple camera movementfor a top down camera. 
+    //This script was taken from https://dev.to/matthewodle/simple-3d-camera-movement-1lcj. Some alterations have been made. 
     private float moveSpeed = 0.075f;
     private float scrollSpeed = 15.0f;
 
