@@ -208,9 +208,9 @@ public class PSManager : MonoBehaviour
 
     void GenerateMoon(float planetMass, Vector3 planetPosition, int planetID, Vector3 planetScale){
         Moon m = new Moon(); 
-        m.mass = planetMass * 0.27f;
+        m.mass = planetMass * Random.Range(0.008f, 0.027f);
         m.planetID = planetID;  
-        m.position = new Vector3(planetPosition.x, planetPosition.y, planetPosition.z + planetScale.z); 
+        m.position = new Vector3(planetPosition.x, planetPosition.y, planetPosition.z + (planetScale.z * 1f)); 
         m.CalculateProperties(); 
 
         moons2.Add(m); 
