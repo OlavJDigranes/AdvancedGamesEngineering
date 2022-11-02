@@ -32,7 +32,6 @@ public class CameraManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(cameraIndex); 
         //Cycle up through the cameras
         if(Input.GetKeyDown(KeyCode.T) && cameraIndex < celestialBodies.Length-1){
                 cameraIndex++; 

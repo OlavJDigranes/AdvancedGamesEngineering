@@ -110,21 +110,27 @@ public class PSManager : MonoBehaviour
             if(planetNr <= (MainMenuManager.numOfPlanets/2)){
                 Material mat = new Material(pgr); 
                 mat.SetColor("_Color", rockyPanet);
+                Color randColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1.0f);
+                mat.SetColor("_DetailColor2", randColor); 
                 float rand = Random.Range(1, 10); 
                 mat.SetFloat("_Scale", rand); 
-                planetRenderer.material = mat;
-                Debug.Log(rand); 
-                
+                float rand2 = Random.Range(1f, 3f); 
+                mat.SetFloat("_Scale", rand2); 
+                planetRenderer.material = mat;                
             }
 
             if(planetNr > (MainMenuManager.numOfPlanets/2)){   
                 Material mat = new Material(pgg); 
                 mat.SetColor("_Color", gassyPanet);
-                float rand = Random.Range(1, 3); 
-                mat.SetFloat("_CellDensity", rand);          
-                planetRenderer.material = mat; 
-                Debug.Log(rand); 
-                 
+                Color randColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1.0f);
+                mat.SetColor("_AccentColor", randColor); 
+                float randDensity = Random.Range(1, 3); 
+                mat.SetFloat("_CellDensity", randDensity);  
+                float randRingAccent = Random.Range(1, 10); 
+                mat.SetFloat("_RingAccents", randRingAccent);
+                float randNumRings = Random.Range(1, 5); 
+                mat.SetFloat("_NumberOfRings", randNumRings);        
+                planetRenderer.material = mat;                  
             }
             Instantiate(g);
             planetNr++; 

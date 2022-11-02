@@ -48,19 +48,13 @@ public class Star : MonoBehaviour
         */
         var sphereRenderer = star.GetComponent<Renderer>();
 
-        
-        int tempAge = 0;
+        float ageHue = (float)a/360f; 
 
-        if(a <= 12){
-            tempAge = a;
-        }
-        if(a > 12){
-            tempAge = 12; 
-        }
+        Debug.Log(Color.HSVToRGB(ageHue, 1f, 1f));
+        //Debug.Log(Color.HSVToRGB(a, Random.Range(0f, 1f), Random.Range(0f, 1f)));
 
-        sphereRenderer.material.SetColor("_DetailColor", colours[tempAge - 1]);
-        sphereRenderer.material.SetColor("_StarColor", colours[tempAge - 1]);
-        
+        sphereRenderer.material.SetColor("_DetailColor", Color.white);
+        sphereRenderer.material.SetColor("_StarColor", Color.HSVToRGB(ageHue, 1f, 1f));
     }
 
     void DetermineLightEmission(int l){
