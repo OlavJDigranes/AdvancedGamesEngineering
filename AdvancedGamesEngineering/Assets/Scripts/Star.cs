@@ -49,7 +49,7 @@ public class Star : MonoBehaviour
         var sphereRenderer = star.GetComponent<Renderer>();
 
         //Reverse and rotate the colour wheel as younger stars are more blue. A more accurate representation of star colour requires implementation of Hertzsprung-Russell values. 
-        float rotatedAge = 360f - (float)a
+        float rotatedAge = 360f - (float)a; 
         float ageHue = rotatedAge/360f; 
 
         Debug.Log(Color.HSVToRGB(ageHue, 1f, 1f));
