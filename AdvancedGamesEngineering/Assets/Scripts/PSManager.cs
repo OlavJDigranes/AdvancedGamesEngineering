@@ -49,7 +49,7 @@ public class PSManager : MonoBehaviour
             x.transform.Rotate(new Vector3(0, -(float)x.GetComponent<Rigidbody>().mass * 10.0f, 0) * Time.deltaTime); 
         }
         foreach(GameObject m in moons){
-            m.transform.Rotate(new Vector3(0, -(float)m.GetComponent<Rigidbody>().mass * 5.0f, 0) * Time.deltaTime); 
+            m.transform.Rotate(new Vector3(0, -(float)m.GetComponent<Rigidbody>().mass, 0) * (Time.deltaTime/2)); 
         }
     }
     
