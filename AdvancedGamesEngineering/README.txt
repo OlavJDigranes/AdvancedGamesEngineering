@@ -1,6 +1,8 @@
 USAGE OF THE PLANETARY SYSTEM SIMULATOR:
-    - When you run the executable you will see a green menu with 4 input fields requireing inputs. BE AWARE, 
-      NO INPUT DELIMITERS HAVE BEEN IMPLEMENTED. 
+    - When you run the executable you will see a green menu with 4 input fields requireing inputs. The four
+      fields represent the four initial aims in the rubrik. Using these parameters a planetary system is
+      generated using simple physics calculations for gravitational pull and velocities of planets and moons. 
+      BE AWARE, NO INPUT DELIMITERS HAVE BEEN IMPLEMENTED. 
         - The first field should be limited to between 20 and 60 as this is the range of test values.
           - Values up to 100 can be used, however that is not fully tested for integration. 
         - The second can only handle an input between 1 and 360.
