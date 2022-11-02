@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems; 
+using UnityEngine.UI;
+using TMPro; 
 
 public class CameraManager : MonoBehaviour
 {
     Camera[] cameras; 
     GameObject[] celestialBodies;
     int cameraIndex = 0; 
+
+    public TextMeshProUGUI numPlanOut; 
+    public TextMeshProUGUI celBod;
+    public TextMeshProUGUI posOut;
+    public TextMeshProUGUI velOut; 
+    public GameObject UIPanel;
     
     // Start is called before the first frame update
     void Start()
@@ -17,13 +26,15 @@ public class CameraManager : MonoBehaviour
             cameras[i].enabled = false; 
         }
         celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBody"); 
+        numPlanOut.text = (celestialBodies.Length-1).ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(cameraIndex); 
         //Cycle up through the cameras
-        if(Input.GetKeyDown(KeyCode.T) && cameraIndex < cameras.Length){
+        if(Input.GetKeyDown(KeyCode.T) && cameraIndex < celestialBodies.Length-1){
                 cameraIndex++; 
                 cameras[cameraIndex].enabled = true; 
                 cameras[cameraIndex - 1].enabled = false; 
@@ -35,6 +46,13 @@ public class CameraManager : MonoBehaviour
                 cameras[cameraIndex].enabled = true; 
                 cameras[cameraIndex + 1].enabled = false; 
         }
+
+        if(celBod.text != (cameraIndex+1).ToString()){
+            celBod.text = (cameraIndex+1).ToString();
+        }
+
+        posOut.text = celestialBodies[cameraIndex].transform.position.ToString();
+        velOut.text = celestialBodies[cameraIndex].GetComponent<Rigidbody>().velocity.ToString();
 
         if (Input.GetKey("escape"))
         {
