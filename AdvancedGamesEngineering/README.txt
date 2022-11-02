@@ -15,4 +15,4 @@ USAGE OF THE PLANETARY SYSTEM SIMULATOR:
       T goes further away from the star, G goes closer to it. All other cameras do not have the movement
       but they all have the zoom functionlaity. Press ESC in the simulation scene to quit the program. 
 
-GITHUB REPOSITORY LINK: https://github.com/OlavJDigranes/AdvancedGamesEngineering
+GITHUB REPOSITORY LINK: https://github.com/OlavJDigranes/AdvancedGamesEngineering 
