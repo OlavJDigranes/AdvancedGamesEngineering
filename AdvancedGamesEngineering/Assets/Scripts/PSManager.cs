@@ -56,10 +56,11 @@ public class PSManager : MonoBehaviour
     
     private void FixedUpdate() {
         //calculate gravitational pull
-        GravitationalPull(); 
-        MoonGravPull(); 
+        //GravitationalPull(); 
+        //MoonGravPull(); 
     }
 
+    /*
     void GravitationalPull(){
         //Calculate gravitational pull using Newton's law of universil gravitation:
         //  F = G * ((m1 * m2)/r^2)
@@ -93,6 +94,7 @@ public class PSManager : MonoBehaviour
             //moons[i].GetComponent<Rigidbody>().velocity = vel; 
         }
     }
+    */
 
     void InitialOrbitVelocity(){
         //Calculate initial orbital velocity using circular orbit instant velocity
@@ -153,9 +155,9 @@ public class PSManager : MonoBehaviour
         //Planet[] planets = new Planet[MainMenuManager.numOfPlanets]; 
         for(int i = 0; i < MainMenuManager.numOfPlanets; i++){
             Planet p = new Planet();
-            float planetMass = UnityEngine.UnityEngine.Random.Range((((float)star.GetComponent<Star>().mass) * 0.003f), (((float)star.GetComponent<Star>().mass) * 0.09f));
-            p.mass = planetMass; 
-            p.position = new Vector3((star.GetComponent<Star>().mass * (i + 2.0f)) * 2.0f, 0, 0);
+            float planetMass = UnityEngine.Random.Range((((float)star.GetComponent<Star>().mass) * 0.003f), (((float)star.GetComponent<Star>().mass) * 0.09f));
+            p.mass = (double)planetMass; 
+            p.position = new double3((star.GetComponent<Star>().mass * (i + 2.0)) * 2.0, 0, 0);
             p.CalculateProperties(); 
             planets[i] = p; 
         }
@@ -169,8 +171,19 @@ public class PSManager : MonoBehaviour
             //Generate values
             rbG = g.GetComponent<Rigidbody>();
             rbG.mass = (float)p.mass; 
-            g.transform.position = (float)p.position; 
-            g.transform.localScale = (float)p.scale;
+
+            Vector3 posConversion;
+            posConversion.x = (float)p.position.x;
+            posConversion.y = (float)p.position.y;
+            posConversion.z = (float)p.position.z;
+            g.transform.position = posConversion; 
+
+            Vector3 scaleConversion;
+            scaleConversion.x = (float)p.scale.x;
+            scaleConversion.y = (float)p.scale.y;
+            scaleConversion.z = (float)p.scale.z;
+            g.transform.localScale = scaleConversion;
+
             var planetRenderer = g.GetComponent<Renderer>();
             
             //Assign correct material
@@ -209,11 +222,11 @@ public class PSManager : MonoBehaviour
         }
     }
 
-    void GenerateMoon(float planetMass, Vector3 planetPosition, int planetID, Vector3 planetScale){
+    void GenerateMoon(double planetMass, double3 planetPosition, int planetID, double3 planetScale){
         Moon m = new Moon(); 
         m.mass = planetMass * UnityEngine.Random.Range(0.08f, 0.27f);
         m.planetID = planetID;  
-        m.position = new Vector3(planetPosition.x, planetPosition.y, planetPosition.z - (planetScale.z * 1.5f)); 
+        m.position = new double3(planetPosition.x, planetPosition.y, planetPosition.z - (planetScale.z * 1.5)); 
         m.CalculateProperties(); 
 
         moons2.Add(m); 
@@ -222,10 +235,19 @@ public class PSManager : MonoBehaviour
         Rigidbody rbM; 
 
         rbM = gm.GetComponent<Rigidbody>(); 
-        rbM.mass = m.mass; 
+        rbM.mass = (float)m.mass; 
 
-        gm.transform.position = m.position; 
-        gm.transform.localScale = m.scale; 
+        Vector3 posConversion;
+        posConversion.x = (float)m.position.x;
+        posConversion.y = (float)m.position.y;
+        posConversion.z = (float)m.position.z;
+        gm.transform.position = posConversion; 
+
+        Vector3 scaleConversion;
+        scaleConversion.x = (float)m.scale.x;
+        scaleConversion.y = (float)m.scale.y;
+        scaleConversion.z = (float)m.scale.z;
+        gm.transform.localScale = scaleConversion; 
 
         //Set up material
         var moonRenderer = gm.GetComponent<Renderer>(); 
