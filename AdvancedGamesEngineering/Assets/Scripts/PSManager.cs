@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics; 
 
 public class PSManager : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class PSManager : MonoBehaviour
     void Start()
     {
         //Seed randomisation
-        Random.InitState(7);
+        UnityEngine.Random.InitState(7);
 
         //Generate planets and fill celestial bodies array. Note: Star will always be at index 0 
         GeneratePlanets();
@@ -73,24 +74,60 @@ public class PSManager : MonoBehaviour
 
     void MoonGravPull(){
         for(int i = 0; i < moonCounter; i++){
-            float m1 = celestialBodies[moons2[i].planetID].GetComponent<Rigidbody>().mass;
-            float m2 = moons[i].GetComponent<Rigidbody>().mass; 
-            float r = Vector3.Distance(celestialBodies[moons2[i].planetID].transform.position, moons[i].transform.position); 
+            double m1 = planets[moons2[i].planetID - 1].mass;
+            double m2 = moons[i].mass; 
+            double x = planets[moons2[i].planetID - 1].position.x - moons2[i].position.x;
+            double y = planets[moons2[i].planetID - 1].position.y - moons2[i].position.y;
+            double z = planets[moons2[i].planetID - 1].position.z - moons2[i].position.z;
+            double r = System.Math.Sqrt((x * x) + (y * y) + (z * z)); 
 
             //Force handeling and integration using Symplectic euler. 
-            Vector3 force = (celestialBodies[moons2[i].planetID].transform.position - moons[i].transform.position).normalized * ((G) * (m1 * m2) / (r * r) * S); 
-            Vector3 force2 = -(moons[i].transform.position - celestialBodies[moons2[i].planetID].transform.position).normalized * ((G) * (m1 * m2) / (r * r) * S); 
-            Vector3 accel = (force + force2) / m2; 
-            Vector3 vel = moons[i].GetComponent<Rigidbody>().velocity + (Time.deltaTime * accel);
-            Vector3 pos = moons[i].transform.position + (Time.deltaTime * vel); 
-            moons[i].transform.position = pos; 
-            moons[i].GetComponent<Rigidbody>().velocity = vel; 
+            double3 force = (planets[moons2[i].planetID - 1].position - moons[i].position).normalized * ((G) * (m1 * m2) / (r * r) * S); 
+            double3 force2 = -(moons[i].transform.position - celestialBodies[moons2[i].planetID].transform.position).normalized * ((G) * (m1 * m2) / (r * r) * S); 
+            double3 accel = (force + force2) / m2; 
+            double3 vel = moons[i].GetComponent<Rigidbody>().velocity + (Time.deltaTime * accel);
+            double3 pos = moons[i].transform.position + (Time.deltaTime * vel); 
+            moons2[i].velocity = vel;
+            moons2[i].position = pos;
+            //moons[i].transform.position = pos; 
+            //moons[i].GetComponent<Rigidbody>().velocity = vel; 
         }
     }
 
     void InitialOrbitVelocity(){
         //Calculate initial orbital velocity using circular orbit instant velocity
         //Has to be calculated in relation to the sun. 
+        double3 directionX = new double3(1.0, 0.0, 0.0);
+        double3 directionZ = new double3(0.0, 0.0, 1.0);
+
+        //Set up masses
+        double[] masses = new double[celestialBodies.Length];
+        masses[0] = star.GetComponent<Star>().mass;
+        for(int i = 1; i < celestialBodies.Length; i++){
+            masses[i] = planets[i].mass; 
+        }
+
+        //Initial planet velocities
+        for(int i = 1; i < celestialBodies.Length; i++){
+            double m = masses[i];
+            double x = (double)star.transform.position.x - planets[i].position.x;
+            double y = (double)star.transform.position.y - planets[i].position.y;
+            double z = (double)star.transform.position.z - planets[i].position.z;
+            double r = System.Math.Sqrt((x * x) + (y * y) + (z * z));
+            double3 initalVelocity = directionZ * System.Math.Sqrt((G * m) / r);
+            planets[i].velocity = initalVelocity; 
+        }
+
+        //Initial moon velocities
+        for(int i = 0; i < moons.Length; i++){
+            double x = planets[moons2[i].planetID - 1].position.x - moons2[i].position.x;
+            double y = planets[moons2[i].planetID - 1].position.y - moons2[i].position.y;
+            double z = planets[moons2[i].planetID - 1].position.z - moons2[i].position.z;
+            double r = System.Math.Sqrt((x * x) + (y * y) + (z * z));
+            double3 initalVelocity = directionX * System.Math.Sqrt((G * moons2[i].mass) / r);
+        }
+
+        /*
         float m1 = star.GetComponent<Star>().mass; 
         for (int i = 1; i < celestialBodies.Length; i++){
             float m2 = celestialBodies[i].GetComponent<Rigidbody>().mass; 
@@ -109,13 +146,14 @@ public class PSManager : MonoBehaviour
             moons[j].transform.LookAt(celestialBodies[moons2[j].planetID].transform); 
             moons[j].GetComponent<Rigidbody>().velocity += moons[j].transform.right * Mathf.Sqrt(((G * S) * m3) / r2); 
         }
+        */
     }
 
     void GeneratePlanets(){        
         //Planet[] planets = new Planet[MainMenuManager.numOfPlanets]; 
         for(int i = 0; i < MainMenuManager.numOfPlanets; i++){
             Planet p = new Planet();
-            float planetMass = UnityEngine.Random.Range((((float)star.GetComponent<Star>().mass) * 0.003f), (((float)star.GetComponent<Star>().mass) * 0.09f));
+            float planetMass = UnityEngine.UnityEngine.Random.Range((((float)star.GetComponent<Star>().mass) * 0.003f), (((float)star.GetComponent<Star>().mass) * 0.09f));
             p.mass = planetMass; 
             p.position = new Vector3((star.GetComponent<Star>().mass * (i + 2.0f)) * 2.0f, 0, 0);
             p.CalculateProperties(); 
@@ -130,20 +168,20 @@ public class PSManager : MonoBehaviour
 
             //Generate values
             rbG = g.GetComponent<Rigidbody>();
-            rbG.mass = p.mass; 
-            g.transform.position = p.position; 
-            g.transform.localScale = p.scale;
+            rbG.mass = (float)p.mass; 
+            g.transform.position = (float)p.position; 
+            g.transform.localScale = (float)p.scale;
             var planetRenderer = g.GetComponent<Renderer>();
             
             //Assign correct material
             if(planetNr <= (MainMenuManager.numOfPlanets/2)){
                 Material mat = new Material(pgr); 
                 mat.SetColor("_Color", rockyPanet);
-                Color randColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1.0f);
+                Color randColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1.0f);
                 mat.SetColor("_DetailColor2", randColor); 
-                float rand = Random.Range(1, 10); 
+                float rand = UnityEngine.Random.Range(1, 10); 
                 mat.SetFloat("_Scale", rand); 
-                float rand2 = Random.Range(1f, 3f); 
+                float rand2 = UnityEngine.Random.Range(1f, 3f); 
                 mat.SetFloat("_Scale", rand2); 
                 planetRenderer.material = mat;                
             }
@@ -151,13 +189,13 @@ public class PSManager : MonoBehaviour
             if(planetNr > (MainMenuManager.numOfPlanets/2)){   
                 Material mat = new Material(pgg); 
                 mat.SetColor("_Color", gassyPanet);
-                Color randColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1.0f);
+                Color randColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1.0f);
                 mat.SetColor("_AccentColor", randColor); 
-                float randDensity = Random.Range(1, 3); 
+                float randDensity = UnityEngine.Random.Range(1, 3); 
                 mat.SetFloat("_CellDensity", randDensity);  
-                float randRingAccent = Random.Range(1, 10); 
+                float randRingAccent = UnityEngine.Random.Range(1, 10); 
                 mat.SetFloat("_RingAccents", randRingAccent);
-                float randNumRings = Random.Range(1, 5); 
+                float randNumRings = UnityEngine.Random.Range(1, 5); 
                 mat.SetFloat("_NumberOfRings", randNumRings);        
                 planetRenderer.material = mat;                  
             }
@@ -173,7 +211,7 @@ public class PSManager : MonoBehaviour
 
     void GenerateMoon(float planetMass, Vector3 planetPosition, int planetID, Vector3 planetScale){
         Moon m = new Moon(); 
-        m.mass = planetMass * Random.Range(0.08f, 0.27f);
+        m.mass = planetMass * UnityEngine.Random.Range(0.08f, 0.27f);
         m.planetID = planetID;  
         m.position = new Vector3(planetPosition.x, planetPosition.y, planetPosition.z - (planetScale.z * 1.5f)); 
         m.CalculateProperties(); 
@@ -192,7 +230,7 @@ public class PSManager : MonoBehaviour
         //Set up material
         var moonRenderer = gm.GetComponent<Renderer>(); 
         Material moonMat = new Material(pgm); 
-        moonMat.SetFloat("_Roughness", Random.Range(3f, 5f)); 
+        moonMat.SetFloat("_Roughness", UnityEngine.Random.Range(3f, 5f)); 
         moonMat.SetColor("_Color", Color.grey); 
         moonRenderer.material = moonMat; 
         //moonRenderer.sharedMaterial.SetColor("_Color", Color.grey); 
