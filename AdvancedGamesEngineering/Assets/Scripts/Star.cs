@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics; 
 
 public class Star : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Star : MonoBehaviour
     public string spectralClassification;
     public int absoluteMagnitude;
     public Color colour;  
+    public double3 accumulatedForce; 
 
     public GameObject star;
     public GameObject menu; 

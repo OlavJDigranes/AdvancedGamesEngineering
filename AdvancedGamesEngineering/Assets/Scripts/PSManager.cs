@@ -27,6 +27,8 @@ public class PSManager : MonoBehaviour
     Color rockyPanet = new Color(0.74f, 0.2f, 0.2f, 0.5f);
     Color gassyPanet = new Color(0.32f, 0.45f, 0.53f, 0.5f);  
     int moonCounter; 
+    double[] masses = new double[MainMenuManager.numOfPlanets + 1];
+    double3[] positions = new double3[MainMenuManager.numOfPlanets + 1];
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +41,12 @@ public class PSManager : MonoBehaviour
         //moons2 = new Moon[moonCounter]; 
         celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBody"); 
         moons = GameObject.FindGameObjectsWithTag("Moon"); 
+        
+        masses[0] = star.GetComponent<Star>().mass;
+        for(int i = 1; i < celestialBodies.Length; i++){
+            masses[i] = planets[i].mass; 
+        }
+        
         InitialOrbitVelocity();
     }
 
@@ -52,12 +60,42 @@ public class PSManager : MonoBehaviour
         foreach(GameObject m in moons){
             m.transform.Rotate(new Vector3(0, -(float)m.GetComponent<Rigidbody>().mass, 0) * (Time.deltaTime/2)); 
         }
+        for(int i = 0; i < celestialBodies.Length; i++){
+            if(i == 0){
+                positions[0] = celestialBodies[0].GetComponent<Star>().mass; 
+            }
+            else{
+                positions[i] = planets[i].mass; 
+            }
+        }
+        OverallGravitationalPull(); 
     }
     
     private void FixedUpdate() {
         //calculate gravitational pull
         //GravitationalPull(); 
         //MoonGravPull(); 
+    }
+
+    void OverallGravitationalPull(){
+        //Calculate gravitational pull using Newton's law of universil gravitation:
+        //  F = G * ((m1 * m2)/r^2)
+
+        for(int i = 0; i < celestialBodies.Length; i++) {
+            double3 force = new double3(); 
+            for(int j = 0; j < celestialBodies.Length; j++) {
+                if(!celestialBodies[i].Equals(celestialBodies[j])){
+                    double m1 = masses[i];
+                    double m2 = masses[j];
+                    double x =  positions[i].x - positions[j].x;
+                    double y =  positions[i].y - positions[j].y;
+                    double z =  positions[i].z - positions[j].z;
+                    double r = System.Math.Sqrt((x * x) + (y * y) + (z * z));
+                    force += ((positions[i] - positions[j])/r) * (G * (m1 * m2)/(r* r)); 
+                    
+                }
+            }
+        }
     }
 
     /*
@@ -101,13 +139,6 @@ public class PSManager : MonoBehaviour
         //Has to be calculated in relation to the sun. 
         double3 directionX = new double3(1.0, 0.0, 0.0);
         double3 directionZ = new double3(0.0, 0.0, 1.0);
-
-        //Set up masses
-        double[] masses = new double[celestialBodies.Length];
-        masses[0] = star.GetComponent<Star>().mass;
-        for(int i = 1; i < celestialBodies.Length; i++){
-            masses[i] = planets[i].mass; 
-        }
 
         //Initial planet velocities
         for(int i = 1; i < celestialBodies.Length; i++){
