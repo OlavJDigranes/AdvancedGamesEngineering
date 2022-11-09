@@ -8,10 +8,11 @@ public class CameraMovement : MonoBehaviour
     //This script was taken from https://dev.to/matthewodle/simple-3d-camera-movement-1lcj. Some alterations have been made. 
     private float moveSpeed = 0.075f;
     private float scrollSpeed = 15.0f;
+    GameObject star;
 
     void Start() {
         transform.LookAt(Vector3.zero);
-        Camera.main.transform.position = new Vector3 (0.0f, MainMenuManager.starMass * 5, 0.0f);      
+        Camera.main.transform.position = new Vector3 (0.0f, (float)star.GetComponent<Star>().mass * 5, 0.0f);      
     }
 
     void Update () {
