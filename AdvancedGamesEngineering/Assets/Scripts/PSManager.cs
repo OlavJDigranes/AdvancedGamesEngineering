@@ -7,7 +7,7 @@ public class PSManager : MonoBehaviour
     //This will manage the behaviour of stars and planets in the simulation. 
 
     //Variables
-    readonly float G = 6.670e-11f;
+    readonly double G = 6.670e-11;
     readonly float S = 1.5e+13f; //Scale 
     GameObject[] celestialBodies; 
     GameObject[] moons; 
@@ -63,7 +63,7 @@ public class PSManager : MonoBehaviour
         //Calculate gravitational pull using Newton's law of universil gravitation:
         //  F = G * ((m1 * m2)/r^2)
         //Has to be calculated in relation to the sun. 
-        float m1 = MainMenuManager.starMass; 
+        float m1 = star.GetComponent<Star>().mass; 
         for (int i = 1; i < celestialBodies.Length; i++){
             float m2 = celestialBodies[i].GetComponent<Rigidbody>().mass; 
             float r = Vector3.Distance(celestialBodies[0].transform.position, celestialBodies[i].transform.position); 
@@ -91,7 +91,7 @@ public class PSManager : MonoBehaviour
     void InitialOrbitVelocity(){
         //Calculate initial orbital velocity using circular orbit instant velocity
         //Has to be calculated in relation to the sun. 
-        float m1 = MainMenuManager.starMass; 
+        float m1 = star.GetComponent<Star>().mass; 
         for (int i = 1; i < celestialBodies.Length; i++){
             float m2 = celestialBodies[i].GetComponent<Rigidbody>().mass; 
             float r = Vector3.Distance(celestialBodies[0].transform.position, celestialBodies[i].transform.position); 
@@ -115,15 +115,9 @@ public class PSManager : MonoBehaviour
         //Planet[] planets = new Planet[MainMenuManager.numOfPlanets]; 
         for(int i = 0; i < MainMenuManager.numOfPlanets; i++){
             Planet p = new Planet();
-            if(i < (MainMenuManager.numOfPlanets/2)){
-                float planetMass = UnityEngine.Random.Range((((float)MainMenuManager.starMass) * 0.003f), (((float)MainMenuManager.starMass) * 0.09f));
-                p.mass = planetMass; 
-            }
-            if(i >= (MainMenuManager.numOfPlanets/2)){
-                float planetMass = UnityEngine.Random.Range((((float)MainMenuManager.starMass) * 0.003f), (((float)MainMenuManager.starMass) * 0.09f));
-                p.mass = planetMass; 
-            }
-            p.position = new Vector3((MainMenuManager.starMass * (i + 2.0f)) * 2.0f, 0, 0);
+            float planetMass = UnityEngine.Random.Range((((float)star.GetComponent<Star>().mass) * 0.003f), (((float)star.GetComponent<Star>().mass) * 0.09f));
+            p.mass = planetMass; 
+            p.position = new Vector3((star.GetComponent<Star>().mass * (i + 2.0f)) * 2.0f, 0, 0);
             p.CalculateProperties(); 
             planets[i] = p; 
         }
