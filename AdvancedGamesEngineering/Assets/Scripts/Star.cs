@@ -15,6 +15,7 @@ public class Star : MonoBehaviour
     public int absoluteMagnitude;
     public Color colour;  
     public double3 accumulatedForce; 
+    public double3 position; 
 
     public GameObject star;
     public GameObject menu; 

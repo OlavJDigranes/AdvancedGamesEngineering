@@ -62,10 +62,10 @@ public class PSManager : MonoBehaviour
         }
         for(int i = 0; i < celestialBodies.Length; i++){
             if(i == 0){
-                positions[0] = celestialBodies[0].GetComponent<Star>().mass; 
+                positions[0] = celestialBodies[0].GetComponent<Star>().position; 
             }
             else{
-                positions[i] = planets[i].mass; 
+                positions[i] = planets[i-1].position; 
             }
         }
         OverallGravitationalPull(); 
@@ -81,6 +81,7 @@ public class PSManager : MonoBehaviour
         //Calculate gravitational pull using Newton's law of universil gravitation:
         //  F = G * ((m1 * m2)/r^2)
 
+        //Figure out how to implement the moons here
         for(int i = 0; i < celestialBodies.Length; i++) {
             double3 force = new double3(); 
             for(int j = 0; j < celestialBodies.Length; j++) {
@@ -92,10 +93,16 @@ public class PSManager : MonoBehaviour
                     double z =  positions[i].z - positions[j].z;
                     double r = System.Math.Sqrt((x * x) + (y * y) + (z * z));
                     force += ((positions[i] - positions[j])/r) * (G * (m1 * m2)/(r* r)); 
-                    
+                    if(i == 0){
+                        celestialBodies[0].GetComponent<Star>().accumulatedForce += force;
+                    }
+                    else{
+                        planets[i-1].accumulatedForce += force; 
+                    }
                 }
             }
         }
+
     }
 
     /*
