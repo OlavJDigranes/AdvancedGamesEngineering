@@ -27,6 +27,7 @@ public class PSManager : MonoBehaviour
     Color rockyPanet = new Color(0.74f, 0.2f, 0.2f, 0.5f);
     Color gassyPanet = new Color(0.32f, 0.45f, 0.53f, 0.5f);  
     int moonCounter; 
+    List<CelestialBody> celestialBodiesPhysics = new List<CelestialBody>(); 
     double[] masses = new double[MainMenuManager.numOfPlanets + 1];
     double3[] positions = new double3[MainMenuManager.numOfPlanets + 1];
 
@@ -41,7 +42,12 @@ public class PSManager : MonoBehaviour
         //moons2 = new Moon[moonCounter]; 
         celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBody"); 
         moons = GameObject.FindGameObjectsWithTag("Moon"); 
-        
+        for(int i = 0; i < celestialBodies.Length; i++){
+            celestialBodiesPhysics.Add(planets[i]); 
+        }
+        for(int j = 0; j < moons.Length; j++){
+            celestialBodiesPhysics.Add(moons2[j]); 
+        }
         masses[0] = star.GetComponent<Star>().mass;
         for(int i = 1; i < celestialBodies.Length; i++){
             masses[i] = planets[i].mass; 
@@ -86,18 +92,18 @@ public class PSManager : MonoBehaviour
             double3 force = new double3(); 
             for(int j = 0; j < celestialBodies.Length; j++) {
                 if(!celestialBodies[i].Equals(celestialBodies[j])){
-                    double m1 = masses[i];
-                    double m2 = masses[j];
-                    double x =  positions[i].x - positions[j].x;
-                    double y =  positions[i].y - positions[j].y;
-                    double z =  positions[i].z - positions[j].z;
+                    double m1 = celestialBodiesPhysics[i].mass;
+                    double m2 = celestialBodiesPhysics[j].mass;
+                    double x =  celestialBodiesPhysics[i].position.x - celestialBodiesPhysics[j].position.x;
+                    double y =  celestialBodiesPhysics[i].position.y - celestialBodiesPhysics[j].position.y;
+                    double z =  celestialBodiesPhysics[i].position.z - celestialBodiesPhysics[j].position.z;
                     double r = System.Math.Sqrt((x * x) + (y * y) + (z * z));
-                    force += ((positions[i] - positions[j])/r) * (G * (m1 * m2)/(r* r)); 
+                    force += ((celestialBodiesPhysics[i].position - celestialBodiesPhysics[j].position)/r) * (G * (m1 * m2)/(r* r)); 
                     if(i == 0){
                         celestialBodies[0].GetComponent<Star>().accumulatedForce += force;
                     }
                     else{
-                        planets[i-1].accumulatedForce += force; 
+                        celestialBodiesPhysics[i-1].accumulatedForce += force; 
                     }
                 }
             }
@@ -234,7 +240,8 @@ public class PSManager : MonoBehaviour
                 mat.SetFloat("_Scale", rand); 
                 float rand2 = UnityEngine.Random.Range(1f, 3f); 
                 mat.SetFloat("_Scale", rand2); 
-                planetRenderer.material = mat;                
+                planetRenderer.material = mat; 
+                p.type = 1;                
             }
 
             if(planetNr > (MainMenuManager.numOfPlanets/2)){   
@@ -248,7 +255,8 @@ public class PSManager : MonoBehaviour
                 mat.SetFloat("_RingAccents", randRingAccent);
                 float randNumRings = UnityEngine.Random.Range(1, 5); 
                 mat.SetFloat("_NumberOfRings", randNumRings);        
-                planetRenderer.material = mat;                  
+                planetRenderer.material = mat;
+                p.type = 2;                  
             }
             Instantiate(g);
 
