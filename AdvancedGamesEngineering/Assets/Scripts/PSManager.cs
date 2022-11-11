@@ -75,6 +75,7 @@ public class PSManager : MonoBehaviour
             }
         }
         OverallGravitationalPull(); 
+        Integration(); 
     }
     
     private void FixedUpdate() {
@@ -108,7 +109,18 @@ public class PSManager : MonoBehaviour
                 }
             }
         }
+    }
 
+    void Integration(){
+        double3 vel;
+        double3 pos; 
+        for(int i = 0; i < celestialBodiesPhysics.Count; i++){
+            double3 accel = celestialBodiesPhysics[i].accumulatedForce / celestialBodiesPhysics[i].mass; 
+            vel = celestialBodiesPhysics[i].velocity + (accel * Time.deltaTime);
+            pos = celestialBodiesPhysics[i].position + (vel * Time.deltaTime); 
+            celestialBodiesPhysics[i].velocity = vel; 
+            celestialBodiesPhysics[i].position = pos;  
+        }
     }
 
     /*
