@@ -904,6 +904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b544287b873e6804a836d6224b8cb5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 2073790014}
 --- !u!1 &1302438810
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,6 +1626,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17617854f1ebcc849b73e73edfb5d854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mass: 0
+  luminocity: 0
+  age: 0
+  radius: 0
+  spectralClassification: 
+  absoluteMagnitude: 0
+  colour: {r: 0, g: 0, b: 0, a: 0}
+  accumulatedForce:
+    x: 0
+    y: 0
+    z: 0
+  position:
+    x: 0
+    y: 0
+    z: 0
   star: {fileID: 1378566511}
   menu: {fileID: 5866709574479496159, guid: 67921259de6bdad4580c0e37653f9db8, type: 3}
   rb: {fileID: 1378566512}
@@ -1640,6 +1656,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 001ebc0f9e08f0b44a362e807250c9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starData: {fileID: 0}
+  ps: {fileID: 2073790014}
   star: {fileID: 1378566511}
   planet: {fileID: 783261928739982422, guid: c1c7bbd4f98b45f49b016523ec1cc0ee, type: 3}
   moon: {fileID: 1363588573039599007, guid: c2b2f4ffd3320a84c960bfc79f440b6b, type: 3}

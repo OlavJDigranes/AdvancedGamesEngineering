@@ -55,42 +55,43 @@ public class Star : MonoBehaviour
         float randMass = 0.0f; 
         float randScale = 0.0f; 
         float randKelvin = 0.0f;
-        double scalarMass = 2*Math.Pow(10.0, 30.0); //kg
+        double scalarMass = 2*(double)Math.Pow(10.0, 30.0); //kg
+        Debug.Log(scalarMass); 
         double scalarScale = 695700.0; //km
         rb.GetComponent<Rigidbody>();
 
-        if(type == "O" || type == "o"){
-            randMass = (UnityEngine.Random.Range(16.1f, 150f)); 
+        if(type.Equals("O") || type.Equals("o")){
+            randMass = UnityEngine.Random.Range(16.1f, 150f); 
             randScale = UnityEngine.Random.Range(6.6f, 1500.0f);
             randKelvin = UnityEngine.Random.Range(30000.0f, 40000.0f);
         }
-        if(type == "B" || type == "b"){
-            randMass = (UnityEngine.Random.Range(2.1f, 16f)); 
+        if(type.Equals("B") || type.Equals("b")){
+            randMass = UnityEngine.Random.Range(2.1f, 16f); 
             randScale = UnityEngine.Random.Range(1.8f, 6.6f);
             randKelvin = UnityEngine.Random.Range(10000.0f, 30000.0f);
         }
-        if(type == "A" || type == "a"){
-            randMass = (UnityEngine.Random.Range(1.4f, 2.1f)); 
+        if(type.Equals("A") || type.Equals("a")){
+            randMass = UnityEngine.Random.Range(1.4f, 2.1f); 
             randScale = UnityEngine.Random.Range(1.4f, 1.8f);
             randKelvin = UnityEngine.Random.Range(7500.0f, 10000.0f);
         }
-        if(type == "F" || type == "f"){
-            randMass = (UnityEngine.Random.Range(1.04f, 1.4f)); 
+        if(type.Equals("F") || type.Equals("f")){
+            randMass = UnityEngine.Random.Range(1.04f, 1.4f); 
             randScale = UnityEngine.Random.Range(1.15f, 1.4f);
             randKelvin = UnityEngine.Random.Range(6000.0f, 7500.0f);
         }
-        if(type == "G" || type == "g"){
-            randMass = (UnityEngine.Random.Range(0.8f, 1.04f)); 
+        if(type.Equals("G") || type.Equals("g")){
+            randMass = UnityEngine.Random.Range(0.8f, 1.04f); 
             randScale = UnityEngine.Random.Range(0.96f, 1.15f);
             randKelvin = UnityEngine.Random.Range(5200.0f, 6000.0f);
         }
-        if(type == "K" || type == "k"){
-            randMass = (UnityEngine.Random.Range(0.45f, 0.8f));
+        if(type.Equals("K") || type.Equals("k")){
+            randMass = UnityEngine.Random.Range(0.45f, 0.8f);
             randScale = UnityEngine.Random.Range(0.7f, 0.96f); 
             randKelvin = UnityEngine.Random.Range(3700.0f, 5200.0f);
         }
-        if(type == "M" || type == "m"){
-            randMass = (UnityEngine.Random.Range(0.08f, 0.45f)); 
+        if(type.Equals("M") || type.Equals("m")){
+            randMass = UnityEngine.Random.Range(0.08f, 0.45f); 
             randScale = UnityEngine.Random.Range(0.1f, 0.7f);
             randKelvin = UnityEngine.Random.Range(2400.0f, 3700.0f);
         }
@@ -98,6 +99,7 @@ public class Star : MonoBehaviour
         //set mass
         mass = (double)randMass * scalarMass; 
         rb.mass = (float)mass; 
+        Debug.Log(rb.mass + "RB MASS"); 
 
         var scale = star.transform.localScale; 
 

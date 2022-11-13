@@ -574,6 +574,10 @@ PrefabInstance:
       propertyPath: m_GlobalFontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+    - target: {fileID: 5866709574148043786, guid: 67921259de6bdad4580c0e37653f9db8, type: 3}
+      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReadStringinputAbsoluteMagnitude
+      objectReference: {fileID: 0}
     - target: {fileID: 5866709574256951812, guid: 67921259de6bdad4580c0e37653f9db8, type: 3}
       propertyPath: m_text
       value: Spectral Type
@@ -706,6 +710,10 @@ PrefabInstance:
       propertyPath: m_GlobalFontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 5da128bd42f00064c95a56606c125f5f, type: 2}
+    - target: {fileID: 5866709574839685838, guid: 67921259de6bdad4580c0e37653f9db8, type: 3}
+      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReadStringinputSpectralClassification
+      objectReference: {fileID: 0}
     - target: {fileID: 5866709574904226195, guid: 67921259de6bdad4580c0e37653f9db8, type: 3}
       propertyPath: m_IsActive
       value: 0

@@ -9,12 +9,14 @@ public class PSManager : MonoBehaviour
 
     //Variables
     readonly double G = 6.670e-11;
-    readonly float S = 1.0e-12f; //Scale 
+    readonly float S = 1.0e-18f; //Scale 
     GameObject[] celestialBodies; 
     GameObject[] moons; 
     //Moon[] moons2; 
     List<Moon> moons2 = new List<Moon>();  
     Planet[] planets = new Planet[MainMenuManager.numOfPlanets]; 
+    public Star starData; 
+    public GameObject ps; 
     public GameObject star;
     public GameObject planet; 
     public GameObject moon; 
@@ -34,6 +36,7 @@ public class PSManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        starData = ps.GetComponent<Star>(); 
         //Seed randomisation
         UnityEngine.Random.InitState(7);
 
@@ -42,15 +45,15 @@ public class PSManager : MonoBehaviour
         //moons2 = new Moon[moonCounter]; 
         celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBody"); 
         moons = GameObject.FindGameObjectsWithTag("Moon"); 
-        for(int i = 0; i < celestialBodies.Length; i++){
+        for(int i = 0; i < celestialBodies.Length - 1; i++){
             celestialBodiesPhysics.Add(planets[i]); 
         }
         for(int j = 0; j < moons.Length; j++){
             celestialBodiesPhysics.Add(moons2[j]); 
         }
-        masses[0] = star.GetComponent<Star>().mass;
+        //masses[0] = starData.mass;
         for(int i = 1; i < celestialBodies.Length; i++){
-            masses[i] = planets[i].mass; 
+            //masses[i] = planets[i].mass; 
         }
         
         InitialOrbitVelocity();
@@ -68,7 +71,7 @@ public class PSManager : MonoBehaviour
         }
         for(int i = 0; i < celestialBodies.Length; i++){
             if(i == 0){
-                positions[0] = celestialBodies[0].GetComponent<Star>().position; 
+                positions[0] = starData.position; 
             }
             else{
                 positions[i] = planets[i-1].position; 
@@ -101,7 +104,7 @@ public class PSManager : MonoBehaviour
                     double r = System.Math.Sqrt((x * x) + (y * y) + (z * z));
                     force += ((celestialBodiesPhysics[i].position - celestialBodiesPhysics[j].position)/r) * (G * (m1 * m2)/(r* r)); 
                     if(i == 0){
-                        celestialBodies[0].GetComponent<Star>().accumulatedForce += force;
+                        starData.accumulatedForce += force;
                     }
                     else{
                         celestialBodiesPhysics[i-1].accumulatedForce += force; 
@@ -124,32 +127,32 @@ public class PSManager : MonoBehaviour
 
         for(int j = 0; j < planets.Length; j++){
             Vector3 tempPos;
-            tempPos.x = (float)planets[j].position.x;
-            tempPos.y = (float)planets[j].position.y;
-            tempPos.z = (float)planets[j].position.z;
+            tempPos.x = S * (float)planets[j].position.x;
+            tempPos.y = S * (float)planets[j].position.y;
+            tempPos.z = S * (float)planets[j].position.z;
 
             Vector3 tempVel;
-            tempVel.x = (float)planets[j].velocity.x;  
-            tempVel.y = (float)planets[j].velocity.y;  
-            tempVel.z = (float)planets[j].velocity.z;  
+            tempVel.x = S * (float)planets[j].velocity.x;  
+            tempVel.y = S * (float)planets[j].velocity.y;  
+            tempVel.z = S * (float)planets[j].velocity.z;  
 
-            celestialBodies[planets[j].uniquePlanetID].transform.position = tempPos * S; 
-            celestialBodies[planets[j].uniquePlanetID].GetComponent<Rigidbody>().velocity = tempVel * S; 
+            celestialBodies[planets[j].uniquePlanetID].transform.position = tempPos; 
+            celestialBodies[planets[j].uniquePlanetID].GetComponent<Rigidbody>().velocity = tempVel; 
         }
 
         for(int k = 0; k < moons2.Count; k++){
             Vector3 tempPos;
-            tempPos.x = (float)moons2[k].position.x;
-            tempPos.y = (float)moons2[k].position.y;
-            tempPos.z = (float)moons2[k].position.z;
+            tempPos.x = S * (float)moons2[k].position.x;
+            tempPos.y = S * (float)moons2[k].position.y;
+            tempPos.z = S * (float)moons2[k].position.z;
 
             Vector3 tempVel;
-            tempVel.x = (float)moons2[k].velocity.x;  
-            tempVel.y = (float)moons2[k].velocity.y;  
-            tempVel.z = (float)moons2[k].velocity.z;  
+            tempVel.x = S * (float)moons2[k].velocity.x;  
+            tempVel.y = S * (float)moons2[k].velocity.y;  
+            tempVel.z = S * (float)moons2[k].velocity.z;  
 
-            moons[moons2[k].uniqueMoonID].transform.position = tempPos * S; 
-            moons[moons2[k].uniqueMoonID].GetComponent<Rigidbody>().velocity = tempVel * S; 
+            moons[moons2[k].uniqueMoonID].transform.position = tempPos; 
+            moons[moons2[k].uniqueMoonID].GetComponent<Rigidbody>().velocity = tempVel; 
         }
     }
 
@@ -198,18 +201,21 @@ public class PSManager : MonoBehaviour
         //Initial planet velocities
         for(int i = 1; i < celestialBodies.Length; i++){
             double m = planets[i-1].mass;
-            double x = (double)star.transform.position.x - planets[i-1].position.x;
-            double y = (double)star.transform.position.y - planets[i-1].position.y;
-            double z = (double)star.transform.position.z - planets[i-1].position.z;
+            double x = starData.position.x - planets[i-1].position.x;
+            double y = starData.position.y - planets[i-1].position.y;
+            double z = starData.position.z - planets[i-1].position.z;
             double r = System.Math.Sqrt((x * x) + (y * y) + (z * z));
             double3 initialVelocity = directionZ * System.Math.Sqrt((G * m) / r);
-            planets[i].velocity = initialVelocity; 
+            planets[i-1].velocity = initialVelocity; 
+
+            Debug.Log(initialVelocity + "INITIAL VELOCITY"); 
 
             //Float conversion for display
             Vector3 initVel; 
-            initVel.x = (float)initialVelocity.x;
-            initVel.y = (float)initialVelocity.y;
-            initVel.z = (float)initialVelocity.z;
+            initVel.x = S * (float)initialVelocity.x;
+            initVel.y = S * (float)initialVelocity.y;
+            initVel.z = S * (float)initialVelocity.z;
+            Debug.Log(initVel + "INITVEL"); 
             celestialBodies[i].GetComponent<Rigidbody>().velocity += initVel; 
         }
 
@@ -224,9 +230,9 @@ public class PSManager : MonoBehaviour
             
             //Float conversion for display
             Vector3 initVel; 
-            initVel.x = (float)initialVelocity.x;
-            initVel.y = (float)initialVelocity.y;
-            initVel.z = (float)initialVelocity.z;
+            initVel.x = S * (float)initialVelocity.x;
+            initVel.y = S * (float)initialVelocity.y;
+            initVel.z = S * (float)initialVelocity.z;
             moons[i].GetComponent<Rigidbody>().velocity += initVel; 
         }
 
@@ -257,9 +263,9 @@ public class PSManager : MonoBehaviour
         //Planet[] planets = new Planet[MainMenuManager.numOfPlanets]; 
         for(int i = 0; i < MainMenuManager.numOfPlanets; i++){
             Planet p = new Planet();
-            float planetMass = UnityEngine.Random.Range((((float)star.GetComponent<Star>().mass) * 0.003f), (((float)star.GetComponent<Star>().mass) * 0.09f));
+            float planetMass = UnityEngine.Random.Range((((float)starData.mass) * 0.003f), (((float)starData.mass) * 0.09f));
             p.mass = (double)planetMass; 
-            p.position = new double3((star.GetComponent<Star>().mass * (i + 2.0)) * 2.0, 0, 0);
+            p.position = new double3((starData.mass * (i + 2.0)) * 2.0, 0, 0);
             p.identifier = 1; 
             p.uniquePlanetID = i+1; 
             p.CalculateProperties(); 
