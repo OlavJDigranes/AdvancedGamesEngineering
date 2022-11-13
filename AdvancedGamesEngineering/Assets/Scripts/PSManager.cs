@@ -139,17 +139,17 @@ public class PSManager : MonoBehaviour
 
         for(int k = 0; k < moons2.Count; k++){
             Vector3 tempPos;
-            tempPos.x = (float)moons2[j].position.x;
-            tempPos.y = (float)moons2[j].position.y;
-            tempPos.z = (float)moons2[j].position.z;
+            tempPos.x = (float)moons2[k].position.x;
+            tempPos.y = (float)moons2[k].position.y;
+            tempPos.z = (float)moons2[k].position.z;
 
             Vector3 tempVel;
-            tempVel.x = (float)moons2[j].velocity.x;  
-            tempVel.y = (float)moons2[j].velocity.y;  
-            tempVel.z = (float)moons2[j].velocity.z;  
+            tempVel.x = (float)moons2[k].velocity.x;  
+            tempVel.y = (float)moons2[k].velocity.y;  
+            tempVel.z = (float)moons2[k].velocity.z;  
 
-            moons[moons2[j].uniqueMoonID].transform.position = tempPos * S; 
-            moons[moons2[j].uniqueMoonID].GetComponent<Rigidbody>().velocity = tempVel * S; 
+            moons[moons2[k].uniqueMoonID].transform.position = tempPos * S; 
+            moons[moons2[k].uniqueMoonID].GetComponent<Rigidbody>().velocity = tempVel * S; 
         }
     }
 
