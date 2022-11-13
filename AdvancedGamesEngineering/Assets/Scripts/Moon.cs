@@ -6,6 +6,7 @@ using Unity.Mathematics;
 public class Moon : CelestialBody
 {
     public int planetID; 
+    public int uniqueMoonID; 
     //public double mass; 
     //public double3 scale; 
     //public double3 position;

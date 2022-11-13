@@ -14,6 +14,7 @@ public class Planet : CelestialBody{
     //public Vector3 scale = new Vector3(1, 1, 1); 
     //public Vector3 position;
     public int type; //1 for rocky, 2 for gassy
+    public int uniquePlanetID; 
     public bool isHabitable = false; 
 
     //Simple calculation of properties. This will be expanded whne habitability is accounted for. 
