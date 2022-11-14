@@ -9,7 +9,7 @@ public class PSManager : MonoBehaviour
 
     //Variables
     readonly double G = 6.670e-11;
-    readonly float S = 1.0e-18f; //Scale 
+    readonly double S = 1.0e-3; //Scale 
     GameObject[] celestialBodies; 
     GameObject[] moons; 
     //Moon[] moons2; 
@@ -77,8 +77,8 @@ public class PSManager : MonoBehaviour
                 positions[i] = planets[i-1].position; 
             }
         }
-        OverallGravitationalPull(); 
-        Integration(); 
+        //OverallGravitationalPull(); 
+        //Integration(); 
     }
     
     private void FixedUpdate() {
@@ -126,30 +126,34 @@ public class PSManager : MonoBehaviour
         }
 
         for(int j = 0; j < planets.Length; j++){
+            double3 tempPosDownscale = S * planets[j].position; 
             Vector3 tempPos;
-            tempPos.x = S * (float)planets[j].position.x;
-            tempPos.y = S * (float)planets[j].position.y;
-            tempPos.z = S * (float)planets[j].position.z;
+            tempPos.x = (float)tempPosDownscale.x;
+            tempPos.y = (float)tempPosDownscale.y;
+            tempPos.z = (float)tempPosDownscale.z;
 
+            double3 tempVelDownscale = S * planets[j].velocity;
             Vector3 tempVel;
-            tempVel.x = S * (float)planets[j].velocity.x;  
-            tempVel.y = S * (float)planets[j].velocity.y;  
-            tempVel.z = S * (float)planets[j].velocity.z;  
+            tempVel.x = (float)tempVelDownscale.x;  
+            tempVel.y = (float)tempVelDownscale.y;  
+            tempVel.z = (float)tempVelDownscale.z;  
 
             celestialBodies[planets[j].uniquePlanetID].transform.position = tempPos; 
             celestialBodies[planets[j].uniquePlanetID].GetComponent<Rigidbody>().velocity = tempVel; 
         }
 
         for(int k = 0; k < moons2.Count; k++){
+            double3 tempPosDownscale = S * moons2[k].position;
             Vector3 tempPos;
-            tempPos.x = S * (float)moons2[k].position.x;
-            tempPos.y = S * (float)moons2[k].position.y;
-            tempPos.z = S * (float)moons2[k].position.z;
+            tempPos.x = (float)tempPosDownscale.x;
+            tempPos.y = (float)tempPosDownscale.y;
+            tempPos.z = (float)tempPosDownscale.z;
 
+            double3 tempVelDownscale = S * moons2[k].velocity; 
             Vector3 tempVel;
-            tempVel.x = S * (float)moons2[k].velocity.x;  
-            tempVel.y = S * (float)moons2[k].velocity.y;  
-            tempVel.z = S * (float)moons2[k].velocity.z;  
+            tempVel.x = (float)tempVelDownscale.x;  
+            tempVel.y = (float)tempVelDownscale.y;  
+            tempVel.z = (float)tempVelDownscale.z;  
 
             moons[moons2[k].uniqueMoonID].transform.position = tempPos; 
             moons[moons2[k].uniqueMoonID].GetComponent<Rigidbody>().velocity = tempVel; 
@@ -205,16 +209,20 @@ public class PSManager : MonoBehaviour
             double y = starData.position.y - planets[i-1].position.y;
             double z = starData.position.z - planets[i-1].position.z;
             double r = System.Math.Sqrt((x * x) + (y * y) + (z * z));
+            Debug.Log(r + " PLANET R"); 
+            Debug.Log(System.Math.Sqrt((G * m) / r) + " PLANET SQRT"); 
             double3 initialVelocity = directionZ * System.Math.Sqrt((G * m) / r);
             planets[i-1].velocity = initialVelocity; 
 
             Debug.Log(initialVelocity + "INITIAL VELOCITY"); 
 
             //Float conversion for display
+            double3 initVelDownscale = S * initialVelocity; 
+            Debug.Log(initVelDownscale + "INITIAL VELOCITY DOWNSCALE"); 
             Vector3 initVel; 
-            initVel.x = S * (float)initialVelocity.x;
-            initVel.y = S * (float)initialVelocity.y;
-            initVel.z = S * (float)initialVelocity.z;
+            initVel.x = (float)initVelDownscale.x;
+            initVel.y = (float)initVelDownscale.y;
+            initVel.z = (float)initVelDownscale.z;
             Debug.Log(initVel + "INITVEL"); 
             celestialBodies[i].GetComponent<Rigidbody>().velocity += initVel; 
         }
@@ -229,10 +237,11 @@ public class PSManager : MonoBehaviour
             moons2[i].velocity = initialVelocity;
             
             //Float conversion for display
+            double3 initVelDownscale = S * initialVelocity; 
             Vector3 initVel; 
-            initVel.x = S * (float)initialVelocity.x;
-            initVel.y = S * (float)initialVelocity.y;
-            initVel.z = S * (float)initialVelocity.z;
+            initVel.x = (float)initVelDownscale.x;
+            initVel.y = (float)initVelDownscale.y;
+            initVel.z = (float)initVelDownscale.z;
             moons[i].GetComponent<Rigidbody>().velocity += initVel; 
         }
 
@@ -265,7 +274,9 @@ public class PSManager : MonoBehaviour
             Planet p = new Planet();
             float planetMass = UnityEngine.Random.Range((((float)starData.mass) * 0.003f), (((float)starData.mass) * 0.09f));
             p.mass = (double)planetMass; 
-            p.position = new double3((starData.mass * (i + 2.0)) * 2.0, 0, 0);
+            Debug.Log(p.mass + " Planet Mass Proper"); 
+            p.position = new double3((starData.mass * (i + 1.0)) * 100.0, 0, 0);
+            Debug.Log(p.position + " Planet Pos Proper"); 
             p.identifier = 1; 
             p.uniquePlanetID = i+1; 
             p.CalculateProperties(); 
@@ -280,18 +291,26 @@ public class PSManager : MonoBehaviour
 
             //Generate values
             rbG = g.GetComponent<Rigidbody>();
-            rbG.mass = (float)p.mass; 
+            double massDownscale = S * p.mass; 
+            Debug.Log(massDownscale + " Planet Mass Downscale"); 
+            rbG.mass = (float)massDownscale; 
 
+            double3 posDownscale = S * p.position; 
+            Debug.Log(posDownscale + " Planet Pos Downscale"); 
             Vector3 posConversion;
-            posConversion.x = (float)p.position.x;
-            posConversion.y = (float)p.position.y;
-            posConversion.z = (float)p.position.z;
+            posConversion.x = (float)posDownscale.x;
+            posConversion.y = (float)posDownscale.y;
+            posConversion.z = (float)posDownscale.z;
+            Debug.Log(posConversion + " Planet pos down conversion"); 
             g.transform.position = posConversion; 
 
+            double3 scaleDownscale = S * p.scale; 
+            Debug.Log(scaleDownscale + " Planet scale downscale"); 
             Vector3 scaleConversion;
-            scaleConversion.x = (float)p.scale.x;
-            scaleConversion.y = (float)p.scale.y;
-            scaleConversion.z = (float)p.scale.z;
+            scaleConversion.x = (float)scaleDownscale.x;
+            scaleConversion.y = (float)scaleDownscale.y;
+            scaleConversion.z = (float)scaleDownscale.z;
+            Debug.Log(scaleConversion + " planet scale down conversion"); 
             g.transform.localScale = scaleConversion;
 
             var planetRenderer = g.GetComponent<Renderer>();
@@ -327,7 +346,7 @@ public class PSManager : MonoBehaviour
             Instantiate(g);
 
             if(rbG.mass > 3.0f){
-                GenerateMoon(p.mass, p.position, planetNr, p.scale, moonCounter); 
+                //GenerateMoon(p.mass, p.position, planetNr, p.scale, moonCounter); 
                 moonCounter++; 
             }
 
@@ -350,24 +369,27 @@ public class PSManager : MonoBehaviour
         Rigidbody rbM; 
 
         rbM = gm.GetComponent<Rigidbody>(); 
-        rbM.mass = (float)m.mass; 
+        double massDownscale = S * m.mass; 
+        rbM.mass = (float)massDownscale; 
 
+        double3 posDownscale = S * m.position; 
         Vector3 posConversion;
-        posConversion.x = (float)m.position.x;
-        posConversion.y = (float)m.position.y;
-        posConversion.z = (float)m.position.z;
+        posConversion.x = (float)posDownscale.x;
+        posConversion.y = (float)posDownscale.y;
+        posConversion.z = (float)posDownscale.z;
         gm.transform.position = posConversion; 
-
+        
+        double3 scaleDownscale = S * m.scale; 
         Vector3 scaleConversion;
-        scaleConversion.x = (float)m.scale.x;
-        scaleConversion.y = (float)m.scale.y;
-        scaleConversion.z = (float)m.scale.z;
+        scaleConversion.x = (float)scaleDownscale.x;
+        scaleConversion.y = (float)scaleDownscale.y;
+        scaleConversion.z = (float)scaleDownscale.z;
         gm.transform.localScale = scaleConversion; 
 
         //Set up material
         var moonRenderer = gm.GetComponent<Renderer>(); 
         Material moonMat = new Material(pgm); 
-        moonMat.SetFloat("_Roughness", UnityEngine.Random.Range(3f, 5f)); 
+        moonMat.SetFloat("_Roughness", UnityEngine.Random.Range(3.0f, 5.0f)); 
         moonMat.SetColor("_Color", Color.grey); 
         moonRenderer.material = moonMat; 
         //moonRenderer.sharedMaterial.SetColor("_Color", Color.grey); 

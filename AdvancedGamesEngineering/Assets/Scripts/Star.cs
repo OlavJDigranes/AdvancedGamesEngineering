@@ -7,6 +7,7 @@ using Unity.Mathematics;
 public class Star : MonoBehaviour
 {
     //Variables
+    readonly double S = 1.0e-3; //Scale 
     public double mass;
     public double luminocity;
     public double age;
@@ -95,24 +96,32 @@ public class Star : MonoBehaviour
             randScale = UnityEngine.Random.Range(0.1f, 0.7f);
             randKelvin = UnityEngine.Random.Range(2400.0f, 3700.0f);
         }
+        Debug.Log(randMass + " STAR RAND MASS"); 
+        Debug.Log(randScale + " STAR RAND SCALE"); 
+        Debug.Log(randKelvin + " STAR RAND KELV"); 
         
         //set mass
         mass = (double)randMass * scalarMass; 
-        rb.mass = (float)mass; 
-        Debug.Log(rb.mass + "RB MASS"); 
+        double massDownscale = S * mass; 
+        rb.mass = (float)massDownscale; 
+        Debug.Log(rb.mass + " RB MASS SUN"); 
 
         var scale = star.transform.localScale; 
 
         //Set scale
         radius = (double)randScale * scalarScale; 
-        scale *= (float)radius * 2.0f; 
+        Debug.Log(radius + " STAR RADIUS"); 
+        double radDownscale = S * radius;
+        Debug.Log(radDownscale + " STAR RAD DOWNSCALE");  
+        scale *= (float)radDownscale * 2.0f; 
+        Debug.Log(scale + " STAR SCALE"); 
         star.transform.localScale = scale; 
 
         //Colour 
         tempCol = Mathf.CorrelatedColorTemperatureToRGB(randKelvin);
         mvMoved = mv + 10;
         mvRev = 30 - mvMoved; 
-        colourAlpha = (float)mvRev/30;
+        colourAlpha = (float)mvRev/30.0f;
         tempCol.a = colourAlpha; 
         colour = tempCol; 
         var sphereRenderer = star.GetComponent<Renderer>();

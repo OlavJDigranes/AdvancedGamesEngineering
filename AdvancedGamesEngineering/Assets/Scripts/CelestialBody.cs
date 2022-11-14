@@ -7,7 +7,7 @@ using Unity.Mathematics;
 public class CelestialBody
 {
     public double mass; 
-    public double3 scale; 
+    public double3 scale = new double3(1.0, 1.0, 1.0); 
     public double3 position;
     public double3 velocity; 
     public double3 accumulatedForce;
@@ -15,6 +15,8 @@ public class CelestialBody
 
     //Simple calculation of properties. This will be expanded whne habitability is accounted for. 
     public void CalculateProperties(){
-        scale *= mass;
+        Debug.Log(mass + " CB Mass in calcProp"); 
+        scale *= (mass); //NEEDS WORK https://www.google.com/search?client=opera&q=planet+mass+to+radius+ratio&sourceid=opera&ie=UTF-8&oe=UTF-8&tpsf=openc 
+        Debug.Log(scale + " CB Scale Proper"); 
     }
 }
