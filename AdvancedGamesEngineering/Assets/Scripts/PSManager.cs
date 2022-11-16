@@ -35,7 +35,8 @@ public class PSManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //starData = ps.GetComponent<Star>(); 
+        //starData = ps.GetComponent<Star>();
+        starData = new Star();  
         
         //Generate star data. 
         starData.GenerateStar(MainMenuManager.absoluteMagnitude, MainMenuManager.spectralClassification);
