@@ -905,6 +905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ps: {fileID: 2073790014}
+  star: {fileID: 1378566511}
 --- !u!1 &1302438810
 GameObject:
   m_ObjectHideFlags: 0

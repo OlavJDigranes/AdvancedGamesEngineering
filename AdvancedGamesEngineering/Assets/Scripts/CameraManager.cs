@@ -60,7 +60,12 @@ public class CameraManager : MonoBehaviour
     }
 
     void LateUpdate() {
-        Camera.main.transform.position = new Vector3(celestialBodies[cameraIndex].transform.position.x, celestialBodies[cameraIndex].transform.position.y + (celestialBodies[cameraIndex].transform.localScale.y), celestialBodies[cameraIndex].transform.position.z);
+        if(cameraIndex > 0){
+            Camera.main.transform.position = new Vector3(celestialBodies[cameraIndex].transform.position.x, celestialBodies[cameraIndex].transform.position.y + (celestialBodies[cameraIndex].transform.localScale.y * 2.0f), celestialBodies[cameraIndex].transform.position.z);
+        }
+        else{
+            Camera.main.transform.position = new Vector3(celestialBodies[cameraIndex].transform.position.x, celestialBodies[cameraIndex].transform.position.y + (celestialBodies[cameraIndex].transform.localScale.y + ((celestialBodies[cameraIndex].transform.localScale.y/2.0f))), celestialBodies[cameraIndex].transform.position.z);
+        }
         //Counteract planet rotation
         //for(int i = 1; i < cameras.Length; i++){
             //cameras[i].transform.rotation = Quaternion.Euler(90.0f, celestialBodies[i].transform.rotation.y * -1.0f, 0.0f); 

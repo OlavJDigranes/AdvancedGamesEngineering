@@ -7,11 +7,11 @@ using Unity.Mathematics;
 public class Star : CelestialBody
 {
     //Variables
-    readonly double S = 1.0e-3; //Scale 
+    readonly double S = 1.0e-4; //Scale 
     //public double mass;
     public double luminocity;
     public double age;
-    public double radius; 
+    //public double radius; 
     public string spectralClassification;
     public int absoluteMagnitude;
     public Color colour;  
@@ -58,7 +58,7 @@ public class Star : CelestialBody
         float randKelvin = 0.0f;
         double scalarMass = 2*(double)Math.Pow(10.0, 30.0); //kg
         Debug.Log(scalarMass); 
-        double scalarScale = 695700.0; //km
+        double scalarScale = 696340.0; //km
         //rb.GetComponent<Rigidbody>();
 
         if(type.Equals("O") || type.Equals("o")){
@@ -102,11 +102,12 @@ public class Star : CelestialBody
         
         //set mass
         mass = (double)randMass * scalarMass; 
+        Debug.Log(mass + " STAR MASS"); 
         massDownscale = S * mass;   
 
         //Set scale
         radius = (double)randScale * scalarScale; 
-        Debug.Log(radius + " STAR RADIUS"); 
+        Debug.Log(radius + " STAR RADIUS " + radius * 2 + " STAR DIAMETER"); 
         radDownscale = S * radius;
         Debug.Log(radDownscale + " STAR RAD DOWNSCALE");   
 
