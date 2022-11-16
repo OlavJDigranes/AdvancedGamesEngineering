@@ -9,12 +9,13 @@ public class CameraMovement : MonoBehaviour
     private float moveSpeed = 0.075f;
     private float scrollSpeed = 15.0f;
     public GameObject ps; 
-    Star starData;
+    public GameObject star; 
+    //Star starData;
 
     void Start() {
-        starData = ps.GetComponent<Star>(); 
+        //starData = ps.GetComponent<Star>(); 
         //transform.LookAt(Vector3.zero);
-        Camera.main.transform.position = new Vector3 (0.0f, (float)starData.scale.y * 5.0f, 0.0f);      
+        Camera.main.transform.position = new Vector3 (0.0f, star.transform.scale.y * 5.0f, 0.0f);      
     }
 
     void Update () {
