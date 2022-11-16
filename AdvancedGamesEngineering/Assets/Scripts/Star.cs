@@ -4,19 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics; 
 
-public class Star : MonoBehaviour
+public class Star : CelestialBody
 {
     //Variables
     readonly double S = 1.0e-3; //Scale 
-    public double mass;
+    //public double mass;
     public double luminocity;
     public double age;
     public double radius; 
     public string spectralClassification;
     public int absoluteMagnitude;
     public Color colour;  
-    public double3 accumulatedForce; 
-    public double3 position; 
+    //public double3 accumulatedForce; 
+    //public double3 position; 
 
     public GameObject star;
     public GameObject menu; 

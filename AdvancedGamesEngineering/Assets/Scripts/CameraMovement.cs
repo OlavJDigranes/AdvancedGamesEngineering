@@ -14,7 +14,7 @@ public class CameraMovement : MonoBehaviour
     void Start() {
         starData = ps.GetComponent<Star>(); 
         transform.LookAt(Vector3.zero);
-        Camera.main.transform.position = new Vector3 (0.0f, (float)starData.mass * 5.0f, 0.0f);      
+        Camera.main.transform.position = new Vector3 (0.0f, (float)starData.radius * 5.0f, 0.0f);      
     }
 
     void Update () {

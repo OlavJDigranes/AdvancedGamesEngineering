@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics; 
 
-public class CelestialBody
+public class CelestialBody : MonoBehaviour
 {
     public double mass; 
     public double3 scale = new double3(1.0, 1.0, 1.0); 
@@ -16,7 +16,7 @@ public class CelestialBody
     //Simple calculation of properties. This will be expanded whne habitability is accounted for. 
     public void CalculateProperties(){
         Debug.Log(mass + " CB Mass in calcProp"); 
-        scale *= (mass); //NEEDS WORK https://www.google.com/search?client=opera&q=planet+mass+to+radius+ratio&sourceid=opera&ie=UTF-8&oe=UTF-8&tpsf=openc 
+        scale *= math.pow(mass, 0.55); //NEEDS WORK https://www.google.com/search?client=opera&q=planet+mass+to+radius+ratio&sourceid=opera&ie=UTF-8&oe=UTF-8&tpsf=openc 
         Debug.Log(scale + " CB Scale Proper"); 
     }
 }
