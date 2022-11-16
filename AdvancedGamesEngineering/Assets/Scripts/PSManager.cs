@@ -121,6 +121,7 @@ public class PSManager : MonoBehaviour
             rotationalAxis = new double3(0.0, -1.0 * (double)Mathf.Sin(obliquity), -1.0 * (double)Mathf.Cos(obliquity)); 
             
             angularVelocity = rotationalAxis * System.Math.Sqrt((G * m)/r); 
+            Debug.Log(angularVelocity + " ANG VEL"); 
             
             force = (m * (angularVelocity * angularVelocity)) / r; 
 
