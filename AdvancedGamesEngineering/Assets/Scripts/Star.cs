@@ -15,26 +15,26 @@ public class Star : CelestialBody
     public string spectralClassification;
     public int absoluteMagnitude;
     public Color colour;  
+    public double massDownscale;
+    public double radDownscale; 
     //public double3 accumulatedForce; 
     //public double3 position; 
 
-    public GameObject star;
-    public GameObject menu; 
-    public Rigidbody rb; 
+    //public GameObject star;
+    //public GameObject menu; 
+    //public Rigidbody rb; 
     MainMenuManager mainMenuMngr;
 
-    Color[] colours; 
-
     //set up some varaiables
-    void Awake() {
-        mainMenuMngr = menu.GetComponent<MainMenuManager>(); 
+    public void GetMainMenuManager() {
+        //mainMenuMngr = menu.GetComponent<MainMenuManager>(); 
     }
 
     // Start is called before the first frame update
-    void Start()
+    public void StarSetup()
     {
         //Ensure the star is at the point of origin. 
-        star.transform.position = new Vector3(0, 0, 0);
+        //star.transform.position = new Vector3(0, 0, 0);
 
         //Take in variables from menu
         spectralClassification = MainMenuManager.spectralClassification; 
@@ -47,7 +47,7 @@ public class Star : CelestialBody
    
     }
 
-    void GenerateStar(int mv, string type){
+    public void GenerateStar(int mv, string type){
         //Temp Variables
         Color tempCol; 
         float colourAlpha; 
@@ -59,7 +59,7 @@ public class Star : CelestialBody
         double scalarMass = 2*(double)Math.Pow(10.0, 30.0); //kg
         Debug.Log(scalarMass); 
         double scalarScale = 695700.0; //km
-        rb.GetComponent<Rigidbody>();
+        //rb.GetComponent<Rigidbody>();
 
         if(type.Equals("O") || type.Equals("o")){
             randMass = UnityEngine.Random.Range(16.1f, 150f); 
@@ -102,20 +102,13 @@ public class Star : CelestialBody
         
         //set mass
         mass = (double)randMass * scalarMass; 
-        double massDownscale = S * mass; 
-        rb.mass = (float)massDownscale; 
-        Debug.Log(rb.mass + " RB MASS SUN"); 
-
-        var scale = star.transform.localScale; 
+        massDownscale = S * mass;   
 
         //Set scale
         radius = (double)randScale * scalarScale; 
         Debug.Log(radius + " STAR RADIUS"); 
-        double radDownscale = S * radius;
-        Debug.Log(radDownscale + " STAR RAD DOWNSCALE");  
-        scale *= (float)radDownscale * 2.0f; 
-        Debug.Log(scale + " STAR SCALE"); 
-        star.transform.localScale = scale; 
+        radDownscale = S * radius;
+        Debug.Log(radDownscale + " STAR RAD DOWNSCALE");   
 
         //Colour 
         tempCol = Mathf.CorrelatedColorTemperatureToRGB(randKelvin);
@@ -124,12 +117,7 @@ public class Star : CelestialBody
         colourAlpha = (float)mvRev/30.0f;
         tempCol.a = colourAlpha; 
         colour = tempCol; 
-        var sphereRenderer = star.GetComponent<Renderer>();
-        sphereRenderer.material.SetColor("_DetailColor", Color.white);
-        sphereRenderer.material.SetColor("_StarColor", tempCol);
     }   
 }
 
-/*NOTES:
- - Star will always be at point 0, 0, 0.  
-*/
+

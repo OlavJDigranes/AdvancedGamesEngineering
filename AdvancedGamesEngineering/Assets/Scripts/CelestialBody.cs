@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics; 
 
-public class CelestialBody : MonoBehaviour
+public class CelestialBody
 {
     public double mass; 
     public double3 scale = new double3(1.0, 1.0, 1.0); 

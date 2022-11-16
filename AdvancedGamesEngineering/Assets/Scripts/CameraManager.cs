@@ -22,9 +22,9 @@ public class CameraManager : MonoBehaviour
     {
         cameras = Camera.allCameras; 
         //Camera.GetAllCameras(cameras); 
-        for(int i = 1; i < cameras.Length; i++){
-            cameras[i].enabled = false; 
-        }
+        //for(int i = 1; i < cameras.Length; i++){
+            //cameras[i].enabled = false; 
+        //}
         celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBody"); 
         numPlanOut.text = (celestialBodies.Length-1).ToString();
     }
@@ -35,15 +35,15 @@ public class CameraManager : MonoBehaviour
         //Cycle up through the cameras
         if(Input.GetKeyDown(KeyCode.T) && cameraIndex < celestialBodies.Length-1){
                 cameraIndex++; 
-                cameras[cameraIndex].enabled = true; 
-                cameras[cameraIndex - 1].enabled = false; 
+                //cameras[cameraIndex].enabled = true; 
+                //cameras[cameraIndex - 1].enabled = false; 
         }
 
         //Cycle down through the cameras
         if(Input.GetKeyDown(KeyCode.G) && cameraIndex > 0){
                 cameraIndex--; 
-                cameras[cameraIndex].enabled = true; 
-                cameras[cameraIndex + 1].enabled = false; 
+                //cameras[cameraIndex].enabled = true; 
+                //cameras[cameraIndex + 1].enabled = false; 
         }
 
         if(celBod.text != (cameraIndex+1).ToString()){
@@ -60,9 +60,10 @@ public class CameraManager : MonoBehaviour
     }
 
     void LateUpdate() {
+        Camera.main.transform.position = new Vector3(celestialBodies[cameraIndex].transform.position.x, celestialBodies[cameraIndex].transform.position.y + (celestialBodies[cameraIndex].transform.localScale.y), celestialBodies[cameraIndex].transform.position.z);
         //Counteract planet rotation
-        for(int i = 1; i < cameras.Length; i++){
-            cameras[i].transform.rotation = Quaternion.Euler(90.0f, celestialBodies[i].transform.rotation.y * -1.0f, 0.0f); 
-        }   
+        //for(int i = 1; i < cameras.Length; i++){
+            //cameras[i].transform.rotation = Quaternion.Euler(90.0f, celestialBodies[i].transform.rotation.y * -1.0f, 0.0f); 
+        //}   
     }
 }

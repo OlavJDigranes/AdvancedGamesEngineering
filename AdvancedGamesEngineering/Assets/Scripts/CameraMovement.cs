@@ -13,13 +13,13 @@ public class CameraMovement : MonoBehaviour
 
     void Start() {
         starData = ps.GetComponent<Star>(); 
-        transform.LookAt(Vector3.zero);
-        Camera.main.transform.position = new Vector3 (0.0f, (float)starData.radius * 5.0f, 0.0f);      
+        //transform.LookAt(Vector3.zero);
+        Camera.main.transform.position = new Vector3 (0.0f, (float)starData.scale.y * 5.0f, 0.0f);      
     }
 
     void Update () {
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) {
-            transform.position += moveSpeed * new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+            //transform.position += moveSpeed * new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         }
 
         if (Input.GetAxis("Mouse ScrollWheel") != 0) {

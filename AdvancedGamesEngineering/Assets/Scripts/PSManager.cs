@@ -36,6 +36,11 @@ public class PSManager : MonoBehaviour
     void Start()
     {
         starData = ps.GetComponent<Star>(); 
+        
+        //Generate star data. 
+        starData.GenerateStar(MainMenuManager.absoluteMagnitude, MainMenuManager.spectralClassification);
+        SetupStarGameObject(); 
+
         //Seed randomisation
         UnityEngine.Random.InitState(7);
 
@@ -70,10 +75,6 @@ public class PSManager : MonoBehaviour
 
         OverallGravitationalPull(); 
         Integration(); 
-    }
-    
-    private void FixedUpdate() {
-        
     }
 
     void OverallGravitationalPull(){
@@ -220,6 +221,25 @@ public class PSManager : MonoBehaviour
             initVel.z = (float)initVelDownscale.z;
             moons[i].GetComponent<Rigidbody>().velocity += initVel; 
         }
+    }
+
+    void SetupStarGameObject(){
+        Rigidbody rbS; 
+        rbS = star.GetComponent<Rigidbody>(); 
+
+        star.transform.position = new Vector3(0, 0, 0);
+
+        rbS.mass = (float)starData.massDownscale; 
+        Debug.Log(rbS.mass + " RB MASS SUN");
+
+        var starScale = star.transform.localScale;
+        starScale *= (float)starData.radDownscale * 2.0f; 
+        Debug.Log(starScale + " STAR SCALE"); 
+        star.transform.localScale = starScale;
+        
+        var sphereRenderer = star.GetComponent<Renderer>();
+        sphereRenderer.material.SetColor("_DetailColor", Color.white);
+        sphereRenderer.material.SetColor("_StarColor", starData.colour);;
     }
 
     void GeneratePlanets(){
