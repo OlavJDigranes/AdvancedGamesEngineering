@@ -227,16 +227,20 @@ public class PSManager : MonoBehaviour
         Rigidbody rbS; 
         rbS = star.GetComponent<Rigidbody>(); 
 
+        //Set star starting position
         star.transform.position = new Vector3(0, 0, 0);
 
+        //set game object mass
         rbS.mass = (float)starData.massDownscale; 
         Debug.Log(rbS.mass + " RB MASS SUN");
 
+        //Set game object scale
         var starScale = star.transform.localScale;
         starScale *= (float)starData.radDownscale * 2.0f; 
         Debug.Log(starScale + " STAR SCALE"); 
         star.transform.localScale = starScale;
         
+        //Star colour handling. 
         var sphereRenderer = star.GetComponent<Renderer>();
         sphereRenderer.material.SetColor("_DetailColor", Color.white);
         sphereRenderer.material.SetColor("_StarColor", starData.colour);;
