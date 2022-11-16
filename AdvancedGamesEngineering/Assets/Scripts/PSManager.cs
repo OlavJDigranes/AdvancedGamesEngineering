@@ -115,7 +115,7 @@ public class PSManager : MonoBehaviour
             double3 force = new double3(); 
             double3 angularVelocity= new double3(); 
             double m = celestialBodiesPhysics[i].mass; 
-            double r = celestialBodiesPhysics[i].radius; 
+            double r = celestialBodiesPhysics[i].radius * 1000.0; //Coversion to meters
 
             float obliquity = UnityEngine.Random.Range(0.03f, 82.23f); //In degrees
             rotationalAxis = new double3(0.0, -1.0 * (double)Mathf.Sin(obliquity), -1.0 * (double)Mathf.Cos(obliquity)); 
