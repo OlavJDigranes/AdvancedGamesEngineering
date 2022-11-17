@@ -10,7 +10,10 @@ public class CameraManager : MonoBehaviour
     Camera[] cameras; 
     GameObject[] celestialBodies;
     int cameraIndex = 0; 
+    private float scrollSpeed = 100.0f;
+    Vector3 scrolling = new Vector3(0.0f, 1.0f, 0.0f); 
 
+    public GameObject star; 
     public TextMeshProUGUI numPlanOut; 
     public TextMeshProUGUI celBod;
     public TextMeshProUGUI posOut;
@@ -25,6 +28,8 @@ public class CameraManager : MonoBehaviour
         //for(int i = 1; i < cameras.Length; i++){
             //cameras[i].enabled = false; 
         //}
+        //Camera.main.transform.position += new Vector3 (0.0f, star.transform.localScale.y + (star.transform.localScale.y/2.0f), 0.0f);
+        scrolling += new Vector3 (0.0f, star.transform.localScale.y + (star.transform.localScale.y/2.0f), 0.0f);
         celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBody"); 
         numPlanOut.text = (celestialBodies.Length-1).ToString();
     }
@@ -60,15 +65,9 @@ public class CameraManager : MonoBehaviour
     }
 
     void LateUpdate() {
-        if(cameraIndex > 0){
-            Camera.main.transform.position = new Vector3(celestialBodies[cameraIndex].transform.position.x, celestialBodies[cameraIndex].transform.position.y + (celestialBodies[cameraIndex].transform.localScale.y * 2.0f), celestialBodies[cameraIndex].transform.position.z);
+        if (Input.GetAxis("Mouse ScrollWheel") != 0) {
+            scrolling += scrollSpeed * new Vector3(0, -Input.GetAxis("Mouse ScrollWheel"), 0);    
         }
-        else{
-            Camera.main.transform.position = new Vector3(celestialBodies[cameraIndex].transform.position.x, celestialBodies[cameraIndex].transform.position.y + (celestialBodies[cameraIndex].transform.localScale.y + ((celestialBodies[cameraIndex].transform.localScale.y/2.0f))), celestialBodies[cameraIndex].transform.position.z);
-        }
-        //Counteract planet rotation
-        //for(int i = 1; i < cameras.Length; i++){
-            //cameras[i].transform.rotation = Quaternion.Euler(90.0f, celestialBodies[i].transform.rotation.y * -1.0f, 0.0f); 
-        //}   
+        Camera.main.transform.position = new Vector3(celestialBodies[cameraIndex].transform.position.x, scrolling.y, celestialBodies[cameraIndex].transform.position.z);   
     }
 }
