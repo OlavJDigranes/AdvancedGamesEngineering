@@ -53,6 +53,7 @@ public class CameraManager : MonoBehaviour
 
         if(celBod.text != (cameraIndex+1).ToString()){
             celBod.text = (cameraIndex+1).ToString();
+            scrolling.y = star.transform.localScale.y + (star.transform.localScale.y/2.0f); 
         }
 
         posOut.text = celestialBodies[cameraIndex].transform.position.ToString();
