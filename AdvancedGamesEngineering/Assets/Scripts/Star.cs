@@ -118,6 +118,8 @@ public class Star : CelestialBody
         colourAlpha = (float)mvRev/30.0f;
         tempCol.a = colourAlpha; 
         colour = tempCol; 
+
+        identifier = 0; 
     }   
 }
 

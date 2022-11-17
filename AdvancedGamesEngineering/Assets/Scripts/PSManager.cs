@@ -1,3 +1,4 @@
+using System; 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +35,7 @@ public class PSManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 0.5f; 
+        Time.timeScale = 1.0f; 
         //starData = ps.GetComponent<Star>();
         starData = new Star();  
         
@@ -59,8 +60,13 @@ public class PSManager : MonoBehaviour
         for(int j = 0; j < moons.Length; j++){
             celestialBodiesPhysics.Add(moons2[j]); 
         }
+
+        for(int i = 0; i < celestialBodiesPhysics.Count; i++){
+            Debug.Log(celestialBodiesPhysics[i].identifier); 
+        }
         
         InitialOrbitVelocity();
+        initialRotationalVelocity(); 
     }
 
     // Update is called once per frame
@@ -75,61 +81,35 @@ public class PSManager : MonoBehaviour
         //Calculate gravitational pull using Newton's law of universil gravitation:
         //  F = G * ((m1 * m2)/r^2)
 
-        //Figure out how to implement the moons here
         for(int i = 0; i < celestialBodiesPhysics.Count; i++) {
             double3 force = new double3(); 
             for(int j = 0; j < celestialBodiesPhysics.Count; j++) {
                 if(!celestialBodiesPhysics[i].Equals(celestialBodiesPhysics[j])){
                     double m1 = celestialBodiesPhysics[i].mass;
                     double m2 = celestialBodiesPhysics[j].mass;
+                    
                     double x =  celestialBodiesPhysics[i].position.x - celestialBodiesPhysics[j].position.x;
                     double y =  celestialBodiesPhysics[i].position.y - celestialBodiesPhysics[j].position.y;
                     double z =  celestialBodiesPhysics[i].position.z - celestialBodiesPhysics[j].position.z;
                     double r = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
-                    Debug.Log(r + " Planet R");
+                    //Debug.Log(r + " Planet R");
+                    
                     force += (((celestialBodiesPhysics[j].position - celestialBodiesPhysics[i].position) * 1000.0)/r) * ((G * m1 * m2)/(r * r));
                     //Debug.Log(force + " Planet: " + i + " force total");
                     celestialBodiesPhysics[i].accumulatedForce += force; 
-                    /*
-                    if(i == 0){
-                        starData.accumulatedForce += force;
-                    }
-                    else{
-                        celestialBodiesPhysics[i].accumulatedForce += force; 
-                    }
-                    */
                 }
             }
         }
     }
 
     void Rotation(){
-        //Rotational force :
-        // F = (m * v^2)/r
-        double3 rotationalAxis; 
         double3 rot; 
         double3 rotDownscale; 
         Vector3 tempRot; 
 
-        for(int i = 0; i < celestialBodiesPhysics.Count; i++){
-            double3 force = new double3(); 
-            double3 angularVelocity= new double3(); 
-            double m = celestialBodiesPhysics[i].mass; 
-            double r = celestialBodiesPhysics[i].radius * 1000.0; //Coversion to meters
-
-            float obliquity = UnityEngine.Random.Range(0.03f, 82.23f); //In degrees
-            rotationalAxis = new double3(0.0, -1.0 * (double)Mathf.Sin(obliquity), -1.0 * (double)Mathf.Cos(obliquity)); 
-            
-            angularVelocity = rotationalAxis * System.Math.Sqrt((G * m)/r); 
-            Debug.Log(angularVelocity + " ANG VEL"); 
-            
-            force = (m * (angularVelocity * angularVelocity)) / r; 
-
-            celestialBodiesPhysics[i].rotationalForce = force; 
-        }
-
         rot = celestialBodiesPhysics[0].rotationalForce * Time.deltaTime; 
         rotDownscale = S * rot; 
+        Debug.Log(rotDownscale + " ROT DOWNSCALE"); 
         tempRot.x = (float)rotDownscale.x; 
         tempRot.y = (float)rotDownscale.y; 
         tempRot.z = (float)rotDownscale.z; 
@@ -138,6 +118,7 @@ public class PSManager : MonoBehaviour
         for(int j = 0; j < planets.Length; j++){
             rot = planets[j].rotationalForce * Time.deltaTime; 
             rotDownscale = S * rot; 
+            Debug.Log(rotDownscale + " ROT DOWNSCALE"); 
             tempRot.x = (float)rotDownscale.x; 
             tempRot.y = (float)rotDownscale.y; 
             tempRot.z = (float)rotDownscale.z; 
@@ -147,6 +128,7 @@ public class PSManager : MonoBehaviour
         for(int k = 0; k < moons2.Count; k++){
             rot = moons2[k].rotationalForce * Time.deltaTime; 
             rotDownscale = S * rot; 
+            Debug.Log(rotDownscale + " ROT DOWNSCALE"); 
             tempRot.x = (float)rotDownscale.x; 
             tempRot.y = (float)rotDownscale.y; 
             tempRot.z = (float)rotDownscale.z; 
@@ -160,14 +142,14 @@ public class PSManager : MonoBehaviour
         double3 pos; 
 
         for(int i = 0; i < celestialBodiesPhysics.Count; i++){
-            Debug.Log(celestialBodiesPhysics[i].accumulatedForce + " CB Accumulated Force for CB " + i); 
+            //Debug.Log(celestialBodiesPhysics[i].accumulatedForce + " CB Accumulated Force for CB " + i); 
             double3 accel = celestialBodiesPhysics[i].accumulatedForce / celestialBodiesPhysics[i].mass; 
             vel = celestialBodiesPhysics[i].velocity + (accel * (Time.deltaTime));
             pos = celestialBodiesPhysics[i].position + (vel * (Time.deltaTime)); 
             celestialBodiesPhysics[i].velocity = vel; 
             celestialBodiesPhysics[i].position = pos; 
 
-            if(i == 0){
+            if(celestialBodiesPhysics[i].identifier == 0){
                 double3 tempPosDownscale = S * celestialBodiesPhysics[i].position; 
                 Vector3 tempPos;
                 tempPos.x = (float)tempPosDownscale.x;
@@ -224,49 +206,115 @@ public class PSManager : MonoBehaviour
         //Calculate initial orbital velocity using circular orbit instant velocity
         double3 directionX = new double3(1.0, 0.0, 0.0);
         double3 directionZ = new double3(0.0, 0.0, 1.0);
-        //double3 direction = new double3(1.0, 0.0, 1.0);
+        double3 direction = new double3(-0.5, 0.0, 1.0);
 
-        //Initial planet velocities
-        for(int i = 1; i < celestialBodies.Length; i++){
-            double m = planets[i-1].mass;
-            double x = starData.position.x - planets[i-1].position.x;
-            double y = starData.position.y - planets[i-1].position.y;
-            double z = starData.position.z - planets[i-1].position.z;
-            double r = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
-            Debug.Log(r + " PLANET R M" + (r / 1000.0) + " PLANET R KM"); 
-            Debug.Log(System.Math.Sqrt((G * m) / r) + " PLANET SQRT"); 
-            double3 initialVelocity = directionZ * System.Math.Sqrt((G * m) / r);
-            planets[i-1].velocity = initialVelocity; 
+        for(int i = 0; i < celestialBodiesPhysics.Count; i++) {
+            double3 velocity = new double3(); 
+            for(int j = 0; j < celestialBodiesPhysics.Count; j++) {
+                if(!celestialBodiesPhysics[i].Equals(celestialBodiesPhysics[j])){
+                    double m = celestialBodiesPhysics[j].mass; 
+                    
+                    double x = celestialBodiesPhysics[i].position.x - celestialBodiesPhysics[j].position.x;
+                    double y = celestialBodiesPhysics[i].position.y - celestialBodiesPhysics[j].position.y;
+                    double z = celestialBodiesPhysics[i].position.z - celestialBodiesPhysics[j].position.z;
+                    double r = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
+                    
+                    Debug.Log(r/1000.0 + " PLANET R KM BETWEEN CB " + i + " AND " + j); 
+                    Debug.Log(System.Math.Sqrt((G * m) / r) + " PLANET SQRT");
+                    
+                    if(celestialBodiesPhysics[i].identifier == 1){
+                        velocity += directionZ * System.Math.Sqrt((G * m) / r); 
+                        celestialBodiesPhysics[i].velocity = velocity;
+                        Debug.Log(celestialBodiesPhysics[i].velocity + " INIT VEL"); 
+                    }
+                    if(celestialBodiesPhysics[i].identifier == 2){
+                        velocity += directionX * System.Math.Sqrt((G * m) / r); 
+                        celestialBodiesPhysics[i].velocity = velocity;
+                        Debug.Log(celestialBodiesPhysics[i].velocity + " INIT VEL"); 
+                    }
 
-            Debug.Log(initialVelocity + "INITIAL VELOCITY"); 
+                     
+                }
+            }
 
-            //Float conversion for display
-            double3 initVelDownscale = S * initialVelocity; 
-            Debug.Log(initVelDownscale + "INITIAL VELOCITY DOWNSCALE"); 
-            Vector3 initVel; 
-            initVel.x = (float)initVelDownscale.x;
-            initVel.y = (float)initVelDownscale.y;
-            initVel.z = (float)initVelDownscale.z;
-            Debug.Log(initVel + "INITVEL"); 
-            celestialBodies[i].GetComponent<Rigidbody>().velocity += initVel; 
+            if(celestialBodiesPhysics[i].identifier == 0){
+                //Float conversion for display
+                double3 initVelDownscale = S * celestialBodiesPhysics[i].velocity; 
+                
+                Vector3 initVel; 
+                initVel.x = (float)initVelDownscale.x;
+                initVel.y = (float)initVelDownscale.y;
+                initVel.z = (float)initVelDownscale.z;
+
+                star.GetComponent<Rigidbody>().velocity += initVel; 
+            }
         }
 
-        //Initial moon velocities
-        for(int i = 0; i < moons.Length; i++){
-            double x = planets[moons2[i].planetID - 1].position.x - moons2[i].position.x;
-            double y = planets[moons2[i].planetID - 1].position.y - moons2[i].position.y;
-            double z = planets[moons2[i].planetID - 1].position.z - moons2[i].position.z;
-            double r = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
-            double3 initialVelocity = directionX * System.Math.Sqrt((G * moons2[i].mass) / r);
-            moons2[i].velocity = initialVelocity;
+        for(int j = 0; j < planets.Length; j++){
+            double3 tempVelDownscale = S * planets[j].velocity;
+            Debug.Log(tempVelDownscale + "INITIAL VELOCITY DOWNSCALE"); 
+
+            Vector3 tempVel;
+            tempVel.x = (float)tempVelDownscale.x;  
+            tempVel.y = (float)tempVelDownscale.y;  
+            tempVel.z = (float)tempVelDownscale.z;  
+            Debug.Log(tempVel + "INITVEL"); 
+
+            celestialBodies[planets[j].uniquePlanetID].GetComponent<Rigidbody>().velocity += tempVel; 
+        }
+
+        for(int k = 0; k < moons2.Count; k++){
+            double3 tempVelDownscale = S * moons2[k].velocity; 
+            Debug.Log(tempVelDownscale + "INITIAL VELOCITY DOWNSCALE"); 
+
+            Vector3 tempVel;
+            tempVel.x = (float)tempVelDownscale.x;  
+            tempVel.y = (float)tempVelDownscale.y;  
+            tempVel.z = (float)tempVelDownscale.z;  
+            Debug.Log(tempVel + "INITVEL"); 
+
+            moons[moons2[k].uniqueMoonID].GetComponent<Rigidbody>().velocity += tempVel; 
+        }
+    }
+
+    void initialRotationalVelocity(){
+        //Rotational force :
+        // F = (m * v^2)/r
+        for(int i = 0; i < celestialBodiesPhysics.Count; i++){
+            double3 force = new double3(); 
+            double3 linearVelocity = new double3(); 
+            double3 angularVelocity= new double3(); 
+            double3 tangentialVelocity= new double3(); 
+            double m = celestialBodiesPhysics[i].mass; 
+            double r = celestialBodiesPhysics[i].radius * 1000.0; //Coversion to meters
+            double conversionToSeconds = 86400.0; 
+
+            float obliquity = UnityEngine.Random.Range(0.03f, 82.23f); //In degrees
+            double3 rotationalAxis = new double3(0.0, -1.0 * (double)Mathf.Sin(obliquity), -1.0 * (double)Mathf.Cos(obliquity)); 
             
-            //Float conversion for display
-            double3 initVelDownscale = S * initialVelocity; 
-            Vector3 initVel; 
-            initVel.x = (float)initVelDownscale.x;
-            initVel.y = (float)initVelDownscale.y;
-            initVel.z = (float)initVelDownscale.z;
-            moons[i].GetComponent<Rigidbody>().velocity += initVel; 
+            //angularVelocity = rotationalAxis * System.Math.Sqrt((G * m)/r); 
+            if(celestialBodiesPhysics[i].identifier == 0 || celestialBodiesPhysics[i].identifier == 2){
+                tangentialVelocity = rotationalAxis * ((2.0 * 3.1415 * celestialBodiesPhysics[i].radius)/(27.0 * conversionToSeconds)); 
+            }
+            if(celestialBodiesPhysics[i].identifier == 1){
+                tangentialVelocity = rotationalAxis * ((2.0 * 3.1415 * celestialBodiesPhysics[i].radius)/((double)UnityEngine.Random.Range(6.0f, 58.0f)) * conversionToSeconds); 
+            }
+            Debug.Log(tangentialVelocity + " TANG VEL"); 
+
+            linearVelocity = tangentialVelocity/r; 
+            Debug.Log(linearVelocity + " LIN VEL"); 
+
+            double x = celestialBodiesPhysics[i].position.x + r; 
+            double y = celestialBodiesPhysics[i].position.y + r; 
+            double z = celestialBodiesPhysics[i].position.z + r; 
+            double absoluteRadius = System.Math.Sqrt((x * x) + (y * y) + (z * z)); 
+            angularVelocity = (r * linearVelocity)/(absoluteRadius); 
+            Debug.Log(angularVelocity + " ANG VEL"); 
+            
+            force = (m * (angularVelocity * angularVelocity)) / r; 
+
+            celestialBodiesPhysics[i].rotationalForce += force;
+            Debug.Log(celestialBodiesPhysics[i].rotationalForce + " ROT FORCE");  
         }
     }
 
@@ -299,12 +347,15 @@ public class PSManager : MonoBehaviour
         for(int i = 0; i < MainMenuManager.numOfPlanets; i++){
             Planet p = new Planet();
             
-            double planetMassScalar = starData.mass; 
-            float planetMass = UnityEngine.Random.Range(0.00000003f, 0.0009f);
+            double planetMassScalar = 2*(double)Math.Pow(10.0, 30.0); //Solar mass used as constant
+            float planetMass = UnityEngine.Random.Range(0.0000001651f, 0.0009543f);
             p.mass = (double)planetMass * planetMassScalar; 
             Debug.Log(p.mass + " Planet Mass Proper"); 
             
-            p.position = new double3((starData.radius * (i + 1.0) * 100.0), 0, 0);
+            double planetPosScalar = (starData.radius * (i + 1.0) * 105.0); 
+
+            p.position = new double3(planetPosScalar, 0, 0);
+            //p.position = new double3(planetPosScalar * 1.5, 0, planetPosScalar * -0.5);
             Debug.Log(p.position + " Planet Pos Proper"); 
 
             double planetRadScalar = 696340.0; //Solar radius used as constant. 
@@ -324,6 +375,7 @@ public class PSManager : MonoBehaviour
         foreach (Planet p in planets){
             GameObject g = planet;  
             Rigidbody rbG; 
+            double planetMassScalar = 2*(double)Math.Pow(10.0, 30.0); //Solar mass used as constant
 
             //Generate values
             rbG = g.GetComponent<Rigidbody>();
@@ -381,8 +433,8 @@ public class PSManager : MonoBehaviour
             }
             Instantiate(g);
 
-            if(p.mass > (starData.mass * 0.2447e-9)){
-                //GenerateMoon(p.mass, p.position, planetNr, p.scale, moonCounter); 
+            if(p.mass > (planetMassScalar * 0.2447e-9)){
+                GenerateMoon(p.mass, p.position, planetNr, p.scale, moonCounter); 
                 moonCounter++; 
             }
 
@@ -392,11 +444,14 @@ public class PSManager : MonoBehaviour
 
     void GenerateMoon(double planetMass, double3 planetPosition, int planetID, double3 planetScale, int i){
         Moon m = new Moon(); 
-        m.mass = planetMass * (double)UnityEngine.Random.Range(0.08f, 0.27f);
+        m.mass = planetMass * (double)UnityEngine.Random.Range(0.1f, 0.4f);
+        Debug.Log(m.mass + " Moon Mass"); 
         m.planetID = planetID;  
-        m.position = new double3(planetPosition.x, planetPosition.y, planetPosition.z - (planetScale.z * 1.5)); 
+        m.position = new double3(planetPosition.x, planetPosition.y, planetPosition.z + ((planetScale.z/2.0) * 30.0)); 
         m.identifier = 2; 
-        m.uniqueMoonID = i+1; 
+        m.uniqueMoonID = i; 
+        double moonRadScalar = 696340.0; //Solar radius used as constant. 
+        m.radius = moonRadScalar * 0.0024; 
         m.CalculateProperties(); 
 
         moons2.Add(m); 
