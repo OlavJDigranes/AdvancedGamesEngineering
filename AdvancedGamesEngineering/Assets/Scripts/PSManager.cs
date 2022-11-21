@@ -96,12 +96,14 @@ public class PSManager : MonoBehaviour
                     
                     double3 dir = ((((celestialBodiesPhysics[j].position - celestialBodiesPhysics[i].position)) * 1000.0)/r); 
 
-                    force += dir * ((G * (m1 * m2)/(r * r)) + ((G * starData.mass)/(r * r)));
+                    //force += dir * ((G * (m1 * m2)/(r * r)) + ((G * starData.mass)/(r * r)));
+                    force += dir * ((G * (m1 * m2)/(r * r)));
+                    force += dir * ((G * starData.mass)/(r * r)); 
 
                     celestialBodiesPhysics[i].accumulatedForce += force; 
                 }
             }
-            Debug.Log(force + " TOTAL FORCE FOR CB " + i); 
+            //Debug.Log(force + " TOTAL FORCE FOR CB " + i); 
         }
     }
 
