@@ -83,6 +83,7 @@ public class PSManager : MonoBehaviour
 
         for(int i = 0; i < celestialBodiesPhysics.Count; i++) {
             double3 force = new double3(); 
+            double3 force2 = new double3(); 
             for(int j = 0; j < celestialBodiesPhysics.Count; j++) {
                 if(!celestialBodiesPhysics[i].Equals(celestialBodiesPhysics[j])){
                     double m1 = celestialBodiesPhysics[i].mass;
@@ -98,11 +99,22 @@ public class PSManager : MonoBehaviour
 
                     //force += dir * ((G * (m1 * m2)/(r * r)) + ((G * starData.mass)/(r * r)));
                     force += dir * ((G * (m1 * m2)/(r * r)));
-                    force += dir * ((G * starData.mass)/(r * r)); 
+                    //force += dir * ((G * starData.mass)/(r * r)); 
 
                     celestialBodiesPhysics[i].accumulatedForce += force; 
                 }
             }
+
+            if(i != 0){
+                double x =  celestialBodiesPhysics[0].position.x - celestialBodiesPhysics[i].position.x;
+                double y =  celestialBodiesPhysics[0].position.y - celestialBodiesPhysics[i].position.y;
+                double z =  celestialBodiesPhysics[0].position.z - celestialBodiesPhysics[i].position.z;
+                double r2 = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
+                double3 dir2 = ((((celestialBodiesPhysics[0].position - celestialBodiesPhysics[i].position)) * 1000.0)/r2);
+                force2 += dir2 * ((G * starData.mass)/(r2* r2));
+                celestialBodiesPhysics[i].accumulatedForce += force2; 
+            }
+
             //Debug.Log(force + " TOTAL FORCE FOR CB " + i); 
         }
     }
@@ -211,7 +223,7 @@ public class PSManager : MonoBehaviour
         //Calculate initial orbital velocity using circular orbit instant velocity
         double3 directionX = new double3(1.0, 0.0, 0.0);
         double3 directionZ = new double3(0.0, 0.0, 1.0);
-        double3 direction = new double3(-0.5, 0.0, 1.0);
+        double3 direction = new double3(-1.0, 0.0, 1.0);
 
         //double m = starData.mass; 
         
@@ -397,20 +409,20 @@ public class PSManager : MonoBehaviour
             
             double planetMassScalar = 2*(double)Math.Pow(10.0, 30.0); //Solar mass used as constant
             float planetMass = UnityEngine.Random.Range(0.0000001651f, 0.0009543f);
-            p.mass = (double)planetMass * planetMassScalar; 
+            p.mass = (double)planetMass * starData.mass; 
             Debug.Log(p.mass + " Planet Mass Proper"); 
-            
-            double planetPosScalar = (starData.radius * (i + 1.0) * 100.0); 
-
-            p.position = new double3(planetPosScalar, 0, 0);
-            //p.position = new double3(planetPosScalar * 1.5, 0, planetPosScalar * -0.5);
-            Debug.Log(p.position + " Planet Pos Proper"); 
-
+        
             double planetRadScalar = 696340.0; //Solar radius used as constant. 
             float planetRadRand = UnityEngine.Random.Range(0.0035514f, 0.10049f); //Random radius based on solar system
             p.radius = (double)planetRadRand * planetRadScalar; 
 
-            
+            double planetPosScalar = (starData.radius * (i + 1.0) * 100.0); 
+            //double planetPosScalar = (starData.radius + p.radius); 
+
+            p.position = new double3(planetPosScalar, 0, 0);
+            //p.position = new double3(planetPosScalar, 0, planetPosScalar * -0.5);
+            Debug.Log(p.position + " Planet Pos Proper"); 
+
             p.identifier = 1; 
             p.uniquePlanetID = i+1; 
             
