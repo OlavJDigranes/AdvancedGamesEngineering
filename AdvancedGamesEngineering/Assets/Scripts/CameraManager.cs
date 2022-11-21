@@ -24,11 +24,6 @@ public class CameraManager : MonoBehaviour
     void Start()
     {
         cameras = Camera.allCameras; 
-        //Camera.GetAllCameras(cameras); 
-        //for(int i = 1; i < cameras.Length; i++){
-            //cameras[i].enabled = false; 
-        //}
-        //Camera.main.transform.position += new Vector3 (0.0f, star.transform.localScale.y + (star.transform.localScale.y/2.0f), 0.0f);
         scrolling += new Vector3 (0.0f, star.transform.localScale.y + (star.transform.localScale.y/2.0f), 0.0f);
         celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBody"); 
         numPlanOut.text = (celestialBodies.Length-1).ToString();
@@ -40,17 +35,14 @@ public class CameraManager : MonoBehaviour
         //Cycle up through the cameras
         if(Input.GetKeyDown(KeyCode.T) && cameraIndex < celestialBodies.Length-1){
                 cameraIndex++; 
-                //cameras[cameraIndex].enabled = true; 
-                //cameras[cameraIndex - 1].enabled = false; 
         }
 
         //Cycle down through the cameras
         if(Input.GetKeyDown(KeyCode.G) && cameraIndex > 0){
                 cameraIndex--; 
-                //cameras[cameraIndex].enabled = true; 
-                //cameras[cameraIndex + 1].enabled = false; 
         }
 
+        //only updated on planet change
         if(celBod.text != (cameraIndex+1).ToString()){
             celBod.text = (cameraIndex+1).ToString();
             scrolling.y = star.transform.localScale.y + (star.transform.localScale.y/2.0f); 
