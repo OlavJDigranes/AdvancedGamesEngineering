@@ -70,11 +70,14 @@ public class PSManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         ClearForces();
         OverallGravitationalPull(); 
-        //Rotation(); 
+        //Rotation();    
+    }
+
+    void Update(){
         Integration();
     }
 
@@ -106,8 +109,8 @@ public class PSManager : MonoBehaviour
                     
                     double3 dir = ((((celestialBodiesPhysics[j].position - celestialBodiesPhysics[i].position)) * 1000.0)/r); 
 
-                    //force += dir * ((G * (m1 * m2)/(r * r)) + ((G * starData.mass)/(r * r)));
-                    force += dir * ((G * (m1 * m2)/(r * r)));
+                    force += dir * ((G * (m1 * m2)/(r * r)) + ((G * starData.mass)/(r * r)));
+                    //force += dir * ((G * (m1 * m2)/(r * r)));
                     //force += dir * ((G * starData.mass)/(r * r)); 
 
                     celestialBodiesPhysics[i].accumulatedForce += force; 
@@ -302,11 +305,13 @@ public class PSManager : MonoBehaviour
 
         for(int i = 0; i < moons2.Count; i++){
             double3 velocity = new double3();
-            double m2 = planets[moons2[i].planetID - 1].mass; 
-            double x = planets[moons2[i].planetID - 1].position.x - moons2[i].position.x;
-            double y = planets[moons2[i].planetID - 1].position.y - moons2[i].position.y;
-            double z = planets[moons2[i].planetID - 1].position.z - moons2[i].position.z;
-            double r = System.Math.Sqrt((x * x) + (y * y) + (z * z));
+            //double m2 = planets[moons2[i].planetID - 1].mass; 
+            double m2 = moons2[i].mass; 
+            //double x = planets[moons2[i].planetID - 1].position.x - moons2[i].position.x;
+            //double y = planets[moons2[i].planetID - 1].position.y - moons2[i].position.y;
+            //double z = planets[moons2[i].planetID - 1].position.z - moons2[i].position.z;
+            //double r = System.Math.Sqrt((x * x) + (y * y) + (z * z));
+            double r = math.distance(planets[moons2[i].planetID - 1].position, moons2[i].position);
 
             Debug.Log(r/1000.0 + " PLANET R KM BETWEEN MOON " + i + " AND PLANET"); 
             Debug.Log(System.Math.Sqrt((G * m2) / r) + " PLANET SQRT");
@@ -519,7 +524,7 @@ public class PSManager : MonoBehaviour
             Instantiate(g);
 
             if(p.mass > (planetMassScalar * 0.2447e-9)){
-                //GenerateMoon(p.mass, p.position, planetNr, p.scale, moonCounter); 
+                GenerateMoon(p.mass, p.position, planetNr, p.scale, moonCounter); 
                 moonCounter++; 
             }
 
@@ -529,10 +534,10 @@ public class PSManager : MonoBehaviour
 
     void GenerateMoon(double planetMass, double3 planetPosition, int planetID, double3 planetScale, int i){
         Moon m = new Moon(); 
-        m.mass = planetMass * (double)UnityEngine.Random.Range(0.08f, 0.27f);
+        m.mass = planetMass * (double)UnityEngine.Random.Range(0.008f, 0.027f);
         Debug.Log(m.mass + " Moon Mass"); 
         m.planetID = planetID;  
-        m.position = new double3(planetPosition.x, planetPosition.y, planetPosition.z + ((planetScale.z/2.0) * 60.0)); 
+        m.position = new double3(planetPosition.x, planetPosition.y, planetPosition.z + ((planetScale.z/2.0) * 10.0)); 
         m.identifier = 2; 
         m.uniqueMoonID = i; 
         double moonRadScalar = 696340.0; //Solar radius used as constant. 
