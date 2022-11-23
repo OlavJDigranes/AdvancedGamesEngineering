@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics; 
 
-public class PSManager : MonoBehaviour
+public class TEST : MonoBehaviour
 {
     //This will manage the behaviour of stars and planets in the simulation. 
 
@@ -72,17 +72,9 @@ public class PSManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ClearForces();
         OverallGravitationalPull(); 
         //Rotation(); 
         Integration();
-    }
-
-    void ClearForces(){
-        double3 clear = new double3(0.0, 0.0, 0.0);
-        for(int i = 0; i < celestialBodiesPhysics.Count; i++){
-            celestialBodiesPhysics[i].accumulatedForce = clear; 
-        }
     }
 
     void OverallGravitationalPull(){
@@ -92,16 +84,15 @@ public class PSManager : MonoBehaviour
         for(int i = 0; i < celestialBodiesPhysics.Count; i++) {
             double3 force = new double3(); 
             double3 force2 = new double3(); 
-            for(int j = 0; j < i+1; j++) {
+            for(int j = 0; j < celestialBodiesPhysics.Count; j++) {
                 if(!celestialBodiesPhysics[i].Equals(celestialBodiesPhysics[j])){
                     double m1 = celestialBodiesPhysics[i].mass;
                     double m2 = celestialBodiesPhysics[j].mass;
                     
-                    //double x =  celestialBodiesPhysics[i].position.x - celestialBodiesPhysics[j].position.x;
-                    //double y =  celestialBodiesPhysics[i].position.y - celestialBodiesPhysics[j].position.y;
-                    //double z =  celestialBodiesPhysics[i].position.z - celestialBodiesPhysics[j].position.z;
-                    //double r = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
-                    double r = math.distance(celestialBodiesPhysics[i].position, celestialBodiesPhysics[j].position) * 1000.0; 
+                    double x =  celestialBodiesPhysics[i].position.x - celestialBodiesPhysics[j].position.x;
+                    double y =  celestialBodiesPhysics[i].position.y - celestialBodiesPhysics[j].position.y;
+                    double z =  celestialBodiesPhysics[i].position.z - celestialBodiesPhysics[j].position.z;
+                    double r = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
                     //Debug.Log(r + " Planet R");
                     
                     double3 dir = ((((celestialBodiesPhysics[j].position - celestialBodiesPhysics[i].position)) * 1000.0)/r); 
@@ -111,22 +102,20 @@ public class PSManager : MonoBehaviour
                     //force += dir * ((G * starData.mass)/(r * r)); 
 
                     celestialBodiesPhysics[i].accumulatedForce += force; 
-                    celestialBodiesPhysics[j].accumulatedForce -= force; 
                 }
             }
 
             if(i != 0){
-                //double x =  celestialBodiesPhysics[0].position.x - celestialBodiesPhysics[i].position.x;
-                //double y =  celestialBodiesPhysics[0].position.y - celestialBodiesPhysics[i].position.y;
-                //double z =  celestialBodiesPhysics[0].position.z - celestialBodiesPhysics[i].position.z;
-                //double r2 = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
-                double r2 = math.distance(celestialBodiesPhysics[0].position, celestialBodiesPhysics[i].position) * 1000.0; 
+                double x =  celestialBodiesPhysics[0].position.x - celestialBodiesPhysics[i].position.x;
+                double y =  celestialBodiesPhysics[0].position.y - celestialBodiesPhysics[i].position.y;
+                double z =  celestialBodiesPhysics[0].position.z - celestialBodiesPhysics[i].position.z;
+                double r2 = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
                 double3 dir2 = ((((celestialBodiesPhysics[0].position - celestialBodiesPhysics[i].position)) * 1000.0)/r2);
-                force2 += dir2 * (G * (starData.mass * celestialBodiesPhysics[i].mass)/(r2* r2));
-                //celestialBodiesPhysics[i].accumulatedForce += force2; 
+                force2 += dir2 * ((G * starData.mass)/(r2* r2));
+                celestialBodiesPhysics[i].accumulatedForce += force2; 
             }
 
-            Debug.Log(force + " TOTAL FORCE FOR CB " + i); 
+            //Debug.Log(force + " TOTAL FORCE FOR CB " + i); 
         }
     }
 
@@ -284,17 +273,15 @@ public class PSManager : MonoBehaviour
                 star.GetComponent<Rigidbody>().velocity += initVel; 
             }
             if(celestialBodiesPhysics[i].identifier == 1){
-                //(celestialBodiesPhysics[0].position - celestialBodiesPhysics[i].position).normalise;  
-                //double x = celestialBodiesPhysics[0].position.x - celestialBodiesPhysics[i].position.x;
-                //double y = celestialBodiesPhysics[0].position.y - celestialBodiesPhysics[i].position.y;
-                //double z = celestialBodiesPhysics[0].position.z - celestialBodiesPhysics[i].position.z;
-                //double r = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
-                double r = math.distance(celestialBodiesPhysics[0].position, celestialBodiesPhysics[i].position) * 1000; 
+                double x = celestialBodiesPhysics[0].position.x - celestialBodiesPhysics[i].position.x;
+                double y = celestialBodiesPhysics[0].position.y - celestialBodiesPhysics[i].position.y;
+                double z = celestialBodiesPhysics[0].position.z - celestialBodiesPhysics[i].position.z;
+                double r = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
                     
                 Debug.Log(r/1000.0 + " PLANET R KM BETWEEN CB " + i + " AND STAR"); 
-                Debug.Log(System.Math.Sqrt((G * celestialBodiesPhysics[i].mass) / r) + " PLANET SQRT");
+                Debug.Log(System.Math.Sqrt((G * celestialBodiesPhysics[0].mass) / r) + " PLANET SQRT");
 
-                velocity += directionZ * System.Math.Sqrt((G * celestialBodiesPhysics[i].mass) / r); 
+                velocity += directionZ * System.Math.Sqrt((G * celestialBodiesPhysics[0].mass) / r); 
                 celestialBodiesPhysics[i].velocity = velocity;
                 Debug.Log(celestialBodiesPhysics[i].velocity + " INIT VEL"); 
             }
@@ -420,39 +407,27 @@ public class PSManager : MonoBehaviour
         for(int i = 0; i < MainMenuManager.numOfPlanets; i++){
             Planet p = new Planet();
             
-            if(MainMenuManager.spectralClassification.Equals("T") || MainMenuManager.spectralClassification.Equals("t")){
-                p.mass = 3.285e+23; 
-                p.radius = 2439.7;
-                p.position = new double3(58000000.0, 0.0, 0.0);
-                p.identifier = 1; 
-                p.uniquePlanetID = i+1;
-                p.CalculateProperties(); 
-                planets[i] = p;
-            }
-            else{
-                double planetMassScalar = 2*(double)Math.Pow(10.0, 30.0); //Solar mass used as constant
-                float planetMass = UnityEngine.Random.Range(0.0000001651f, 0.0009543f);
-                p.mass = (double)planetMass * starData.mass; 
-                Debug.Log(p.mass + " Planet Mass Proper"); 
+            double planetMassScalar = 2*(double)Math.Pow(10.0, 30.0); //Solar mass used as constant
+            float planetMass = UnityEngine.Random.Range(0.0000001651f, 0.0009543f);
+            p.mass = (double)planetMass * starData.mass; 
+            Debug.Log(p.mass + " Planet Mass Proper"); 
         
-                double planetRadScalar = 696340.0; //Solar radius used as constant. 
-                float planetRadRand = UnityEngine.Random.Range(0.0035514f, 0.10049f); //Random radius based on solar system
-                p.radius = (double)planetRadRand * planetRadScalar; 
+            double planetRadScalar = 696340.0; //Solar radius used as constant. 
+            float planetRadRand = UnityEngine.Random.Range(0.0035514f, 0.10049f); //Random radius based on solar system
+            p.radius = (double)planetRadRand * planetRadScalar; 
 
-                double planetPosScalar = (starData.radius * (i + 1.0) * 100.0); 
-                //double planetPosScalar = (starData.radius + p.radius); 
+            double planetPosScalar = (starData.radius * (i + 1.0) * 100.0); 
+            //double planetPosScalar = (starData.radius + p.radius); 
 
-                p.position = new double3(planetPosScalar, 0, 0);
-                //p.position = new double3(planetPosScalar, 0, planetPosScalar * -0.5);
-                Debug.Log(p.position + " Planet Pos Proper"); 
+            p.position = new double3(planetPosScalar, 0, 0);
+            //p.position = new double3(planetPosScalar, 0, planetPosScalar * -0.5);
+            Debug.Log(p.position + " Planet Pos Proper"); 
 
-                p.identifier = 1; 
-                p.uniquePlanetID = i+1; 
+            p.identifier = 1; 
+            p.uniquePlanetID = i+1; 
             
-                p.CalculateProperties(); 
-                planets[i] = p;
-            }
-             
+            p.CalculateProperties(); 
+            planets[i] = p; 
         }
 
         //generate planet game objects

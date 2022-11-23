@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics; 
 
+[Serializable]
 public class Star : CelestialBody
 {
     //Variables
@@ -95,6 +96,11 @@ public class Star : CelestialBody
             randMass = UnityEngine.Random.Range(0.08f, 0.45f); 
             randScale = UnityEngine.Random.Range(0.1f, 0.7f);
             randKelvin = UnityEngine.Random.Range(2400.0f, 3700.0f);
+        }
+        if(type.Equals("T") || type.Equals("t")){
+            randMass = 1.0f;
+            randScale = 1.0f;
+            randKelvin = 6000.0f; 
         }
         Debug.Log(randMass + " STAR RAND MASS"); 
         Debug.Log(randScale + " STAR RAND SCALE"); 

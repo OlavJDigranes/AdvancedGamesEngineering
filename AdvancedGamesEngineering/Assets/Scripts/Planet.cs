@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics; 
 
+[Serializable]
 public class Planet : CelestialBody{
     //Variables
     //public double mass; 
