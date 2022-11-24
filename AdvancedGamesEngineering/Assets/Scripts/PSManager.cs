@@ -13,7 +13,8 @@ public class PSManager : MonoBehaviour
     readonly float G2 = 6.670e-11f;
     readonly double S = 1.0e-4; //Scale 
     readonly float S2 = 1.75e+4f; //DisplayScale
-    readonly double S3 = 1.0e-15; //ForceScale 
+    readonly double S3 = 1.0e-18; //ForceScale 
+    readonly double S4 = 1.0e-12; //RotScale 
     GameObject[] celestialBodies; 
     GameObject[] moons; 
     //Moon[] moons2; 
@@ -69,7 +70,7 @@ public class PSManager : MonoBehaviour
         }
         
         InitialOrbitVelocity();
-        //InitialRotationalVelocity(); 
+        InitialRotationalVelocity(); 
     }
 
     // Update is called once per frame
@@ -77,7 +78,7 @@ public class PSManager : MonoBehaviour
     {
         ClearForces();
         OverallGravitationalPull(); 
-        //Rotation(); 
+        Rotation(); 
         Integration();   
         
     }
@@ -91,7 +92,7 @@ public class PSManager : MonoBehaviour
         double3 clear = new double3(0.0, 0.0, 0.0);
         for(int i = 0; i < celestialBodiesPhysics.Count; i++){
             celestialBodiesPhysics[i].accumulatedForce = clear; 
-            celestialBodiesPhysics[i].rotationalForce = clear; 
+            //celestialBodiesPhysics[i].rotationalForce = clear; 
         }
     }
 
@@ -133,7 +134,8 @@ public class PSManager : MonoBehaviour
         tempRot.x = (float)rotDownscale.x; 
         tempRot.y = (float)rotDownscale.y; 
         tempRot.z = (float)rotDownscale.z; 
-        star.transform.Rotate(tempRot); 
+        //star.transform.Rotate(tempRot); 
+        star.transform.GetComponent<Rigidbody>().angularVelocity = tempRot; 
 
         for(int j = 0; j < planets.Length; j++){
             rot = planets[j].rotationalForce * Time.deltaTime; 
@@ -142,7 +144,8 @@ public class PSManager : MonoBehaviour
             tempRot.x = (float)rotDownscale.x; 
             tempRot.y = (float)rotDownscale.y; 
             tempRot.z = (float)rotDownscale.z; 
-            celestialBodies[planets[j].uniquePlanetID].transform.Rotate(tempRot); 
+            //celestialBodies[planets[j].uniquePlanetID].transform.Rotate(tempRot); 
+            celestialBodies[planets[j].uniquePlanetID].GetComponent<Rigidbody>().angularVelocity = tempRot; 
         }
 
         for(int k = 0; k < moons2.Count; k++){
@@ -152,7 +155,8 @@ public class PSManager : MonoBehaviour
             tempRot.x = (float)rotDownscale.x; 
             tempRot.y = (float)rotDownscale.y; 
             tempRot.z = (float)rotDownscale.z; 
-            celestialBodies[moons2[k].uniqueMoonID].transform.Rotate(tempRot);
+            //celestialBodies[moons2[k].uniqueMoonID].transform.Rotate(tempRot);
+            celestialBodies[moons2[k].uniqueMoonID].GetComponent<Rigidbody>().angularVelocity = tempRot;
         }
     }
 
@@ -306,7 +310,7 @@ public class PSManager : MonoBehaviour
             double conversionToSeconds = 86400.0; 
 
             float obliquity = UnityEngine.Random.Range(0.03f, 82.23f); //In degrees
-            double3 rotationalAxis = new double3(0.0, -1.0 * (double)Mathf.Sin(obliquity), -1.0 * (double)Mathf.Cos(obliquity)); 
+            double3 rotationalAxis = math.normalize(new double3(0.0, -1.0 * (double)Mathf.Sin(obliquity), -1.0 * (double)Mathf.Cos(obliquity))); 
             
             //angularVelocity = rotationalAxis * System.Math.Sqrt((G * m)/r); 
             if(celestialBodiesPhysics[i].identifier == 0 || celestialBodiesPhysics[i].identifier == 2){
