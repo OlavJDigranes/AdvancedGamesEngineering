@@ -13,6 +13,7 @@ public class PSManager : MonoBehaviour
     readonly float G2 = 6.670e-11f;
     readonly double S = 1.0e-4; //Scale 
     readonly float S2 = 1.75e+4f; //DisplayScale
+    readonly double S3 = 1.0e-15; //ForceScale 
     GameObject[] celestialBodies; 
     GameObject[] moons; 
     //Moon[] moons2; 
@@ -90,6 +91,7 @@ public class PSManager : MonoBehaviour
         double3 clear = new double3(0.0, 0.0, 0.0);
         for(int i = 0; i < celestialBodiesPhysics.Count; i++){
             celestialBodiesPhysics[i].accumulatedForce = clear; 
+            celestialBodiesPhysics[i].rotationalForce = clear; 
         }
     }
 
@@ -105,35 +107,15 @@ public class PSManager : MonoBehaviour
                 if(!celestialBodiesPhysics[i].Equals(celestialBodiesPhysics[j])){
                     double m1 = celestialBodiesPhysics[i].mass;
                     double m2 = celestialBodiesPhysics[j].mass;
-                    
-                    //double x =  celestialBodiesPhysics[i].position.x - celestialBodiesPhysics[j].position.x;
-                    //double y =  celestialBodiesPhysics[i].position.y - celestialBodiesPhysics[j].position.y;
-                    //double z =  celestialBodiesPhysics[i].position.z - celestialBodiesPhysics[j].position.z;
-                    //double r = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
                     double r = math.distance(celestialBodiesPhysics[i].position, celestialBodiesPhysics[j].position) * 1000.0; 
-                    //Debug.Log(r + " Planet R");
                     
                     double3 dir = ((((celestialBodiesPhysics[i].position - celestialBodiesPhysics[j].position)) * 1000.0)/r); 
 
-                    //force += dir * ((G * (m1 * m2)/(r * r)) + ((G * starData.mass)/(r * r)));
                     force += dir * ((G * (m1 * m2)/(r * r)));
-                    //force += dir * ((G * starData.mass)/(r * r)); 
 
                     celestialBodiesPhysics[i].accumulatedForce += force; 
                     celestialBodiesPhysics[j].accumulatedForce -= force; 
                 }
-            }
-
-            if(i != 0){
-                //double x =  celestialBodiesPhysics[0].position.x - celestialBodiesPhysics[i].position.x;
-                //double y =  celestialBodiesPhysics[0].position.y - celestialBodiesPhysics[i].position.y;
-                //double z =  celestialBodiesPhysics[0].position.z - celestialBodiesPhysics[i].position.z;
-                //double r2 = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
-                double r2 = math.distance(celestialBodiesPhysics[0].position, celestialBodiesPhysics[i].position) * 1000.0; 
-                double3 dir2 = ((((celestialBodiesPhysics[0].position - celestialBodiesPhysics[i].position)) * 1000.0)/r2);
-                force2 += dir2 * (G * (starData.mass * celestialBodiesPhysics[i].mass)/(r2* r2));
-                //force2 += dir2 * (G * (starData.mass)/(r2));
-                celestialBodiesPhysics[i].accumulatedForce += force2; 
             }
 
             Debug.Log(force + " TOTAL FORCE FOR CB " + i); 
@@ -180,68 +162,12 @@ public class PSManager : MonoBehaviour
         double3 pos; 
 
         for(int i = 0; i < celestialBodiesPhysics.Count; i++){
-            //Debug.Log(celestialBodiesPhysics[i].accumulatedForce + " CB Accumulated Force for CB " + i); 
             double3 accel = celestialBodiesPhysics[i].accumulatedForce / celestialBodiesPhysics[i].mass; 
             vel = celestialBodiesPhysics[i].velocity + (accel * (Time.deltaTime));
             pos = celestialBodiesPhysics[i].position + (vel * (Time.deltaTime)); 
             celestialBodiesPhysics[i].velocity = vel; 
             celestialBodiesPhysics[i].position = pos; 
-
-            /*
-            if(celestialBodiesPhysics[i].identifier == 0){
-                double3 tempPosDownscale = S * celestialBodiesPhysics[i].position; 
-                Vector3 tempPos;
-                tempPos.x = (float)tempPosDownscale.x;
-                tempPos.y = (float)tempPosDownscale.y;
-                tempPos.z = (float)tempPosDownscale.z;
-
-                double3 tempVelDownscale = S * celestialBodiesPhysics[i].velocity;
-                Vector3 tempVel;
-                tempVel.x = (float)tempVelDownscale.x;  
-                tempVel.y = (float)tempVelDownscale.y;  
-                tempVel.z = (float)tempVelDownscale.z;
-
-                celestialBodies[i].transform.position = tempPos; 
-                celestialBodies[i].GetComponent<Rigidbody>().velocity = tempVel; 
-            }
-            */
         }
-
-        /*
-        for(int j = 0; j < planets.Length; j++){
-            double3 tempPosDownscale = S * planets[j].position; 
-            Vector3 tempPos;
-            tempPos.x = (float)tempPosDownscale.x;
-            tempPos.y = (float)tempPosDownscale.y;
-            tempPos.z = (float)tempPosDownscale.z;
-
-            double3 tempVelDownscale = S * planets[j].velocity;
-            Vector3 tempVel;
-            tempVel.x = (float)tempVelDownscale.x;  
-            tempVel.y = (float)tempVelDownscale.y;  
-            tempVel.z = (float)tempVelDownscale.z;  
-
-            celestialBodies[planets[j].uniquePlanetID].transform.position = tempPos; 
-            celestialBodies[planets[j].uniquePlanetID].GetComponent<Rigidbody>().velocity = tempVel; 
-        }
-
-        for(int k = 0; k < moons2.Count; k++){
-            double3 tempPosDownscale = S * moons2[k].position;
-            Vector3 tempPos;
-            tempPos.x = (float)tempPosDownscale.x;
-            tempPos.y = (float)tempPosDownscale.y;
-            tempPos.z = (float)tempPosDownscale.z;
-
-            double3 tempVelDownscale = S * moons2[k].velocity; 
-            Vector3 tempVel;
-            tempVel.x = (float)tempVelDownscale.x;  
-            tempVel.y = (float)tempVelDownscale.y;  
-            tempVel.z = (float)tempVelDownscale.z;  
-
-            moons[moons2[k].uniqueMoonID].transform.position = tempPos; 
-            moons[moons2[k].uniqueMoonID].GetComponent<Rigidbody>().velocity = tempVel; 
-        }
-        */
     }
     
     void Display(){
@@ -250,13 +176,9 @@ public class PSManager : MonoBehaviour
             float m2 = celestialBodies[i].GetComponent<Rigidbody>().mass; 
             float r = Vector3.Distance(celestialBodies[0].transform.position, celestialBodies[i].transform.position); 
             celestialBodies[i].GetComponent<Rigidbody>().AddForce(((celestialBodies[0].transform.position - celestialBodies[i].transform.position).normalized * ((G2 * S2) * (m1 * m2) / (r * r))));
-            celestialBodies[0].GetComponent<Rigidbody>().AddForce(-((celestialBodies[0].transform.position - celestialBodies[i].transform.position).normalized * ((G2 * S2) * (m1 * m2) / (r * r))));
-            Debug.Log((celestialBodies[0].transform.position - celestialBodies[i].transform.position).normalized * ((G2 * S2) * (m1 * m2) / (r * r)));  
         }
         
-
-        /*
-        double3 forceDownscaleS = S2 * celestialBodiesPhysics[0].accumulatedForce; 
+        double3 forceDownscaleS = S3 * celestialBodiesPhysics[0].accumulatedForce; 
         Vector3 forceVectorS; 
         forceVectorS.x = (float)forceDownscaleS.x;
         forceVectorS.y = (float)forceDownscaleS.y;
@@ -264,23 +186,13 @@ public class PSManager : MonoBehaviour
         celestialBodies[0].GetComponent<Rigidbody>().AddForce(forceVectorS); 
 
         for(int i = 0; i < planets.Length; i++){
-            double3 forceDownscaleP = S2 * planets[i].accumulatedForce; 
+            double3 forceDownscaleP = S3 * planets[i].accumulatedForce; 
             Vector3 forceVectorP; 
             forceVectorP.x = (float)forceDownscaleP.x;
             forceVectorP.y = (float)forceDownscaleP.y;
             forceVectorP.z = (float)forceDownscaleP.z;
             celestialBodies[planets[i].uniquePlanetID].GetComponent<Rigidbody>().AddForce(forceVectorP); 
         }
-
-        for(int i = 0; i < moons2.Count; i++){
-            double3 forceDownscaleM = S2 * moons2[i].accumulatedForce; 
-            Vector3 forceVectorM; 
-            forceVectorM.x = (float)forceDownscaleM.x;
-            forceVectorM.y = (float)forceDownscaleM.y;
-            forceVectorM.z = (float)forceDownscaleM.z;
-            celestialBodies[moons2[i].uniqueMoonID].GetComponent<Rigidbody>().AddForce(forceVectorM); 
-        }
-        */
     }
 
     void MoonDisplay(){
@@ -298,6 +210,15 @@ public class PSManager : MonoBehaviour
             moons[i].transform.position = pos; 
             moons[i].GetComponent<Rigidbody>().velocity = vel; 
         }
+
+        for(int i = 0; i < moons2.Count; i++){
+            double3 forceDownscaleM = S3 * moons2[i].accumulatedForce; 
+            Vector3 forceVectorM; 
+            forceVectorM.x = (float)forceDownscaleM.x;
+            forceVectorM.y = (float)forceDownscaleM.y;
+            forceVectorM.z = (float)forceDownscaleM.z;
+            celestialBodies[moons2[i].uniqueMoonID].GetComponent<Rigidbody>().AddForce(forceVectorM); 
+        }
     }
 
     void InitialOrbitVelocity(){
@@ -305,40 +226,6 @@ public class PSManager : MonoBehaviour
         double3 directionX = new double3(1.0, 0.0, 0.0);
         double3 directionZ = new double3(0.0, 0.0, 1.0);
         double3 direction = new double3(-1.0, 0.0, 1.0);
-
-        //double m = starData.mass; 
-        
-        /*
-        for(int i = 0; i < celestialBodiesPhysics.Count; i++) {
-            double3 velocity = new double3(); 
-            for(int j = 0; j < celestialBodiesPhysics.Count; j++) {
-                if(!celestialBodiesPhysics[i].Equals(celestialBodiesPhysics[j])){
-                    double m = celestialBodiesPhysics[j].mass; 
-                    
-                    double x = celestialBodiesPhysics[i].position.x - celestialBodiesPhysics[j].position.x;
-                    double y = celestialBodiesPhysics[i].position.y - celestialBodiesPhysics[j].position.y;
-                    double z = celestialBodiesPhysics[i].position.z - celestialBodiesPhysics[j].position.z;
-                    double r = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
-                    
-                    Debug.Log(r/1000.0 + " PLANET R KM BETWEEN CB " + i + " AND " + j); 
-                    Debug.Log(System.Math.Sqrt((G * m) / r) + " PLANET SQRT");
-                    
-                    if(celestialBodiesPhysics[i].identifier == 1){
-                        velocity += directionZ * System.Math.Sqrt((G * m) / r); 
-                        celestialBodiesPhysics[i].velocity = velocity;
-                        Debug.Log(celestialBodiesPhysics[i].velocity + " INIT VEL"); 
-                    }
-                    if(celestialBodiesPhysics[i].identifier == 2){
-                        velocity += directionX * System.Math.Sqrt((G * m) / r); 
-                        celestialBodiesPhysics[i].velocity = velocity;
-                        Debug.Log(celestialBodiesPhysics[i].velocity + " INIT VEL"); 
-                    }
-
-                     
-                }
-            }
-        */
-
         
         for(int i = 0; i < celestialBodiesPhysics.Count; i++) {
             double3 velocity = new double3();
@@ -354,11 +241,6 @@ public class PSManager : MonoBehaviour
                 star.GetComponent<Rigidbody>().velocity += initVel; 
             }
             if(celestialBodiesPhysics[i].identifier == 1){
-                //(celestialBodiesPhysics[0].position - celestialBodiesPhysics[i].position).normalise;  
-                //double x = celestialBodiesPhysics[0].position.x - celestialBodiesPhysics[i].position.x;
-                //double y = celestialBodiesPhysics[0].position.y - celestialBodiesPhysics[i].position.y;
-                //double z = celestialBodiesPhysics[0].position.z - celestialBodiesPhysics[i].position.z;
-                //double r = System.Math.Sqrt((x * x) + (y * y) + (z * z)) * 1000.0;
                 double r = math.distance(celestialBodiesPhysics[0].position, celestialBodiesPhysics[i].position) * 1000; 
                     
                 Debug.Log(r/1000.0 + " PLANET R KM BETWEEN CB " + i + " AND STAR"); 
@@ -374,10 +256,6 @@ public class PSManager : MonoBehaviour
             double3 velocity = new double3();
             //double m2 = planets[moons2[i].planetID - 1].mass; 
             double m2 = moons2[i].mass; 
-            //double x = planets[moons2[i].planetID - 1].position.x - moons2[i].position.x;
-            //double y = planets[moons2[i].planetID - 1].position.y - moons2[i].position.y;
-            //double z = planets[moons2[i].planetID - 1].position.z - moons2[i].position.z;
-            //double r = System.Math.Sqrt((x * x) + (y * y) + (z * z));
             double r = math.distance(planets[moons2[i].planetID - 1].position, moons2[i].position);
 
             Debug.Log(r/1000.0 + " PLANET R KM BETWEEN MOON " + i + " AND PLANET"); 
@@ -547,8 +425,8 @@ public class PSManager : MonoBehaviour
             posConversion.y = (float)posDownscale.y;
             posConversion.z = (float)posDownscale.z;
             Debug.Log(posConversion + " Planet pos down conversion"); 
-            //g.transform.position = posConversion; 
-            g.transform.position = new Vector3((star.transform.localScale.x * ((planetNr-1) + 2.0f)) * 2.0f, 0, 0);
+            g.transform.position = posConversion; 
+            //g.transform.position = new Vector3((star.transform.localScale.x * ((planetNr-1) + 2.0f)) * 2.0f, 0, 0);
 
             double3 scaleDownscale = S * p.scale; 
             Debug.Log(scaleDownscale + " Planet scale downscale"); 
@@ -605,7 +483,7 @@ public class PSManager : MonoBehaviour
         m.mass = planetMass * (double)UnityEngine.Random.Range(0.008f, 0.027f);
         Debug.Log(m.mass + " Moon Mass"); 
         m.planetID = planetID;  
-        m.position = new double3(planetPosition.x, planetPosition.y, planetPosition.z + ((planetScale.z/2.0) * 10.0)); 
+        m.position = new double3(planetPosition.x, planetPosition.y, planetPosition.z + ((planetScale.z/2.0) * 20.0)); 
         m.identifier = 2; 
         m.uniqueMoonID = i; 
         double moonRadScalar = 696340.0; //Solar radius used as constant. 
@@ -626,8 +504,8 @@ public class PSManager : MonoBehaviour
         posConversion.x = (float)posDownscale.x;
         posConversion.y = (float)posDownscale.y;
         posConversion.z = (float)posDownscale.z;
-        //gm.transform.position = posConversion; 
-        gm.transform.position = new Vector3(dispPlanPos.x, dispPlanPos.y, dispPlanPos.z - (dispPlanScale.z * 3.5f));
+        gm.transform.position = posConversion; 
+        //gm.transform.position = new Vector3(dispPlanPos.x, dispPlanPos.y, dispPlanPos.z - (dispPlanScale.z * 3.5f));
         
         double3 scaleDownscale = S * m.scale; 
         Vector3 scaleConversion;
