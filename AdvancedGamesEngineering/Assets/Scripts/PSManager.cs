@@ -528,6 +528,7 @@ public class PSManager : MonoBehaviour
             if(planetNr <= (MainMenuManager.numOfPlanets/2)){
                 Material mat = new Material(pgr);
                 if(p.isHabitable == false){
+                    Debug.Log("UNINHABITABLE"); 
                     mat.SetInt("_IsHabitable", 0); 
                     mat.SetColor("_Color", rockyPanet);
                     Color randColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1.0f);
@@ -538,6 +539,7 @@ public class PSManager : MonoBehaviour
                     mat.SetFloat("_Scale", rand2);
                 }             
                 if(p.isHabitable == true){
+                    Debug.Log("HABITABLE");
                     mat.SetInt("_IsHabitable", 1); 
                     mat.SetFloat("_Scale3", UnityEngine.Random.Range(2.0f, 4.0f)); 
                     mat.SetFloat("_ForestScale", UnityEngine.Random.Range(5.0f, 10.0f)); 
@@ -551,9 +553,13 @@ public class PSManager : MonoBehaviour
 
             if(planetNr > (MainMenuManager.numOfPlanets/2)){   
                 Material mat = new Material(pgg); 
-                int lookDecider = UnityEngine.Random.Range(0, 1); 
+                System.Random rnd = new System.Random();
+                //int lookDecider = rnd.Next(0, 2);
+                int lookDecider = UnityEngine.Random.Range(0, 2); 
                 //With rings
+                //lookDecider -= 1; 
                 if(lookDecider == 0){
+                    Debug.Log("RINGS");
                     //mat.SetColor("_Color", gassyPanet);
                     mat.SetColor("_Color", Color.HSVToRGB((UnityEngine.Random.Range(0.0f, 66.0f)/360.0f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f)));
                     Color randColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1.0f);
@@ -568,6 +574,7 @@ public class PSManager : MonoBehaviour
                 }
                 //without rings
                 if(lookDecider == 1){
+                    Debug.Log("FLAT");
                     mat.SetInt("_Rings", lookDecider); 
                     float randStrength = UnityEngine.Random.Range(1.0f, 4.0f); 
                     mat.SetFloat("_Version2Strength", randStrength); 
