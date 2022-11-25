@@ -478,6 +478,13 @@ public class PSManager : MonoBehaviour
                 p.uniquePlanetID = i+1; 
             
                 p.CalculateProperties(); 
+
+                //Calculate habitability. Stefan-Boltzmann Law
+                double distFromStar = math.distance(starData.position, p.position); //in meters
+                if(distFromStar > starData.minHabitableRadius && distFromStar < starData.maxHabitableRadius){
+                    p.isHabitable = true; 
+                }
+
                 planets[i] = p;
             }
              
@@ -519,14 +526,25 @@ public class PSManager : MonoBehaviour
             
             //Assign correct material
             if(planetNr <= (MainMenuManager.numOfPlanets/2)){
-                Material mat = new Material(pgr); 
-                mat.SetColor("_Color", rockyPanet);
-                Color randColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1.0f);
-                mat.SetColor("_AtmosphereColour", randColor); 
-                float rand = UnityEngine.Random.Range(1, 10); 
-                mat.SetFloat("_Scale", rand); 
-                float rand2 = UnityEngine.Random.Range(1f, 3f); 
-                mat.SetFloat("_Scale", rand2); 
+                Material mat = new Material(pgr);
+                if(p.isHabitable == false){
+                    mat.SetInt("_IsHabitable", 0); 
+                    mat.SetColor("_Color", rockyPanet);
+                    Color randColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1.0f);
+                    mat.SetColor("_AtmosphereColour", randColor); 
+                    float rand = UnityEngine.Random.Range(1, 10); 
+                    mat.SetFloat("_Scale", rand); 
+                    float rand2 = UnityEngine.Random.Range(1f, 3f); 
+                    mat.SetFloat("_Scale", rand2);
+                }             
+                if(p.isHabitable == true){
+                    mat.SetInt("_IsHabitable", 1); 
+                    mat.SetFloat("_Scale3", UnityEngine.Random.Range(2.0f, 4.0f)); 
+                    mat.SetFloat("_ForestScale", UnityEngine.Random.Range(5.0f, 10.0f)); 
+                    mat.SetFloat("_MountainScale", UnityEngine.Random.Range(0.0f, 3.0f)); 
+                    mat.SetFloat("_DesertScale", UnityEngine.Random.Range(0.0f, 3.0f)); 
+                }
+                 
                 planetRenderer.material = mat; 
                 p.type = 1;                
             }

@@ -18,6 +18,9 @@ public class Star : CelestialBody
     public Color colour;  
     public double massDownscale;
     public double radDownscale; 
+    public double temperature; 
+    public double minHabitableRadius;
+    public double maxHabitableRadius; 
     //public double3 accumulatedForce; 
     //public double3 position; 
 
@@ -118,6 +121,7 @@ public class Star : CelestialBody
         //Debug.Log(radDownscale + " STAR RAD DOWNSCALE");   
 
         //Colour 
+        temperature = randKelvin; 
         tempCol = Mathf.CorrelatedColorTemperatureToRGB(randKelvin);
         mvMoved = mv + 10;
         mvRev = 30 - mvMoved; 
@@ -126,6 +130,11 @@ public class Star : CelestialBody
         colour = tempCol; 
 
         identifier = 0; 
+
+        //luminocity = (radius/scalarScale) * (temperature/5778) * 3.828e+26; 
+        luminocity = (radius/scalarScale) * (temperature/5778); 
+        minHabitableRadius = System.Math.Sqrt((luminocity/3.828e+26)/1.1) * 149597870.691; 
+        maxHabitableRadius = System.Math.Sqrt((luminocity/3.828e+26)/0.53) * 149597870.691; 
     }   
 }
 
