@@ -86,8 +86,7 @@ public class PSManager : MonoBehaviour
         ClearForces();
         OverallGravitationalPull(); 
         Rotation(); 
-        Integration();   
-        
+        Integration();  
     }
 
     void Update(){
@@ -95,7 +94,7 @@ public class PSManager : MonoBehaviour
         MoonDisplay();
         if(asteroids.Count > 0){
             AsteroidDisplay(); 
-        }
+        } 
     }
 
     void ClearForces(){
@@ -272,6 +271,7 @@ public class PSManager : MonoBehaviour
         Debug.Log("ASTEROID DISPLAY"); 
         float m1 = celestialBodies[0].GetComponent<Rigidbody>().mass; 
         for(int i = 0; i < asteroidsGO.Count; i++){
+            Debug.Log(asteroidsGO[i].GetComponent<Rigidbody>().velocity + " AST RB VELOCITY");
             float m2 = asteroidsGO[i].GetComponent<Rigidbody>().mass; 
             float r = Vector3.Distance(celestialBodies[0].transform.position, asteroidsGO[i].transform.position); 
 
@@ -522,7 +522,7 @@ public class PSManager : MonoBehaviour
                 Material mat = new Material(pgr); 
                 mat.SetColor("_Color", rockyPanet);
                 Color randColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1.0f);
-                mat.SetColor("_DetailColor2", randColor); 
+                mat.SetColor("_AtmosphereColour", randColor); 
                 float rand = UnityEngine.Random.Range(1, 10); 
                 mat.SetFloat("_Scale", rand); 
                 float rand2 = UnityEngine.Random.Range(1f, 3f); 
@@ -533,15 +533,32 @@ public class PSManager : MonoBehaviour
 
             if(planetNr > (MainMenuManager.numOfPlanets/2)){   
                 Material mat = new Material(pgg); 
-                mat.SetColor("_Color", gassyPanet);
-                Color randColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1.0f);
-                mat.SetColor("_AccentColor", randColor); 
-                float randDensity = UnityEngine.Random.Range(1, 3); 
-                mat.SetFloat("_CellDensity", randDensity);  
-                float randRingAccent = UnityEngine.Random.Range(1, 10); 
-                mat.SetFloat("_RingAccents", randRingAccent);
-                float randNumRings = UnityEngine.Random.Range(1, 5); 
-                mat.SetFloat("_NumberOfRings", randNumRings);        
+                int lookDecider = UnityEngine.Random.Range(0, 1); 
+                //With rings
+                if(lookDecider == 0){
+                    //mat.SetColor("_Color", gassyPanet);
+                    mat.SetColor("_Color", Color.HSVToRGB((UnityEngine.Random.Range(0.0f, 66.0f)/360.0f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f)));
+                    Color randColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1.0f);
+                    mat.SetColor("_AccentColor", randColor); 
+                    float randDensity = UnityEngine.Random.Range(1, 3); 
+                    mat.SetFloat("_CellDensity", randDensity);  
+                    float randRingAccent = UnityEngine.Random.Range(1, 10); 
+                    mat.SetFloat("_RingAccents", randRingAccent);
+                    float randNumRings = UnityEngine.Random.Range(1, 5); 
+                    mat.SetFloat("_NumberOfRings", randNumRings);
+                    mat.SetInt("_Rings", lookDecider); 
+                }
+                //without rings
+                if(lookDecider == 1){
+                    mat.SetInt("_Rings", lookDecider); 
+                    float randStrength = UnityEngine.Random.Range(1.0f, 4.0f); 
+                    mat.SetFloat("_Version2Strength", randStrength); 
+                    float randAngleOffset = UnityEngine.Random.Range(1.0f, 10.0f); 
+                    mat.SetFloat("_Version2AngleOffset", randAngleOffset); 
+                    float randHue = UnityEngine.Random.Range(241.0f, 300.0f); 
+                    Color randColor = Color.HSVToRGB((randHue/360.0f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f)); 
+                    mat.SetColor("_Version2Color", randColor); 
+                }
                 planetRenderer.material = mat;
                 p.type = 2;                  
             }
