@@ -127,6 +127,7 @@ public class PSManager : MonoBehaviour
         double3 rot; 
         double3 rotDownscale; 
         Vector3 tempRot; 
+        Vector3 rotAxis; 
 
         rot = celestialBodiesPhysics[0].rotationalForce * Time.deltaTime; 
         rotDownscale = S * rot; 
@@ -134,8 +135,12 @@ public class PSManager : MonoBehaviour
         tempRot.x = (float)rotDownscale.x; 
         tempRot.y = (float)rotDownscale.y; 
         tempRot.z = (float)rotDownscale.z; 
-        //star.transform.Rotate(tempRot); 
         star.transform.GetComponent<Rigidbody>().angularVelocity = tempRot; 
+
+        rotAxis.x = 0.0f; 
+        rotAxis.y = (float)celestialBodiesPhysics[0].rotationalAxis.y; 
+        rotAxis.z = (float)celestialBodiesPhysics[0].rotationalAxis.z;
+        star.transform.Rotate(rotAxis);  
 
         for(int j = 0; j < planets.Length; j++){
             rot = planets[j].rotationalForce * Time.deltaTime; 
@@ -143,9 +148,13 @@ public class PSManager : MonoBehaviour
             Debug.Log(rotDownscale + " ROT DOWNSCALE"); 
             tempRot.x = (float)rotDownscale.x; 
             tempRot.y = (float)rotDownscale.y; 
-            tempRot.z = (float)rotDownscale.z; 
-            //celestialBodies[planets[j].uniquePlanetID].transform.Rotate(tempRot); 
+            tempRot.z = (float)rotDownscale.z;  
             celestialBodies[planets[j].uniquePlanetID].GetComponent<Rigidbody>().angularVelocity = tempRot; 
+
+            rotAxis.x = 0.0f; 
+            rotAxis.y = (float)celestialBodiesPhysics[planets[j].uniquePlanetID].rotationalAxis.y; 
+            rotAxis.z = (float)celestialBodiesPhysics[planets[j].uniquePlanetID].rotationalAxis.z;
+            celestialBodies[planets[j].uniquePlanetID].transform.Rotate(rotAxis);
         }
 
         for(int k = 0; k < moons2.Count; k++){
@@ -155,8 +164,12 @@ public class PSManager : MonoBehaviour
             tempRot.x = (float)rotDownscale.x; 
             tempRot.y = (float)rotDownscale.y; 
             tempRot.z = (float)rotDownscale.z; 
-            //celestialBodies[moons2[k].uniqueMoonID].transform.Rotate(tempRot);
             celestialBodies[moons2[k].uniqueMoonID].GetComponent<Rigidbody>().angularVelocity = tempRot;
+
+            rotAxis.x = 0.0f; 
+            rotAxis.y = (float)celestialBodiesPhysics[moons2[k].uniqueMoonID].rotationalAxis.y; 
+            rotAxis.z = (float)celestialBodiesPhysics[moons2[k].uniqueMoonID].rotationalAxis.z;
+            celestialBodies[moons2[k].uniqueMoonID].transform.Rotate(rotAxis);
         }
     }
 
@@ -166,7 +179,8 @@ public class PSManager : MonoBehaviour
         double3 pos; 
 
         for(int i = 0; i < celestialBodiesPhysics.Count; i++){
-            double3 accel = celestialBodiesPhysics[i].accumulatedForce / celestialBodiesPhysics[i].mass; 
+            double3 rotFEffect = new double3(celestialBodiesPhysics[i].rotationalForce.x, 0.0, celestialBodiesPhysics[i].rotationalForce.z); 
+            double3 accel = (celestialBodiesPhysics[i].accumulatedForce + rotFEffect) / celestialBodiesPhysics[i].mass; 
             vel = celestialBodiesPhysics[i].velocity + (accel * (Time.deltaTime));
             pos = celestialBodiesPhysics[i].position + (vel * (Time.deltaTime)); 
             celestialBodiesPhysics[i].velocity = vel; 
@@ -311,13 +325,14 @@ public class PSManager : MonoBehaviour
 
             float obliquity = UnityEngine.Random.Range(0.03f, 82.23f); //In degrees
             double3 rotationalAxis = math.normalize(new double3(0.0, -1.0 * (double)Mathf.Sin(obliquity), -1.0 * (double)Mathf.Cos(obliquity))); 
+            celestialBodiesPhysics[i].rotationalAxis = rotationalAxis; 
             
             //angularVelocity = rotationalAxis * System.Math.Sqrt((G * m)/r); 
             if(celestialBodiesPhysics[i].identifier == 0 || celestialBodiesPhysics[i].identifier == 2){
-                tangentialVelocity = rotationalAxis * ((2.0 * 3.1415 * celestialBodiesPhysics[i].radius)/(27.0 * conversionToSeconds)); 
+                tangentialVelocity = rotationalAxis * ((2.0 * 3.14159265359 * celestialBodiesPhysics[i].radius)/(27.0 * conversionToSeconds)); 
             }
             if(celestialBodiesPhysics[i].identifier == 1){
-                tangentialVelocity = rotationalAxis * ((2.0 * 3.1415 * celestialBodiesPhysics[i].radius)/((double)UnityEngine.Random.Range(6.0f, 58.0f)) * conversionToSeconds); 
+                tangentialVelocity = rotationalAxis * ((2.0 * 3.14159265359 * celestialBodiesPhysics[i].radius)/((double)UnityEngine.Random.Range(6.0f, 58.0f)) * conversionToSeconds); 
             }
             Debug.Log(tangentialVelocity + " TANG VEL"); 
 

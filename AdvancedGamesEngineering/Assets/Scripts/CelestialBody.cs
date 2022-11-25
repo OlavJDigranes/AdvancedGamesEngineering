@@ -14,6 +14,7 @@ public class CelestialBody
     public double3 velocity; 
     public double3 accumulatedForce;
     public double3 rotationalForce;
+    public double3 rotationalAxis;
     public int identifier; //0 for sun, 1 for planet, 2 for moon 
 
     //Simple calculation of properties. This will be expanded whne habitability is accounted for. 
