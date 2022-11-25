@@ -131,10 +131,12 @@ public class Star : CelestialBody
 
         identifier = 0; 
 
-        //luminocity = (radius/scalarScale) * (temperature/5778) * 3.828e+26; 
-        luminocity = (radius/scalarScale) * (temperature/5778); 
+        luminocity = (radius/scalarScale) * (temperature/5778) * 3.828e+26; 
+        //luminocity = (radius/scalarScale) * (temperature/5778); 
         minHabitableRadius = System.Math.Sqrt((luminocity/3.828e+26)/1.1) * 149597870.691; 
-        maxHabitableRadius = System.Math.Sqrt((luminocity/3.828e+26)/0.53) * 149597870.691; 
+        maxHabitableRadius = System.Math.Sqrt((luminocity/3.828e+26)/0.53) * 149597870.691;
+        Debug.Log((minHabitableRadius * S) + " MIN HAB RANG SCALE");  
+        Debug.Log((maxHabitableRadius * S) + " Max HAB RANG SCALE");  
     }   
 }
 
