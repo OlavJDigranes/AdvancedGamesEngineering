@@ -8,7 +8,8 @@ using TMPro;
 public class CameraManager : MonoBehaviour
 {
     Camera[] cameras; 
-    GameObject[] celestialBodies;
+    //GameObject[] celestialBodies;
+    List<GameObject> celestialBodies = new List<GameObject>(); 
     int cameraIndex = 0; 
     private float scrollSpeed = 100.0f;
     Vector3 scrolling = new Vector3(0.0f, 1.0f, 0.0f); 
@@ -19,21 +20,25 @@ public class CameraManager : MonoBehaviour
     public TextMeshProUGUI posOut;
     public TextMeshProUGUI velOut; 
     public GameObject UIPanel;
+    public PSManager ps; 
     
     // Start is called before the first frame update
     void Start()
     {
         cameras = Camera.allCameras; 
         scrolling += new Vector3 (0.0f, star.transform.localScale.y + (star.transform.localScale.y/2.0f), 0.0f);
-        celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBody"); 
-        numPlanOut.text = (celestialBodies.Length-1).ToString();
+        foreach(GameObject g in GameObject.FindGameObjectsWithTag("CelestialBody")){
+            celestialBodies.Add(g); 
+        }
+        //celestialBodies = GameObject.FindGameObjectsWithTag("CelestialBody"); 
+        numPlanOut.text = (celestialBodies.Count-1).ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
         //Cycle up through the cameras
-        if(Input.GetKeyDown(KeyCode.T) && cameraIndex < celestialBodies.Length-1){
+        if(Input.GetKeyDown(KeyCode.T) && cameraIndex < celestialBodies.Count-1){
                 cameraIndex++; 
         }
 
@@ -54,6 +59,14 @@ public class CameraManager : MonoBehaviour
         if (Input.GetKey("escape"))
         {
             Application.Quit();
+        }
+
+        if(Input.GetKeyDown(KeyCode.R)){
+            ps.GenerateAsteroid(); 
+            celestialBodies.Clear(); 
+            foreach(GameObject g in GameObject.FindGameObjectsWithTag("CelestialBody")){
+                celestialBodies.Add(g); 
+            }
         }
     }
 

@@ -41,7 +41,7 @@ public class Star : CelestialBody
         spectralClassification = MainMenuManager.spectralClassification; 
         absoluteMagnitude = MainMenuManager.absoluteMagnitude; 
 
-        Debug.Log("Sim Loaded");
+        //Debug.Log("Sim Loaded");
 
         //Funcitons to generate star
         GenerateStar(absoluteMagnitude, spectralClassification);
@@ -102,20 +102,20 @@ public class Star : CelestialBody
             randScale = 1.0f;
             randKelvin = 6000.0f; 
         }
-        Debug.Log(randMass + " STAR RAND MASS"); 
-        Debug.Log(randScale + " STAR RAND SCALE"); 
-        Debug.Log(randKelvin + " STAR RAND KELV"); 
+        //Debug.Log(randMass + " STAR RAND MASS"); 
+        //Debug.Log(randScale + " STAR RAND SCALE"); 
+        //Debug.Log(randKelvin + " STAR RAND KELV"); 
         
         //set mass
         mass = (double)randMass * scalarMass; 
-        Debug.Log(mass + " STAR MASS"); 
+        //Debug.Log(mass + " STAR MASS"); 
         massDownscale = S * mass;   
 
         //Set scale
         radius = (double)randScale * scalarScale; 
-        Debug.Log(radius + " STAR RADIUS " + radius * 2 + " STAR DIAMETER"); 
+        //Debug.Log(radius + " STAR RADIUS " + radius * 2 + " STAR DIAMETER"); 
         radDownscale = S * radius;
-        Debug.Log(radDownscale + " STAR RAD DOWNSCALE");   
+        //Debug.Log(radDownscale + " STAR RAD DOWNSCALE");   
 
         //Colour 
         tempCol = Mathf.CorrelatedColorTemperatureToRGB(randKelvin);

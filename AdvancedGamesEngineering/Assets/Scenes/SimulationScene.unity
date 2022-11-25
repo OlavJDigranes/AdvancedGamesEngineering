@@ -1606,10 +1606,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 001ebc0f9e08f0b44a362e807250c9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starData:
+    mass: 0
+    radius: 0
+    scale:
+      x: 1
+      y: 1
+      z: 1
+    position:
+      x: 0
+      y: 0
+      z: 0
+    velocity:
+      x: 0
+      y: 0
+      z: 0
+    accumulatedForce:
+      x: 0
+      y: 0
+      z: 0
+    rotationalForce:
+      x: 0
+      y: 0
+      z: 0
+    rotationalAxis:
+      x: 0
+      y: 0
+      z: 0
+    identifier: 0
+    luminocity: 0
+    age: 0
+    spectralClassification: 
+    absoluteMagnitude: 0
+    colour: {r: 0, g: 0, b: 0, a: 0}
+    massDownscale: 0
+    radDownscale: 0
   ps: {fileID: 2073790014}
   star: {fileID: 1378566511}
   planet: {fileID: 783261928739982422, guid: c1c7bbd4f98b45f49b016523ec1cc0ee, type: 3}
   moon: {fileID: 1363588573039599007, guid: c2b2f4ffd3320a84c960bfc79f440b6b, type: 3}
+  asteroidTemplate: {fileID: 3268616182868791902, guid: 11e89d7c0a4609547847cca866f10da7, type: 3}
   rockyPlanetMaterial: {fileID: 2100000, guid: 26975ba42c8921247b8285a5e895bc7a, type: 2}
   gassyPlanetMaterial: {fileID: 2100000, guid: 9130ecd9f61ec0e439bef1cf66de27ed, type: 2}
   moonMaterial: {fileID: 2100000, guid: 1ef3218418dca8d429d14e45f4e5e727, type: 2}
@@ -1634,6 +1670,7 @@ MonoBehaviour:
   posOut: {fileID: 809978118}
   velOut: {fileID: 330693061}
   UIPanel: {fileID: 892081018}
+  ps: {fileID: 2073790017}
 --- !u!1 &2078666079
 GameObject:
   m_ObjectHideFlags: 0
