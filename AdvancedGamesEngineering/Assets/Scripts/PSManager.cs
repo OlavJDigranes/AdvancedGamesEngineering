@@ -15,7 +15,7 @@ public class PSManager : MonoBehaviour
     readonly float S2 = 1.75e+4f; //DisplayScale
     readonly double S3 = 1.0e-18; //ForceScale 
     readonly double S4 = 1.0e-12; //RotScale 
-    readonly double S5 = 1.0e-18; //DispMass 
+    readonly double S5 = 1.0e-15; //DispMass 
     //GameObject[] celestialBodies; 
     List<GameObject> celestialBodies = new List<GameObject>(); 
     GameObject[] moons; 
@@ -275,22 +275,7 @@ public class PSManager : MonoBehaviour
             float m2 = asteroidsGO[i].GetComponent<Rigidbody>().mass; 
             float r = Vector3.Distance(celestialBodies[0].transform.position, asteroidsGO[i].transform.position); 
             asteroidsGO[i].GetComponent<Rigidbody>().AddForce(((celestialBodies[0].transform.position - asteroidsGO[i].transform.position).normalized * ((G2 * S2) * (m1 * m2) / (r * r))));
-            /*
-            Debug.Log(asteroidsGO[i].GetComponent<Rigidbody>().velocity + " AST RB VELOCITY");
-            float m2 = asteroidsGO[i].GetComponent<Rigidbody>().mass; 
-            float r = Vector3.Distance(celestialBodies[0].transform.position, asteroidsGO[i].transform.position); 
-
-            //Force handeling and integration using Symplectic euler. 
-            Vector3 force = (celestialBodies[0].transform.position - asteroidsGO[i].transform.position).normalized * ((G2) * (m1 * m2) / (r * r) * S2); 
-            Vector3 force2 = -(asteroidsGO[i].transform.position - celestialBodies[0].transform.position).normalized * ((G2) * (m1 * m2) / (r * r) * S2); 
-            
-            Vector3 accel = (force + force2) / m2; 
-            Vector3 vel = asteroidsGO[i].GetComponent<Rigidbody>().velocity + (Time.deltaTime * accel);
-            Vector3 pos = asteroidsGO[i].transform.position + (Time.deltaTime * vel); 
-            asteroidsGO[i].transform.position = pos; 
-            asteroidsGO[i].GetComponent<Rigidbody>().velocity = vel;
-            Debug.Log(asteroidsGO[i].GetComponent<Rigidbody>().velocity + " AST RB VELOCITY"); 
-            */
+            Debug.Log(asteroidsGO[i].GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY NO UNIVERSAL"); 
         }
 
         for(int i = 0; i < asteroids.Count; i++){
@@ -301,6 +286,7 @@ public class PSManager : MonoBehaviour
             forceVectorA.z = (float)forceDownscaleA.z;
             asteroidsGO[i].GetComponent<Rigidbody>().AddForce(forceVectorA); 
             Debug.Log(forceVectorA + " AST RB FORCE"); 
+            Debug.Log(asteroidsGO[i].GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY UNIVERSAL");
         }
     }
 
@@ -517,7 +503,7 @@ public class PSManager : MonoBehaviour
             posConversion.y = (float)posDownscale.y;
             posConversion.z = (float)posDownscale.z;
             //Debug.Log(posConversion + " Planet pos down conversion"); 
-            g.transform.position = posConversion; 
+            g.transform.position = (posConversion); 
             //g.transform.position = new Vector3((star.transform.localScale.x * ((planetNr-1) + 2.0f)) * 2.0f, 0, 0);
 
             double3 scaleDownscale = S * p.scale; 
@@ -631,7 +617,7 @@ public class PSManager : MonoBehaviour
         posConversion.x = (float)posDownscale.x;
         posConversion.y = (float)posDownscale.y;
         posConversion.z = (float)posDownscale.z;
-        gm.transform.position = posConversion; 
+        gm.transform.position = (posConversion); 
         //gm.transform.position = new Vector3(dispPlanPos.x, dispPlanPos.y, dispPlanPos.z - (dispPlanScale.z * 3.5f));
         
         double3 scaleDownscale = S * m.scale; 
