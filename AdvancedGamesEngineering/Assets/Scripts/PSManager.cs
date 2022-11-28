@@ -186,7 +186,7 @@ public class PSManager : MonoBehaviour
 
         for(int l = 0; l < asteroids.Count; l++){
             rot = asteroids[l].rotationalForce * Time.deltaTime; 
-            rotDownscale = S * rot; 
+            rotDownscale = S3 * rot; 
             //Debug.Log(rotDownscale + " ROT DOWNSCALE"); 
             tempRot.x = (float)rotDownscale.x; 
             tempRot.y = (float)rotDownscale.y; 
@@ -269,6 +269,8 @@ public class PSManager : MonoBehaviour
     }
 
     void AsteroidDisplay(){
+        
+        /*
         Debug.Log("ASTEROID DISPLAY"); 
         float m1 = celestialBodies[0].GetComponent<Rigidbody>().mass; 
         for(int i = 0; i < asteroidsGO.Count; i++){
@@ -288,6 +290,7 @@ public class PSManager : MonoBehaviour
             Debug.Log(forceVectorA + " AST RB FORCE"); 
             Debug.Log(asteroidsGO[i].GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY UNIVERSAL");
         }
+        */
     }
 
     void InitialOrbitVelocity(){
@@ -689,6 +692,7 @@ public class PSManager : MonoBehaviour
         celestialBodiesPhysics.Add(a);
         asteroids.Add(a);
 
+        //--------------------------------------------------------------------------------------------------------------------------------------------------
         //Game Object
         GameObject ga = asteroidTemplate; 
         Rigidbody rbA = ga.GetComponent<Rigidbody>();
@@ -716,7 +720,6 @@ public class PSManager : MonoBehaviour
         astMat.SetFloat("_Roughness", UnityEngine.Random.Range(3.0f, 5.0f)); 
         astMat.SetColor("_Color", Color.grey); 
         moonRenderer.material = astMat; 
-        Instantiate(ga);
 
         //RB velocity
         double3 tempVel = velocity * S; 
@@ -724,8 +727,11 @@ public class PSManager : MonoBehaviour
         rbVel.x = (float)tempVel.x; 
         rbVel.y = (float)tempVel.y; 
         rbVel.z = (float)tempVel.z;  
-        ga.GetComponent<Rigidbody>().velocity += rbVel; 
+        ga.GetComponent<Rigidbody>().velocity = rbVel; 
+
+        Instantiate(ga);
         Debug.Log(ga.GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY"); 
         asteroidsGO.Add(ga); 
+        Debug.Log(asteroidsGO[0].GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY");
     } 
 }
