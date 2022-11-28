@@ -15,7 +15,7 @@ public class PSManager : MonoBehaviour
     readonly float S2 = 1.75e+4f; //DisplayScale
     readonly double S3 = 1.0e-18; //ForceScale 
     readonly double S4 = 1.0e-12; //RotScale 
-    readonly double S5 = 1.0e-15; //DispMass 
+    readonly double S5 = 1.0e-18; //DispMass 
     //GameObject[] celestialBodies; 
     List<GameObject> celestialBodies = new List<GameObject>(); 
     GameObject[] moons; 
@@ -270,7 +270,7 @@ public class PSManager : MonoBehaviour
 
     void AsteroidDisplay(){
         
-        /*
+        
         Debug.Log("ASTEROID DISPLAY"); 
         float m1 = celestialBodies[0].GetComponent<Rigidbody>().mass; 
         for(int i = 0; i < asteroidsGO.Count; i++){
@@ -290,7 +290,7 @@ public class PSManager : MonoBehaviour
             Debug.Log(forceVectorA + " AST RB FORCE"); 
             Debug.Log(asteroidsGO[i].GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY UNIVERSAL");
         }
-        */
+        
     }
 
     void InitialOrbitVelocity(){
@@ -659,8 +659,8 @@ public class PSManager : MonoBehaviour
         //Initial Velocity
         double3 direction = new double3(-1.0, 0.0, 1.0);
         double3 velocity = new double3();
-        double r = math.distance(celestialBodiesPhysics[0].position, a.position) * 1000; 
-        velocity += direction * System.Math.Sqrt((G * celestialBodiesPhysics[0].mass) / r); 
+        double r = math.distance(planets[MainMenuManager.numOfPlanets - 1].position, a.position) * 1000; 
+        velocity += direction * System.Math.Sqrt((G * (celestialBodiesPhysics[0].mass)) / r) * 2; 
         a.velocity = velocity;
         Debug.Log(a.velocity + " ASTEROID VELODITY"); 
 
@@ -694,7 +694,7 @@ public class PSManager : MonoBehaviour
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------
         //Game Object
-        GameObject ga = asteroidTemplate; 
+        GameObject ga = Instantiate(asteroidTemplate); 
         Rigidbody rbA = ga.GetComponent<Rigidbody>();
         double massDownscale = S5 * a.mass;
         rbA.mass = (float)massDownscale; 
@@ -717,7 +717,7 @@ public class PSManager : MonoBehaviour
         //Set up material
         var moonRenderer = ga.GetComponent<Renderer>(); 
         Material astMat = new Material(pgm); 
-        astMat.SetFloat("_Roughness", UnityEngine.Random.Range(3.0f, 5.0f)); 
+        astMat.SetFloat("_Roughness", UnityEngine.Random.Range(1.0f, 3.0f)); 
         astMat.SetColor("_Color", Color.grey); 
         moonRenderer.material = astMat; 
 
@@ -729,7 +729,7 @@ public class PSManager : MonoBehaviour
         rbVel.z = (float)tempVel.z;  
         ga.GetComponent<Rigidbody>().velocity = rbVel; 
 
-        Instantiate(ga);
+        //Instantiate(ga);
         Debug.Log(ga.GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY"); 
         asteroidsGO.Add(ga); 
         Debug.Log(asteroidsGO[0].GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY");
