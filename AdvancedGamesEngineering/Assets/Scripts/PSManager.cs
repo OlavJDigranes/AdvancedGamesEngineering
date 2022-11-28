@@ -15,6 +15,7 @@ public class PSManager : MonoBehaviour
     readonly float S2 = 1.75e+4f; //DisplayScale
     readonly double S3 = 1.0e-18; //ForceScale 
     readonly double S4 = 1.0e-12; //RotScale 
+    readonly double S5 = 1.0e-18; //DispMass 
     //GameObject[] celestialBodies; 
     List<GameObject> celestialBodies = new List<GameObject>(); 
     GameObject[] moons; 
@@ -271,6 +272,10 @@ public class PSManager : MonoBehaviour
         Debug.Log("ASTEROID DISPLAY"); 
         float m1 = celestialBodies[0].GetComponent<Rigidbody>().mass; 
         for(int i = 0; i < asteroidsGO.Count; i++){
+            float m2 = asteroidsGO[i].GetComponent<Rigidbody>().mass; 
+            float r = Vector3.Distance(celestialBodies[0].transform.position, asteroidsGO[i].transform.position); 
+            asteroidsGO[i].GetComponent<Rigidbody>().AddForce(((celestialBodies[0].transform.position - asteroidsGO[i].transform.position).normalized * ((G2 * S2) * (m1 * m2) / (r * r))));
+            /*
             Debug.Log(asteroidsGO[i].GetComponent<Rigidbody>().velocity + " AST RB VELOCITY");
             float m2 = asteroidsGO[i].GetComponent<Rigidbody>().mass; 
             float r = Vector3.Distance(celestialBodies[0].transform.position, asteroidsGO[i].transform.position); 
@@ -285,6 +290,7 @@ public class PSManager : MonoBehaviour
             asteroidsGO[i].transform.position = pos; 
             asteroidsGO[i].GetComponent<Rigidbody>().velocity = vel;
             Debug.Log(asteroidsGO[i].GetComponent<Rigidbody>().velocity + " AST RB VELOCITY"); 
+            */
         }
 
         for(int i = 0; i < asteroids.Count; i++){
@@ -427,7 +433,8 @@ public class PSManager : MonoBehaviour
         star.transform.position = new Vector3(0, 0, 0);
 
         //set game object mass
-        rbS.mass = (float)starData.massDownscale; 
+        double rbMass = starData.mass * S5; 
+        rbS.mass = (float)rbMass; 
         //Debug.Log(rbS.mass + " RB MASS SUN");
 
         //Set game object scale
@@ -499,7 +506,7 @@ public class PSManager : MonoBehaviour
 
             //Display planet
             rbG = g.GetComponent<Rigidbody>();
-            double massDownscale = S * p.mass; 
+            double massDownscale = S5 * p.mass; 
             //Debug.Log(massDownscale + " Planet Mass Downscale"); 
             rbG.mass = (float)massDownscale; 
 
@@ -616,7 +623,7 @@ public class PSManager : MonoBehaviour
         Rigidbody rbM; 
 
         rbM = gm.GetComponent<Rigidbody>(); 
-        double massDownscale = S * m.mass; 
+        double massDownscale = S5 * m.mass; 
         rbM.mass = (float)massDownscale; 
 
         double3 posDownscale = S * m.position; 
@@ -699,7 +706,7 @@ public class PSManager : MonoBehaviour
         //Game Object
         GameObject ga = asteroidTemplate; 
         Rigidbody rbA = ga.GetComponent<Rigidbody>();
-        double massDownscale = S * a.mass;
+        double massDownscale = S5 * a.mass;
         rbA.mass = (float)massDownscale; 
 
         double3 posDownscale = S * a.position; 
