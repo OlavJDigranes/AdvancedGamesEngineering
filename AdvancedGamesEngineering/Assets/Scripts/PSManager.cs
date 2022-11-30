@@ -107,7 +107,7 @@ public class PSManager : MonoBehaviour
     }
 
     void OverallGravitationalPull(){
-        //Calculate gravitational pull using Newton's law of universil gravitation:
+        //Calculate gravitational pull using Newton's law of universal gravitation:
         //  F = G * ((m1 * m2)/r^2)
 
         for(int i = 1; i < celestialBodiesPhysics.Count; i++) {
@@ -718,7 +718,7 @@ public class PSManager : MonoBehaviour
         var moonRenderer = ga.GetComponent<Renderer>(); 
         Material astMat = new Material(pgm); 
         astMat.SetFloat("_Roughness", UnityEngine.Random.Range(1.0f, 3.0f)); 
-        astMat.SetColor("_Color", Color.grey); 
+        astMat.SetColor("_Color", Color.HSVToRGB(0.0f, 0.0f, (17.0f/100.0f))); 
         moonRenderer.material = astMat; 
 
         //RB velocity
