@@ -179,7 +179,7 @@ public class PSManager : MonoBehaviour
             celestialBodies[moons2[k].uniqueMoonID].GetComponent<Rigidbody>().angularVelocity = tempRot;
 
             rotAxis.x = 0.0f; 
-            rotAxis.y = (float)celestialBodiesPhysics[moons2[k].uniqueMoonID].rotationalAxis.y; 
+            rotAxis.y = (float)celestialBodiesPhysics[moons2[k].uniqueMoonID].rotationalAxis.y;
             rotAxis.z = (float)celestialBodiesPhysics[moons2[k].uniqueMoonID].rotationalAxis.z;
             celestialBodies[moons2[k].uniqueMoonID].transform.Rotate(rotAxis);
         }
@@ -194,7 +194,7 @@ public class PSManager : MonoBehaviour
             asteroidsGO[l].GetComponent<Rigidbody>().angularVelocity = tempRot;
 
             rotAxis.x = 0.0f; 
-            rotAxis.y = (float)asteroids[l].rotationalAxis.y; 
+            rotAxis.y = (float)asteroids[l].rotationalAxis.y;
             rotAxis.z = (float)asteroids[l].rotationalAxis.z;
             asteroidsGO[l].transform.Rotate(rotAxis);
 
@@ -378,7 +378,7 @@ public class PSManager : MonoBehaviour
             double conversionToSeconds = 86400.0; 
 
             float obliquity = UnityEngine.Random.Range(0.03f, 82.23f); //In degrees
-            double3 rotationalAxis = math.normalize(new double3(0.0, -1.0 * (double)Mathf.Sin(obliquity), -1.0 * (double)Mathf.Cos(obliquity))); 
+            double3 rotationalAxis = math.normalize(new double3(0.0, -1.0 * (double)Mathf.Sin(obliquity), -1.0 * (double)Mathf.Cos(obliquity)));  
             celestialBodiesPhysics[i].rotationalAxis = rotationalAxis; 
             
             //angularVelocity = rotationalAxis * System.Math.Sqrt((G * m)/r); 
@@ -397,7 +397,7 @@ public class PSManager : MonoBehaviour
             double y = celestialBodiesPhysics[i].position.y + r; 
             double z = celestialBodiesPhysics[i].position.z + r; 
             double absoluteRadius = System.Math.Sqrt((x * x) + (y * y) + (z * z)); 
-            angularVelocity = (r * linearVelocity)/(absoluteRadius); 
+            angularVelocity = (r * linearVelocity)/(absoluteRadius * absoluteRadius); 
             //Debug.Log(angularVelocity + " ANG VEL"); 
             
             force = (m * (angularVelocity * angularVelocity)) / r; 
@@ -673,7 +673,7 @@ public class PSManager : MonoBehaviour
         double r2 = a.radius * 1000.0; //Coversion to meters
         double conversionToSeconds = 86400.0; 
         float obliquity = UnityEngine.Random.Range(0.03f, 82.23f); //In degrees
-        double3 rotationalAxis = math.normalize(new double3(0.0, -1.0 * (double)Mathf.Sin(obliquity), -1.0 * (double)Mathf.Cos(obliquity))); 
+        double3 rotationalAxis = math.normalize(new double3(0.0, -1.0 * (double)Mathf.Sin(obliquity), -1.0 * (double)Mathf.Cos(obliquity)));  
         a.rotationalAxis = rotationalAxis; 
         Debug.Log(a.rotationalAxis + " ASTEROID ROTATIONAL AXIS"); 
         
