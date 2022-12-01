@@ -9,10 +9,8 @@ public class Star : CelestialBody
 {
     //Variables
     readonly double S = 1.0e-4; //Scale 
-    //public double mass;
     public double luminocity;
     public double age;
-    //public double radius; 
     public string spectralClassification;
     public int absoluteMagnitude;
     public Color colour;  
@@ -21,12 +19,8 @@ public class Star : CelestialBody
     public double temperature; 
     public double minHabitableRadius;
     public double maxHabitableRadius; 
-    //public double3 accumulatedForce; 
-    //public double3 position; 
+    public string name; 
 
-    //public GameObject star;
-    //public GameObject menu; 
-    //public Rigidbody rb; 
     MainMenuManager mainMenuMngr;
 
     //set up some varaiables
@@ -37,18 +31,12 @@ public class Star : CelestialBody
     // Start is called before the first frame update
     public void StarSetup()
     {
-        //Ensure the star is at the point of origin. 
-        //star.transform.position = new Vector3(0, 0, 0);
-
         //Take in variables from menu
         spectralClassification = MainMenuManager.spectralClassification; 
         absoluteMagnitude = MainMenuManager.absoluteMagnitude; 
 
-        //Debug.Log("Sim Loaded");
-
         //Funcitons to generate star
         GenerateStar(absoluteMagnitude, spectralClassification);
-   
     }
 
     public void GenerateStar(int mv, string type){
@@ -136,8 +124,18 @@ public class Star : CelestialBody
         minHabitableRadius = System.Math.Sqrt((luminocity/3.828e+26)/1.1) * 149597870.691; 
         maxHabitableRadius = System.Math.Sqrt((luminocity/3.828e+26)/0.53) * 149597870.691;
         Debug.Log((minHabitableRadius * S) + " MIN HAB RANG SCALE");  
-        Debug.Log((maxHabitableRadius * S) + " Max HAB RANG SCALE");  
+        Debug.Log((maxHabitableRadius * S) + " Max HAB RANG SCALE"); 
+
+        GenerateName(type); 
     }   
+
+    void GenerateName(string sc){
+        char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+        char[] generatedName = {'S', 'T', '-', alphabet[UnityEngine.Random.Range(0,26)], alphabet[UnityEngine.Random.Range(0,26)], alphabet[UnityEngine.Random.Range(0,26)], alphabet[UnityEngine.Random.Range(0,26)] };
+        //string nameP2 = "-" + sc; 
+        name = String.Concat(generatedName) + "-" + sc;
+        Debug.Log(name); 
+    }
 }
 
 

@@ -22,6 +22,7 @@ public class PSManager : MonoBehaviour
     //Moon[] moons2; 
     List<Moon> moons2 = new List<Moon>();  
     Planet[] planets = new Planet[MainMenuManager.numOfPlanets]; 
+    public Planet[] planetsOutput = new Planet[MainMenuManager.numOfPlanets]; 
     public Star starData; 
     public GameObject ps; 
     public GameObject star;
@@ -40,6 +41,7 @@ public class PSManager : MonoBehaviour
     List<CelestialBody> celestialBodiesPhysics = new List<CelestialBody>();
     List<GameObject> asteroidsGO = new List<GameObject>();
     List<Asteroid> asteroids = new List<Asteroid>();   
+    public List<Asteroid> asteroidsOutput = new List<Asteroid>();   
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +59,7 @@ public class PSManager : MonoBehaviour
 
         //Generate planets and fill celestial bodies array. Note: Star will always be at index 0 of gameobjects vector
         GeneratePlanets();
+        planetsOutput = planets; 
         //moons2 = new Moon[moonCounter]; 
         foreach(GameObject g in GameObject.FindGameObjectsWithTag("CelestialBody")){
             celestialBodies.Add(g); 
@@ -129,7 +132,7 @@ public class PSManager : MonoBehaviour
             }
 
             if(celestialBodiesPhysics[i].identifier == 3){
-                Debug.Log(force + " TOTAL FORCE FOR CB " + i); 
+                //Debug.Log(force + " TOTAL FORCE FOR CB " + i); 
             }
             
         }
@@ -198,7 +201,7 @@ public class PSManager : MonoBehaviour
             rotAxis.z = (float)asteroids[l].rotationalAxis.z;
             asteroidsGO[l].transform.Rotate(rotAxis);
 
-            Debug.Log(asteroidsGO[l].GetComponent<Rigidbody>().angularVelocity + " ANG VEL "); 
+            //Debug.Log(asteroidsGO[l].GetComponent<Rigidbody>().angularVelocity + " ANG VEL "); 
         }
     }
 
@@ -271,13 +274,13 @@ public class PSManager : MonoBehaviour
     void AsteroidDisplay(){
         
         
-        Debug.Log("ASTEROID DISPLAY"); 
+        //Debug.Log("ASTEROID DISPLAY"); 
         float m1 = celestialBodies[0].GetComponent<Rigidbody>().mass; 
         for(int i = 0; i < asteroidsGO.Count; i++){
             float m2 = asteroidsGO[i].GetComponent<Rigidbody>().mass; 
             float r = Vector3.Distance(celestialBodies[0].transform.position, asteroidsGO[i].transform.position); 
             asteroidsGO[i].GetComponent<Rigidbody>().AddForce(((celestialBodies[0].transform.position - asteroidsGO[i].transform.position).normalized * ((G2 * S2) * (m1 * m2) / (r * r))));
-            Debug.Log(asteroidsGO[i].GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY NO UNIVERSAL"); 
+            //Debug.Log(asteroidsGO[i].GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY NO UNIVERSAL"); 
         }
 
         for(int i = 0; i < asteroids.Count; i++){
@@ -287,8 +290,8 @@ public class PSManager : MonoBehaviour
             forceVectorA.y = (float)forceDownscaleA.y;
             forceVectorA.z = (float)forceDownscaleA.z;
             asteroidsGO[i].GetComponent<Rigidbody>().AddForce(forceVectorA); 
-            Debug.Log(forceVectorA + " AST RB FORCE"); 
-            Debug.Log(asteroidsGO[i].GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY UNIVERSAL");
+            //Debug.Log(forceVectorA + " AST RB FORCE"); 
+            //Debug.Log(asteroidsGO[i].GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY UNIVERSAL");
         }
         
     }
@@ -474,6 +477,7 @@ public class PSManager : MonoBehaviour
                 p.uniquePlanetID = i+1; 
             
                 p.CalculateProperties(); 
+                p.GenerateName();
 
                 //Calculate habitability. Stefan-Boltzmann Law
                 double distFromStar = math.distance(starData.position, p.position); //in meters
@@ -642,16 +646,17 @@ public class PSManager : MonoBehaviour
     }
 
     public void GenerateAsteroid(){
-        Debug.Log("NEW ASTEROID"); 
+        //Debug.Log("NEW ASTEROID"); 
         Asteroid a = new Asteroid(); 
         a.mass = 2e+30 * (double)UnityEngine.Random.Range(0.0000000013208f, 0.0009543f);
-        Debug.Log(a.mass + " ASTEROID MASS"); 
+        //Debug.Log(a.mass + " ASTEROID MASS"); 
         a.identifier = 3; 
         double radScalar = 696340.0;
         float astRadRand = UnityEngine.Random.Range(0.0024f, 0.10049f);
         a.radius = radScalar * (double)astRadRand;
-        Debug.Log(a.radius + " ASTEROID RADIUS");  
+        //Debug.Log(a.radius + " ASTEROID RADIUS");  
         a.CalculateProperties(); 
+        a.GenerateName(); 
         double astPosScalar = (starData.radius * 200.0); 
         a.position = new double3(astPosScalar, 0, astPosScalar * -0.5); 
         a.asteroidID = celestialBodiesPhysics.Count + 1; 
@@ -662,7 +667,7 @@ public class PSManager : MonoBehaviour
         double r = math.distance(planets[MainMenuManager.numOfPlanets - 1].position, a.position) * 1000; 
         velocity += direction * System.Math.Sqrt((G * (celestialBodiesPhysics[0].mass)) / r) * 2; 
         a.velocity = velocity;
-        Debug.Log(a.velocity + " ASTEROID VELODITY"); 
+        //Debug.Log(a.velocity + " ASTEROID VELODITY"); 
 
         //Initial rotational velocity
         double3 rotForce = new double3(); 
@@ -675,7 +680,7 @@ public class PSManager : MonoBehaviour
         float obliquity = UnityEngine.Random.Range(0.03f, 82.23f); //In degrees
         double3 rotationalAxis = math.normalize(new double3(0.0, -1.0 * (double)Mathf.Sin(obliquity), -1.0 * (double)Mathf.Cos(obliquity)));  
         a.rotationalAxis = rotationalAxis; 
-        Debug.Log(a.rotationalAxis + " ASTEROID ROTATIONAL AXIS"); 
+        //Debug.Log(a.rotationalAxis + " ASTEROID ROTATIONAL AXIS"); 
         
         tangentialVelocity = rotationalAxis * ((2.0 * 3.14159265359 * a.radius)/((double)UnityEngine.Random.Range(6.0f, 58.0f)) * conversionToSeconds); 
         linearVelocity = tangentialVelocity/r2; 
@@ -687,10 +692,11 @@ public class PSManager : MonoBehaviour
         
         rotForce = (m * (angularVelocity * angularVelocity)) / r2; 
         a.rotationalForce += rotForce;
-        Debug.Log(a.rotationalForce + " ASTEROID ROTATIONAL FORCE"); 
+        //Debug.Log(a.rotationalForce + " ASTEROID ROTATIONAL FORCE"); 
 
         celestialBodiesPhysics.Add(a);
         asteroids.Add(a);
+        asteroidsOutput.Add(a);
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------
         //Game Object
@@ -730,8 +736,8 @@ public class PSManager : MonoBehaviour
         ga.GetComponent<Rigidbody>().velocity = rbVel; 
 
         //Instantiate(ga);
-        Debug.Log(ga.GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY"); 
+        //Debug.Log(ga.GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY"); 
         asteroidsGO.Add(ga); 
-        Debug.Log(asteroidsGO[0].GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY");
+        //Debug.Log(asteroidsGO[0].GetComponent<Rigidbody>().velocity + " INITIAL RB VELOCITY");
     } 
 }
