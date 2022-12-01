@@ -589,7 +589,7 @@ public class PSManager : MonoBehaviour
             }
             Instantiate(g);
 
-            if(p.mass > (planetMassScalar * 0.2447e-9)){
+            if(p.mass > (planetMassScalar * 0.000003003)){
                 GenerateMoon(p.mass, p.position, planetNr, p.scale, moonCounter, g.transform.position, g.transform.localScale); 
                 moonCounter++; 
             }
